@@ -13,10 +13,6 @@ class SignUpController implements Controller {
     try {
       const { name, id_guild, email, id_discord } = httpRequest.body;
 
-
-
-      
-
       if (!name) {
         return badRequest(new MissingParamError('name'));
       }
