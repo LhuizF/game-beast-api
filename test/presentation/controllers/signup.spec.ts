@@ -1,12 +1,15 @@
-import SignUpController from '../../../src/presentation/controllers/signup';
+import SignUpController from '../../../src/presentation/controllers/signup/signup';
 import {
   MissingParamError,
   InvalidParamError,
   ServerError
 } from '../../../src/presentation/erros';
-import { EmailValidator } from '../../../src/presentation/protocols';
-import { AddUser, AddUserModel } from '../../../src/domain/usecase/add-user';
-import { UserModel } from '../../../src/domain/models/user';
+import {
+  EmailValidator,
+  AddUser,
+  AddUserModel,
+  UserModel
+} from '../../../src/presentation/controllers/signup/signup-protocols';
 
 interface SutTypes {
   sut: SignUpController;
@@ -69,9 +72,7 @@ describe('SignUp Controller', () => {
     const httpResponse = sut.handle(httpRequest);
 
     expect(httpResponse.statusCode).toBe(400);
-    expect(httpResponse.body).toEqual(
-      new MissingParamError('id_guild or email')
-    );
+    expect(httpResponse.body).toEqual(new MissingParamError('id_guild or email'));
   });
 
   test('should return 400 if id_guild is provided and id_discord no provided', () => {
@@ -113,9 +114,7 @@ describe('SignUp Controller', () => {
     };
     const httpResponse = sut.handle(httpRequest);
     expect(httpResponse.statusCode).toBe(400);
-    expect(httpResponse.body).toEqual(
-      new MissingParamError('password_confirmation')
-    );
+    expect(httpResponse.body).toEqual(new MissingParamError('password_confirmation'));
   });
 
   test('should return 400 if Password confirmation does not match password', () => {
@@ -130,9 +129,7 @@ describe('SignUp Controller', () => {
     };
     const httpResponse = sut.handle(httpRequest);
     expect(httpResponse.statusCode).toBe(400);
-    expect(httpResponse.body).toEqual(
-      new InvalidParamError('password_confirmation')
-    );
+    expect(httpResponse.body).toEqual(new InvalidParamError('password_confirmation'));
   });
 
   test('should return 400 if invalide email is provided', () => {

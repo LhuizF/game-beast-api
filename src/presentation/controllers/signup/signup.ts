@@ -1,9 +1,7 @@
-import { HttpRequest, HttpResponse } from '../protocols';
-import { InvalidParamError, MissingParamError } from '../erros';
-import { badRequest, serverError } from '../helpers';
-import { Controller } from '../protocols/controller';
-import { EmailValidator } from '../protocols/email-validator';
-import { AddUser } from '../../domain/usecase/add-user';
+import { HttpRequest, HttpResponse, EmailValidator, AddUser } from './signup-protocols';
+import { InvalidParamError, MissingParamError } from '../../erros';
+import { badRequest, serverError } from '../../helpers';
+import { Controller } from '../../protocols/controller';
 
 class SignUpController implements Controller {
   constructor(
@@ -14,6 +12,10 @@ class SignUpController implements Controller {
   handle(httpRequest: HttpRequest): HttpResponse {
     try {
       const { name, id_guild, email, id_discord } = httpRequest.body;
+
+
+
+      
 
       if (!name) {
         return badRequest(new MissingParamError('name'));
