@@ -44,6 +44,10 @@ class SignUpController implements Controller {
           return badRequest(new InvalidParamError('password_confirmation'));
         }
       }
+      //trocar depois hehehe
+      const urlAvatar =
+        httpRequest.body.avatar ||
+        'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png';
 
       const user = await this.addUser.add({
         name,
@@ -51,7 +55,7 @@ class SignUpController implements Controller {
         id_discord,
         email,
         password: httpRequest.body.password,
-        avatar: httpRequest.body.avatar
+        avatar: urlAvatar
       });
 
       return ok(user);
