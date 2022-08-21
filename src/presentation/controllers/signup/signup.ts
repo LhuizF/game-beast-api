@@ -1,6 +1,6 @@
 import { HttpRequest, HttpResponse, EmailValidator, AddUser } from './signup-protocols';
 import { InvalidParamError, MissingParamError } from '../../erros';
-import { badRequest, serverError } from '../../helpers';
+import { badRequest, serverError, ok } from '../../helpers';
 import { Controller } from '../../protocols/controller';
 
 class SignUpController implements Controller {
@@ -9,7 +9,7 @@ class SignUpController implements Controller {
     private readonly addUser: AddUser
   ) {}
 
-  handle(httpRequest: HttpRequest): HttpResponse {
+  async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
       const { name, id_guild, email, id_discord } = httpRequest.body;
 
@@ -45,7 +45,7 @@ class SignUpController implements Controller {
         }
       }
 
-      const user = this.addUser.add({
+      const user = await this.addUser.add({
         name,
         id_guild,
         id_discord,
@@ -54,10 +54,7 @@ class SignUpController implements Controller {
         avatar: httpRequest.body.avatar
       });
 
-      return {
-        statusCode: 200,
-        body: 'success'
-      };
+      return ok(user);
     } catch (error) {
       return serverError();
     }
