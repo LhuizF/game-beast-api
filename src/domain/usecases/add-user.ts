@@ -1,19 +1,18 @@
 import { UserModel } from '../models/user';
 
-export type AddUserModel = UserDiscordModel | UserEmailModel;
-
-export interface UserDiscordModel {
+export interface AddUserModel extends UserDiscordModel, UserEmailModel {
   name: string;
-  id_guild: string;
-  id_discord: string;
   avatar?: string;
 }
 
+export interface UserDiscordModel {
+  id_guild?: string;
+  id_discord?: string;
+}
+
 export interface UserEmailModel {
-  name: string;
-  email: string;
-  password: string;
-  avatar?: string;
+  email?: string;
+  password?: string;
 }
 
 export interface AddUser {
