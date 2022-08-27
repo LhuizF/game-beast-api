@@ -6,5 +6,5 @@ export interface UserModel {
   email?: string;
   password?: string;
   avatar?: string;
-  created_at: string;
+  created_at: Date;
 }
