@@ -13,9 +13,9 @@ datasource db {
 model User {
   id         String   @id @default(uuid())
   name       String
-  id_guild   String?
+  id_guild   String?  @unique
   id_discord String?
-  email      String?
+  email      String?  @unique
   password   String?
   avatar     String?
   created_at DateTime @default(now())
