@@ -23,8 +23,8 @@ const makeSut = (): SutTypes => {
       const fakeUser = {
         id: 'any_id',
         name: 'any_name',
-        id_guild: 'any_id_guild',
-        id_discord: 'any_id_discord',
+        id_guild: 123,
+        id_discord: 312,
         email: 'any_email',
         password: 'hashed_password',
         avatar: 'any_avatar',
@@ -105,8 +105,8 @@ describe('AddUser Usecase', () => {
 
     const fakeUser = {
       name: 'any_name',
-      id_guild: 'any_id_guild',
-      id_discord: 'any_id_discord',
+      id_guild: 123,
+      id_discord: 312,
       avatar: 'any_avatar'
     };
 
@@ -114,8 +114,8 @@ describe('AddUser Usecase', () => {
 
     expect(saveSpy).toHaveBeenCalledWith({
       name: 'any_name',
-      id_guild: 'any_id_guild',
-      id_discord: 'any_id_discord',
+      id_guild: 123,
+      id_discord: 312,
       avatar: 'any_avatar'
     });
   });
@@ -126,8 +126,8 @@ describe('AddUser Usecase', () => {
 
     const fakeUser = {
       name: 'any_name',
-      id_guild: 'any_id_guild',
-      id_discord: 'any_id_discord',
+      id_guild: 123,
+      id_discord: 312,
       avatar: 'any_avatar'
     };
 
@@ -144,8 +144,8 @@ describe('AddUser Usecase', () => {
 
     const fakeUser = {
       name: 'any_name',
-      email: 'any_email',
-      password: 'any_password',
+      id_guild: 123,
+      id_discord: 312,
       avatar: 'any_avatar'
     };
 
@@ -169,8 +169,8 @@ describe('AddUser Usecase', () => {
     expect(user).toEqual({
       id: 'any_id',
       name: 'any_name',
-      id_guild: 'any_id_guild',
-      id_discord: 'any_id_discord',
+      id_guild: 123,
+      id_discord: 312,
       email: 'any_email',
       password: 'hashed_password',
       avatar: 'any_avatar',

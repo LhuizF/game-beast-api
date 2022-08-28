@@ -31,8 +31,8 @@ const makeSut = (): SutTypes => {
       const fakeUser = {
         id: 'valid_id',
         name: 'valid_name',
-        id_guild: 'valid_id_guild',
-        id_discord: 'valid_id_discord',
+        id_guild: 123,
+        id_discord: 312,
         avatar: 'valid_avatar',
         email: 'valid_email',
         password: 'valid_password',
@@ -57,8 +57,8 @@ describe('SignUp Controller', () => {
     const { sut } = makeSut();
     const httpRequest = {
       body: {
-        id_guild: 'any_id_guild',
-        id_discord: 'any_id_discord'
+        id_guild: 123,
+        id_discord: 312
       }
     };
     const httpResponse = await sut.handle(httpRequest);
@@ -85,7 +85,7 @@ describe('SignUp Controller', () => {
     const httpRequest = {
       body: {
         name: 'any_name',
-        id_guild: 'any_id_guild'
+        id_guild: 123
       }
     };
     const httpResponse = await sut.handle(httpRequest);
@@ -200,8 +200,8 @@ describe('SignUp Controller', () => {
     const httpRequest = {
       body: {
         name: 'any_name',
-        id_guild: 'any_id_guild',
-        id_discord: 'any_id_discord',
+        id_guild: 123,
+        id_discord: 312,
         avatar: 'any_url_avatar'
       }
     };
@@ -210,8 +210,8 @@ describe('SignUp Controller', () => {
     expect(addSpy).toHaveBeenCalledWith(
       expect.objectContaining({
         name: 'any_name',
-        id_guild: 'any_id_guild',
-        id_discord: 'any_id_discord',
+        id_guild: 123,
+        id_discord: 312,
         avatar: 'any_url_avatar'
       })
     );
@@ -267,8 +267,8 @@ describe('SignUp Controller', () => {
     const httpRequest = {
       body: {
         name: 'any_name',
-        id_guild: 'any_id_guild',
-        id_discord: 'any_id_discord',
+        id_guild: 123,
+        id_discord: 312,
         avatar: 'any_url_avatar'
       }
     };
@@ -278,8 +278,8 @@ describe('SignUp Controller', () => {
     expect(httpResponse.body).toEqual({
       id: 'valid_id',
       name: 'valid_name',
-      id_guild: 'valid_id_guild',
-      id_discord: 'valid_id_discord',
+      id_guild: 123,
+      id_discord: 312,
       email: 'valid_email',
       password: 'valid_password',
       avatar: 'valid_avatar',
@@ -304,8 +304,8 @@ describe('SignUp Controller', () => {
     expect(httpResponse.body).toEqual({
       id: 'valid_id',
       name: 'valid_name',
-      id_guild: 'valid_id_guild',
-      id_discord: 'valid_id_discord',
+      id_guild: 123,
+      id_discord: 312,
       email: 'valid_email',
       password: 'valid_password',
       avatar: 'valid_avatar',

@@ -2,12 +2,12 @@ import { UserModel } from '../models/user';
 
 export interface AddUserModel extends UserDiscordModel, UserEmailModel {
   name: string;
-  avatar?: string;
+  avatar: string;
 }
 
 export interface UserDiscordModel {
-  id_guild?: string;
-  id_discord?: string;
+  id_guild?: number;
+  id_discord?: number;
 }
 
 export interface UserEmailModel {
