@@ -17,6 +17,8 @@ interface SutTypes {
   addUserStub: AddUser;
 }
 
+jest.useFakeTimers().setSystemTime(new Date());
+
 const makeSut = (): SutTypes => {
   class EmailValidatorStub implements EmailValidator {
     isValid(email: string): boolean {
@@ -34,7 +36,7 @@ const makeSut = (): SutTypes => {
         avatar: 'valid_avatar',
         email: 'valid_email',
         password: 'valid_password',
-        created_at: 'valid_date'
+        created_at: new Date()
       };
 
       return new Promise((resolve) => resolve(fakeUser));
@@ -281,7 +283,7 @@ describe('SignUp Controller', () => {
       email: 'valid_email',
       password: 'valid_password',
       avatar: 'valid_avatar',
-      created_at: 'valid_date'
+      created_at: new Date()
     });
   });
 
@@ -307,7 +309,7 @@ describe('SignUp Controller', () => {
       email: 'valid_email',
       password: 'valid_password',
       avatar: 'valid_avatar',
-      created_at: 'valid_date'
+      created_at: new Date()
     });
   });
 });

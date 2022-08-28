@@ -9,6 +9,8 @@ interface SutTypes {
   saveUserRepositoryStub: SaveUserRepository;
 }
 
+jest.useFakeTimers().setSystemTime(new Date());
+
 const makeSut = (): SutTypes => {
   class EncrypterStub implements Encrypter {
     async encrypt(value: string): Promise<string> {
@@ -26,7 +28,7 @@ const makeSut = (): SutTypes => {
         email: 'any_email',
         password: 'hashed_password',
         avatar: 'any_avatar',
-        created_at: 'any_date'
+        created_at: new Date()
       };
       return new Promise((resolve) => resolve(fakeUser));
     }
@@ -172,7 +174,7 @@ describe('AddUser Usecase', () => {
       email: 'any_email',
       password: 'hashed_password',
       avatar: 'any_avatar',
-      created_at: 'any_date'
+      created_at: new Date(Date.now())
     });
   });
 });
