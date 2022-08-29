@@ -1,8 +1,10 @@
 import express from 'express';
-import useMiddleware from './middleware';
+import middleware from './middleware';
+import routes from './routes';
 
 const app = express();
 
-useMiddleware(app);
+middleware(app);
+routes(app);
 
 export default app;
