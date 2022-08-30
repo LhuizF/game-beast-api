@@ -1,0 +1,12 @@
+import { AddGuild, AddGuildModel } from '../../domain/usecases/add-guild';
+import { GuildModel } from '../../domain/models/guild';
+import { CreateGuildRepository } from '../protocols';
+
+export class AddGuildDb implements AddGuild {
+  constructor(private readonly createGuildRepository: CreateGuildRepository) {}
+
+  async add(guildDate: AddGuildModel): Promise<GuildModel> {
+    const user = await this.createGuildRepository.save(guildDate);
+    return user;
+  }
+}
