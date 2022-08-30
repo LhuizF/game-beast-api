@@ -21,5 +21,19 @@ model User {
   avatar     String
   created_at DateTime @default(now())
 
+  Guild Guild? @relation(fields: [id_guild], references: [id])
+
   @@map("user")
+}
+
+model Guild {
+  id         Int      @id @unique
+  name       String
+  icon       String
+  channel    Int
+  created_at DateTime @default(now())
+
+  users User[]
+
+  @@map("guild")
 }
