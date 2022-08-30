@@ -27,6 +27,7 @@ describe('SaveUserPrismaRepository prisma', () => {
       id_discord: null,
       email: 'any_email',
       password: 'any_password',
+      points: 100,
       avatar: 'any_url',
       created_at: new Date()
     };
@@ -62,6 +63,7 @@ describe('SaveUserPrismaRepository prisma', () => {
       id_discord: 312,
       email: null,
       password: null,
+      points: 100,
       avatar: 'any_url',
       created_at: new Date()
     };
@@ -82,6 +84,7 @@ describe('SaveUserPrismaRepository prisma', () => {
         id_guild: 123,
         id_discord: 312,
         avatar: 'any_url',
+        points: 100,
         created_at: new Date(Date.now())
       })
     );
