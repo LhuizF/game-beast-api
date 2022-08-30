@@ -1,6 +1,6 @@
 import SignUpController from '../../presentation/controllers/signup/signup';
 import { EmailValidatorAdapter } from '../../utils/email-validator';
-import { AddUserDb } from '../../data/usecases/AddUserDb';
+import { AddUserDb } from '../../data/usecases/addUserDb';
 import { BcryptAdapter } from '../../infra/cryptography/bcrypt-adapter';
 import { SaveUserPrismaRepository, prisma } from '../../infra/db/prisma';
 
