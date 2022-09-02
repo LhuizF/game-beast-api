@@ -28,7 +28,7 @@ class CreateGuildController implements Controller {
       });
       return ok(guild);
     } catch (error) {
-      return serverError();
+      return serverError(error);
     }
   }
 }
