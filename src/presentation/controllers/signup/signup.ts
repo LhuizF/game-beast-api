@@ -60,7 +60,7 @@ class SignUpController implements Controller {
 
       return ok(user);
     } catch (error) {
-      return serverError();
+      return serverError(error);
     }
   }
 }
