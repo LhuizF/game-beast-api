@@ -37,3 +37,11 @@ model Guild {
 
   @@map("guild")
 }
+
+model LogError {
+  id         Int      @id @default(autoincrement())
+  stack      String
+  created_at DateTime @default(now())
+
+  @@map("log_erro")
+}
