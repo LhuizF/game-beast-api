@@ -16,7 +16,7 @@ const makeSut = () => {
   };
 };
 
-describe('CreateGuildPrismaRepository prisma', () => {
+describe('CreateGuildPrismaRepository', () => {
   test('Save guild db', async () => {
     const { sut, prismaMock } = makeSut();
 
