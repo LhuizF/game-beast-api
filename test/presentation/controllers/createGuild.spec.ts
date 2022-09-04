@@ -1,7 +1,12 @@
 import CreateGuildController from '../../../src/presentation/controllers/guild/createGuild';
-import { MissingParamError, ServerError } from '../../../src/presentation/erros';
+import {
+  InvalidParamError,
+  MissingParamError,
+  ServerError
+} from '../../../src/presentation/erros';
 import { AddGuild, AddGuildModel } from '../../../src/domain/usecases/add-guild';
 import { GuildModel } from '../../../src/domain/models/guild';
+import { badRequest } from '../../../src/presentation/helpers';
 
 interface SutTypes {
   sut: CreateGuildController;
@@ -137,5 +142,35 @@ describe('CreateGuild Controller', () => {
       icon: 'valid_icon',
       created_at: new Date()
     });
+  });
+
+  test('should return 400 if id not number', async () => {
+    const { sut } = makeSut();
+    const httpRequest = {
+      body: {
+        id: 'any',
+        channel: 123,
+        name: 'any_name',
+        icon: 'any_icon'
+      }
+    };
+    const httpResponse = await sut.handle(httpRequest);
+
+    expect(httpResponse).toEqual(badRequest(new InvalidParamError('id')));
+  });
+
+  test('should return 400 if channel not number', async () => {
+    const { sut } = makeSut();
+    const httpRequest = {
+      body: {
+        id: 1,
+        channel: '123',
+        name: 'any_name',
+        icon: 'any_icon'
+      }
+    };
+    const httpResponse = await sut.handle(httpRequest);
+
+    expect(httpResponse).toEqual(badRequest(new InvalidParamError('channel')));
   });
 });

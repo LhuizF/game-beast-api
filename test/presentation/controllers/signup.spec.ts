@@ -10,6 +10,7 @@ import {
   AddUserModel,
   UserModel
 } from '../../../src/presentation/controllers/signup/signup-protocols';
+import { badRequest } from '../../../src/presentation/helpers';
 
 interface SutTypes {
   sut: SignUpController;
@@ -311,5 +312,33 @@ describe('SignUp Controller', () => {
       avatar: 'valid_avatar',
       created_at: new Date()
     });
+  });
+
+  test('should return 400 if id_guild not number', async () => {
+    const { sut } = makeSut();
+    const httpRequest = {
+      body: {
+        name: 'any_name',
+        id_guild: '123',
+        id_discord: 312
+      }
+    };
+    const httpResponse = await sut.handle(httpRequest);
+
+    expect(httpResponse).toEqual(badRequest(new InvalidParamError('id_guild')));
+  });
+
+  test('should return 400 if id_discord not number', async () => {
+    const { sut } = makeSut();
+    const httpRequest = {
+      body: {
+        name: 'any_name',
+        id_guild: 123,
+        id_discord: '312'
+      }
+    };
+    const httpResponse = await sut.handle(httpRequest);
+
+    expect(httpResponse).toEqual(badRequest(new InvalidParamError('id_discord')));
   });
 });
