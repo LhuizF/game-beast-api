@@ -5,6 +5,7 @@ import { BcryptAdapter } from '../../infra/cryptography/bcrypt-adapter';
 import { SaveUserPrismaRepository, prisma } from '../../infra/db/prisma';
 import { Controller } from '../../presentation/protocols';
 import { LogControllerDecorator } from '../Decorator/logsError';
+import { LogErrorPrismaRepository } from '../../infra/db/prisma/logError';
 
 export const makeSignUpController = (): Controller => {
   const emailValidatorAdapter = new EmailValidatorAdapter();
@@ -12,5 +13,6 @@ export const makeSignUpController = (): Controller => {
   const saveUserPrismaRepository = new SaveUserPrismaRepository(prisma);
   const addUser = new AddUserDb(bcryptAdapter, saveUserPrismaRepository);
   const signUpController = new SignUpController(emailValidatorAdapter, addUser);
-  return new LogControllerDecorator(signUpController);
+  const logErrorPrismaRepository = new LogErrorPrismaRepository(prisma);
+  return new LogControllerDecorator(signUpController, logErrorPrismaRepository);
 };
