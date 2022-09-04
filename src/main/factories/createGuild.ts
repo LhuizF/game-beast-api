@@ -2,7 +2,7 @@ import CreateGuildController from '../../presentation/controllers/guild/createGu
 import { AddGuildDb } from '../../data/usecases/addGuildDb';
 import { CreateGuildPrismaRepository, prisma } from '../../infra/db/prisma';
 import { Controller } from '../../presentation/protocols';
-import { LogControllerDecorator } from '../Decorator/logsError';
+import { LogControllerDecorator } from '../decorator/logsError';
 import { LogErrorPrismaRepository } from '../../infra/db/prisma/logError';
 
 export const makeCreateGuildController = (): Controller => {

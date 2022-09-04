@@ -4,7 +4,7 @@ import { AddUserDb } from '../../data/usecases/addUserDb';
 import { BcryptAdapter } from '../../infra/cryptography/bcrypt-adapter';
 import { SaveUserPrismaRepository, prisma } from '../../infra/db/prisma';
 import { Controller } from '../../presentation/protocols';
-import { LogControllerDecorator } from '../Decorator/logsError';
+import { LogControllerDecorator } from '../decorator/logsError';
 import { LogErrorPrismaRepository } from '../../infra/db/prisma/logError';
 
 export const makeSignUpController = (): Controller => {
