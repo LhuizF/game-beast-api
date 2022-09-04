@@ -21,8 +21,15 @@ class SignUpController implements Controller {
         return badRequest(new MissingParamError('id_guild or email'));
       }
 
-      if (id_guild && !id_discord) {
-        return badRequest(new MissingParamError('id_discord'));
+      if (id_guild) {
+        if (!id_discord) {
+          return badRequest(new MissingParamError('id_discord'));
+        }
+        const numberFields = ['id_guild', 'id_discord'];
+        for (const field of numberFields) {
+          if (typeof httpRequest.body[field] !== 'number')
+            return badRequest(new InvalidParamError(field));
+        }
       }
 
       if (email) {
