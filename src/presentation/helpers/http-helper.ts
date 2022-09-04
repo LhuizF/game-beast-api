@@ -8,7 +8,7 @@ export const badRequest = (error: Error): HttpResponse => ({
 
 export const serverError = (error: any): HttpResponse => ({
   statusCode: 500,
-  body: new ServerError(error?.stack || 'no stack')
+  body: new ServerError(error)
 });
 
 export const ok = (data: any): HttpResponse => ({

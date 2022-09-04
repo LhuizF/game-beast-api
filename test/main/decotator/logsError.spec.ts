@@ -1,5 +1,5 @@
 import { LogErrorRepository } from '../../../src/data/protocols/logErrorRepository';
-import { LogControllerDecorator } from '../../../src/main/Decorator/logsError';
+import { LogControllerDecorator } from '../../../src/main/decorator/logsError';
 import { serverError } from '../../../src/presentation/helpers';
 import {
   Controller,
@@ -83,7 +83,6 @@ describe('LogControllerDecorator', () => {
     const { sut, controllerStub, logErrorRepositoryStub } = makeSut();
 
     const fakeError = new Error();
-    fakeError.stack = 'any_error';
     const logSpy = jest.spyOn(logErrorRepositoryStub, 'logError');
     jest
       .spyOn(controllerStub, 'handle')
@@ -97,8 +96,8 @@ describe('LogControllerDecorator', () => {
       }
     };
 
-    const response = await sut.handle(request);
+    await sut.handle(request);
 
-    expect(logSpy).toHaveBeenCalledWith('any_error');
+    expect(logSpy).toHaveBeenCalledWith('{}');
   });
 });

@@ -11,7 +11,9 @@ export class LogControllerDecorator implements Controller {
     const httpResponse = await this.controller.handle(httpRequest);
 
     if (httpResponse.statusCode === 500) {
-      await this.logErrorRepository.logError(httpResponse.body.stack);
+      const { error } = httpResponse.body;
+
+      await this.logErrorRepository.logError(error);
     }
 
     return httpResponse;

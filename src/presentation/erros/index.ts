@@ -13,9 +13,10 @@ export class MissingParamError extends Error {
 }
 
 export class ServerError extends Error {
-  constructor(stack: string) {
+  private readonly error: string;
+  constructor(error: any) {
     super('Internal server error');
     this.name = 'ServerError';
-    this.stack = stack;
+    this.error = JSON.stringify(error);
   }
 }
