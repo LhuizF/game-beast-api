@@ -19,8 +19,9 @@ const makeSut = () => {
 
 describe('LogErrorPrismaRepository', () => {
   test('Save log db', async () => {
-    const { sut, prismaMock } = makeSut();
+    const { sut } = makeSut();
 
+    await prisma.logError.deleteMany();
     await sut.logError('any_error');
 
     const count = await prisma.logError.count();
