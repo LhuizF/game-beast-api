@@ -2,10 +2,10 @@ export interface Bet {
   id: number;
   points: number;
   game_time: number;
-  status: StatusBet;
+  status: string;
   platform: string;
   id_beast: number;
-  id_user: number;
+  id_user: string;
   created_at: Date;
 }
 

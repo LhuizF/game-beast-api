@@ -1,7 +1,7 @@
 import { Bet } from '../../domain/models/bet';
 
 export interface BetModel {
-  id_user: number;
+  id_user: string;
   id_beast: number;
   points: number;
   platform: string;
