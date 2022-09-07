@@ -1,7 +1,7 @@
 import { Bet } from '../models/Bet';
 
 export interface PlayBetModel {
-  id_user: number;
+  id_user: string;
   id_beast: number;
   points: number;
   platform: string;
