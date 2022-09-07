@@ -37,6 +37,12 @@ const makeSut = (): SutTypes => {
   }
 
   class HelperDbStub implements HelperDb {
+    async verifyUser(id: number): Promise<void> {
+      await new Promise((resolve) => resolve(null));
+    }
+    async verifyBeast(id: number): Promise<void> {
+      await new Promise((resolve) => resolve(null));
+    }
     async verifyGuild(id: number): Promise<void> {
       await new Promise((resolve) => resolve(null));
     }
