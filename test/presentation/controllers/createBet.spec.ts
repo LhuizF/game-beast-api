@@ -17,7 +17,7 @@ const makeSut = (): SutTypes => {
       return new Promise((resolve) =>
         resolve({
           id: 1,
-          id_user: 123,
+          id_user: 'any_id',
           id_beast: 1,
           game_time: 1,
           status: 'pending',
@@ -125,7 +125,7 @@ describe('CreateBet Controller', () => {
     expect(bet).toEqual(
       ok({
         id: 1,
-        id_user: 123,
+        id_user: 'any_id',
         id_beast: 1,
         game_time: 1,
         status: 'pending',

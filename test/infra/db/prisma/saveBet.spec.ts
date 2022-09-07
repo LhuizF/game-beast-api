@@ -1,7 +1,7 @@
-import { SaveBetPrismaRepository } from '../../../../src/infra/db/prisma/SaveBet';
+import { SaveBetPrismaRepository } from '../../../../src/infra/db/prisma/saveBet';
 import { mockDeep, DeepMockProxy } from 'jest-mock-extended';
 import { Bet, PrismaClient } from '@prisma/client';
-import { BetModel } from '../../../../src/data/protocols/SaveBetRepository';
+import { BetModel } from '../../../../src/data/protocols/saveBetRepository';
 
 jest.useFakeTimers().setSystemTime(new Date());
 

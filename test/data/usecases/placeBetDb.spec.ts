@@ -1,14 +1,17 @@
 import { PlaceBetDb } from '../../../src/data/usecases/placeBetDb';
 import { HelperDb } from '../../../src/data/protocols/helperDb';
-import { SaveBetRepository } from '../../../src/data/protocols/SaveBetRepository';
+import { SaveBetRepository } from '../../../src/data/protocols/saveBetRepository';
 import { Bet } from '../../../src/domain/models/Bet';
 import { PlayBetModel } from '../../../src/domain/usecases/place-bet';
 import { GameTime } from '../../../src/presentation/protocols/game-time';
+import { UserModel } from '../../../src/domain/models/user';
+import { UpdatePoints } from '../../../src/data/protocols/updatePoints';
 
 interface SutTypes {
   sut: PlaceBetDb;
   saveBetRepositoryStub: SaveBetRepository;
   helperDbStub: HelperDb;
+  updatePointsStub: UpdatePoints;
 }
 
 jest.useFakeTimers().setSystemTime(new Date());
@@ -32,8 +35,20 @@ const makeSut = (): SutTypes => {
   }
 
   class HelperDbStub implements HelperDb {
-    async verifyUser(id: string): Promise<void> {
-      await new Promise((resolve) => resolve(null));
+    async verifyUser(id: string): Promise<UserModel> {
+      return await new Promise((resolve) =>
+        resolve({
+          id: 'any_id',
+          name: 'any_name',
+          points: 100,
+          id_guild: 123,
+          id_discord: 312,
+          email: 'any_email',
+          password: 'hashed_password',
+          avatar: 'any_avatar',
+          created_at: new Date()
+        })
+      );
     }
     async verifyBeast(id: number): Promise<void> {
       await new Promise((resolve) => resolve(null));
@@ -49,15 +64,29 @@ const makeSut = (): SutTypes => {
     }
   }
 
+  class UpdatePointsStub implements UpdatePoints {
+    async discount(userID: string, points: number): Promise<void> {
+      await new Promise((resolve) => resolve(null));
+    }
+  }
+
   const gameTimeAdapterStub = new GameTimeAdapterStub();
   const helperDbStub = new HelperDbStub();
   const saveBetRepositoryStub = new SaveBetRepositoryStub();
-  const sut = new PlaceBetDb(saveBetRepositoryStub, helperDbStub, gameTimeAdapterStub);
+  const updatePointsStub = new UpdatePointsStub();
+
+  const sut = new PlaceBetDb(
+    saveBetRepositoryStub,
+    helperDbStub,
+    gameTimeAdapterStub,
+    updatePointsStub
+  );
 
   return {
     sut,
     saveBetRepositoryStub,
-    helperDbStub
+    helperDbStub,
+    updatePointsStub
   };
 };
 
@@ -113,5 +142,26 @@ describe('PlaceBetDb Usecase', () => {
       id_user: 'any_id',
       created_at: new Date()
     });
+  });
+
+  test('should call updatePoint with correct values', async () => {
+    const { sut, updatePointsStub } = makeSut();
+    const discountStub = jest.spyOn(updatePointsStub, 'discount');
+
+    await sut.play(makeBet());
+
+    expect(discountStub).toHaveBeenCalledWith('any_id', 10);
+  });
+
+  test('should not call updatePoint if saveBetRepository throw', async () => {
+    const { sut, updatePointsStub, saveBetRepositoryStub } = makeSut();
+    const discountStub = jest.spyOn(updatePointsStub, 'discount');
+    jest
+      .spyOn(saveBetRepositoryStub, 'save')
+      .mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())));
+
+    const promise = sut.play(makeBet());
+
+    await expect(promise).rejects.toThrow();
   });
 });

@@ -32,6 +32,7 @@ const makeSut = (): SutTypes => {
       const fakeUser = {
         id: 'valid_id',
         name: 'valid_name',
+        points: 100,
         id_guild: 123,
         id_discord: 312,
         avatar: 'valid_avatar',
@@ -279,6 +280,7 @@ describe('SignUp Controller', () => {
     expect(httpResponse.body).toEqual({
       id: 'valid_id',
       name: 'valid_name',
+      points: 100,
       id_guild: 123,
       id_discord: 312,
       email: 'valid_email',
@@ -305,6 +307,7 @@ describe('SignUp Controller', () => {
     expect(httpResponse.body).toEqual({
       id: 'valid_id',
       name: 'valid_name',
+      points: 100,
       id_guild: 123,
       id_discord: 312,
       email: 'valid_email',
