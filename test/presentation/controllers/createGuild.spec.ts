@@ -144,6 +144,27 @@ describe('CreateGuild Controller', () => {
     });
   });
 
+  test('should return 200 if valid data is provided without icon', async () => {
+    const { sut } = makeSut();
+    const httpRequest = {
+      body: {
+        id: 1,
+        channel: 123,
+        name: 'any_name'
+      }
+    };
+    const httpResponse = await sut.handle(httpRequest);
+
+    expect(httpResponse.statusCode).toBe(200);
+    expect(httpResponse.body).toEqual({
+      id: 1,
+      channel: 123,
+      name: 'valid_name',
+      icon: 'valid_icon',
+      created_at: new Date()
+    });
+  });
+
   test('should return 400 if id not number', async () => {
     const { sut } = makeSut();
     const httpRequest = {
