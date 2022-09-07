@@ -1,10 +1,11 @@
+import { HelperDb } from '../../../data/protocols/helperDb';
 import { PlaceBet } from '../../../domain/usecases/place-bet';
-import { MissingParamError } from '../../erros';
+import { InvalidParamError, MissingParamError } from '../../erros';
 import { badRequest, ok, serverError } from '../../helpers';
 import { Controller, HttpRequest, HttpResponse } from '../../protocols';
 
 class CreateBetController implements Controller {
-  constructor(private readonly placeBet: PlaceBet) {}
+  constructor(private readonly placeBet: PlaceBet, private readonly helperDb: HelperDb) {}
 
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
@@ -17,6 +18,13 @@ class CreateBetController implements Controller {
       }
 
       const { id_user, id_beast, points, platform } = httpRequest.body;
+
+      await this.helperDb.verifyBeast(id_beast);
+      const user = await this.helperDb.verifyUser(id_user);
+
+      if (user.points < points) {
+        return badRequest(new InvalidParamError('insufficient points'));
+      }
 
       const bet = await this.placeBet.play({ id_user, id_beast, points, platform });
 

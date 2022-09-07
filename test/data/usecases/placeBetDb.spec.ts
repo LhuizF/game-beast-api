@@ -1,16 +1,13 @@
 import { PlaceBetDb } from '../../../src/data/usecases/placeBetDb';
-import { HelperDb } from '../../../src/data/protocols/helperDb';
 import { SaveBetRepository } from '../../../src/data/protocols/saveBetRepository';
 import { Bet } from '../../../src/domain/models/Bet';
 import { PlayBetModel } from '../../../src/domain/usecases/place-bet';
 import { GameTime } from '../../../src/presentation/protocols/game-time';
-import { UserModel } from '../../../src/domain/models/user';
 import { UpdatePoints } from '../../../src/data/protocols/updatePoints';
 
 interface SutTypes {
   sut: PlaceBetDb;
   saveBetRepositoryStub: SaveBetRepository;
-  helperDbStub: HelperDb;
   updatePointsStub: UpdatePoints;
 }
 
@@ -34,30 +31,6 @@ const makeSut = (): SutTypes => {
     }
   }
 
-  class HelperDbStub implements HelperDb {
-    async verifyUser(id: string): Promise<UserModel> {
-      return await new Promise((resolve) =>
-        resolve({
-          id: 'any_id',
-          name: 'any_name',
-          points: 100,
-          id_guild: 123,
-          id_discord: 312,
-          email: 'any_email',
-          password: 'hashed_password',
-          avatar: 'any_avatar',
-          created_at: new Date()
-        })
-      );
-    }
-    async verifyBeast(id: number): Promise<void> {
-      await new Promise((resolve) => resolve(null));
-    }
-    async verifyGuild(id: number): Promise<void> {
-      await new Promise((resolve) => resolve(null));
-    }
-  }
-
   class GameTimeAdapterStub implements GameTime {
     get(): number {
       return 1;
@@ -71,13 +44,11 @@ const makeSut = (): SutTypes => {
   }
 
   const gameTimeAdapterStub = new GameTimeAdapterStub();
-  const helperDbStub = new HelperDbStub();
   const saveBetRepositoryStub = new SaveBetRepositoryStub();
   const updatePointsStub = new UpdatePointsStub();
 
   const sut = new PlaceBetDb(
     saveBetRepositoryStub,
-    helperDbStub,
     gameTimeAdapterStub,
     updatePointsStub
   );
@@ -85,7 +56,6 @@ const makeSut = (): SutTypes => {
   return {
     sut,
     saveBetRepositoryStub,
-    helperDbStub,
     updatePointsStub
   };
 };
@@ -98,22 +68,6 @@ const makeBet = () => ({
 });
 
 describe('PlaceBetDb Usecase', () => {
-  test('should call verifyUser with correct id_user', async () => {
-    const { sut, helperDbStub } = makeSut();
-    const verifyUserStub = jest.spyOn(helperDbStub, 'verifyUser');
-    await sut.play(makeBet());
-
-    expect(verifyUserStub).toHaveBeenCalledWith('any_id');
-  });
-
-  test('should call verifyBeast with correct id_user', async () => {
-    const { sut, helperDbStub } = makeSut();
-    const verifyBeastStub = jest.spyOn(helperDbStub, 'verifyBeast');
-    await sut.play(makeBet());
-
-    expect(verifyBeastStub).toHaveBeenCalledWith(1);
-  });
-
   test('should call SaveBetRepository with correct values', async () => {
     const { sut, saveBetRepositoryStub } = makeSut();
     const saveStub = jest.spyOn(saveBetRepositoryStub, 'save');

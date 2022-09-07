@@ -1,15 +1,22 @@
 import CreateBetController from '../../../src/presentation/controllers/bet/createBet';
-import { MissingParamError, ServerError } from '../../../src/presentation/erros';
+import {
+  InvalidParamError,
+  MissingParamError,
+  ServerError
+} from '../../../src/presentation/erros';
 import { badRequest, ok } from '../../../src/presentation/helpers';
 import { PlayBetModel, PlaceBet } from '../../../src/domain/usecases/place-bet';
 import { Bet } from '../../../src/domain/models/Bet';
+import { UserModel } from '../../../src/domain/models/user';
+import { HelperDb } from '../../../src/data/protocols/helperDb';
+
+jest.useFakeTimers().setSystemTime(new Date());
 
 interface SutTypes {
   sut: CreateBetController;
   placeBetStub: PlaceBet;
+  helperDbStub: HelperDb;
 }
-
-jest.useFakeTimers().setSystemTime(new Date());
 
 const makeSut = (): SutTypes => {
   class PlaceBetStub implements PlaceBet {
@@ -29,15 +36,40 @@ const makeSut = (): SutTypes => {
     }
   }
 
+  class HelperDbStub implements HelperDb {
+    async verifyUser(id: string): Promise<UserModel> {
+      return await new Promise((resolve) =>
+        resolve({
+          id: 'any_id',
+          name: 'any_name',
+          points: 100,
+          id_guild: 123,
+          id_discord: 312,
+          email: 'any_email',
+          password: 'hashed_password',
+          avatar: 'any_avatar',
+          created_at: new Date()
+        })
+      );
+    }
+    async verifyBeast(id: number): Promise<void> {
+      await new Promise((resolve) => resolve(null));
+    }
+    async verifyGuild(id: number): Promise<void> {
+      await new Promise((resolve) => resolve(null));
+    }
+  }
+
+  const helperDbStub = new HelperDbStub();
   const placeBetStub = new PlaceBetStub();
-  const sut = new CreateBetController(placeBetStub);
-  return { sut, placeBetStub };
+  const sut = new CreateBetController(placeBetStub, helperDbStub);
+  return { sut, placeBetStub, helperDbStub };
 };
 
 const makeBet = () => {
   return {
     body: {
-      id_user: 1,
+      id_user: 'any_id',
       id_beast: 1,
       points: 10,
       platform: 'any_platform'
@@ -64,7 +96,7 @@ describe('CreateBet Controller', () => {
     const { sut } = makeSut();
     const httpRequest = {
       body: {
-        id_user: 1,
+        id_user: 'any_id',
         points: 10,
         platform: 'any_platform'
       }
@@ -78,7 +110,7 @@ describe('CreateBet Controller', () => {
     const { sut } = makeSut();
     const httpRequest = {
       body: {
-        id_user: 1,
+        id_user: 'any_id',
         id_beast: 1,
         points: 0,
         platform: 'any_platform'
@@ -93,7 +125,7 @@ describe('CreateBet Controller', () => {
     const { sut } = makeSut();
     const httpRequest = {
       body: {
-        id_user: 1,
+        id_user: 'any_id',
         id_beast: 1,
         points: 10
       }
@@ -110,7 +142,7 @@ describe('CreateBet Controller', () => {
     await sut.handle(makeBet());
 
     expect(play).toHaveBeenCalledWith({
-      id_user: 1,
+      id_user: 'any_id',
       id_beast: 1,
       points: 10,
       platform: 'any_platform'
@@ -145,5 +177,44 @@ describe('CreateBet Controller', () => {
     const httpResponse = await sut.handle(makeBet());
     expect(httpResponse.statusCode).toBe(500);
     expect(httpResponse.body).toEqual(new ServerError('null'));
+  });
+
+  test('should call verifyUser with correct id_user', async () => {
+    const { sut, helperDbStub } = makeSut();
+    const verifyUserStub = jest.spyOn(helperDbStub, 'verifyUser');
+    await sut.handle(makeBet());
+
+    expect(verifyUserStub).toHaveBeenCalledWith('any_id');
+  });
+
+  test('should call verifyBeast with correct id_user', async () => {
+    const { sut, helperDbStub } = makeSut();
+    const verifyBeastStub = jest.spyOn(helperDbStub, 'verifyBeast');
+    await sut.handle(makeBet());
+
+    expect(verifyBeastStub).toHaveBeenCalledWith(1);
+  });
+
+  test('should return 400 if points is insufficient', async () => {
+    const { sut, helperDbStub } = makeSut();
+    jest.spyOn(helperDbStub, 'verifyUser').mockReturnValueOnce(
+      new Promise((resolve) =>
+        resolve({
+          id: 'any_id',
+          name: 'any_name',
+          points: 9,
+          id_guild: 123,
+          id_discord: 312,
+          email: 'any_email',
+          password: 'hashed_password',
+          avatar: 'any_avatar',
+          created_at: new Date()
+        })
+      )
+    );
+
+    const bet = await sut.handle(makeBet());
+
+    expect(bet).toEqual(badRequest(new InvalidParamError('insufficient points')));
   });
 });
