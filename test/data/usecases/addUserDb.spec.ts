@@ -14,6 +14,18 @@ interface SutTypes {
 jest.useFakeTimers().setSystemTime(new Date());
 
 const makeSut = (): SutTypes => {
+  const fakeUser: UserModel = {
+    id: 'any_id',
+    name: 'any_name',
+    points: 100,
+    id_guild: 123,
+    id_discord: 312,
+    email: 'any_email',
+    password: 'hashed_password',
+    avatar: 'any_avatar',
+    created_at: new Date()
+  };
+
   class EncrypterStub implements Encrypter {
     async encrypt(value: string): Promise<string> {
       return await new Promise((resolve) => resolve('hashed_password'));
@@ -22,23 +34,13 @@ const makeSut = (): SutTypes => {
 
   class SaveUserRepositoryStub implements SaveUserRepository {
     save(userDate: AddUserModel): Promise<UserModel> {
-      const fakeUser = {
-        id: 'any_id',
-        name: 'any_name',
-        id_guild: 123,
-        id_discord: 312,
-        email: 'any_email',
-        password: 'hashed_password',
-        avatar: 'any_avatar',
-        created_at: new Date()
-      };
       return new Promise((resolve) => resolve(fakeUser));
     }
   }
 
   class HelperDbStub implements HelperDb {
-    async verifyUser(id: string): Promise<void> {
-      await new Promise((resolve) => resolve(null));
+    async verifyUser(id: string): Promise<UserModel> {
+      return await new Promise((resolve) => resolve(fakeUser));
     }
     async verifyBeast(id: number): Promise<void> {
       await new Promise((resolve) => resolve(null));
@@ -185,6 +187,7 @@ describe('AddUser Usecase', () => {
     expect(user).toEqual({
       id: 'any_id',
       name: 'any_name',
+      points: 100,
       id_guild: 123,
       id_discord: 312,
       email: 'any_email',

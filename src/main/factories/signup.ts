@@ -6,7 +6,7 @@ import { SaveUserPrismaRepository, prisma } from '../../infra/db/prisma';
 import { Controller } from '../../presentation/protocols';
 import { LogControllerDecorator } from '../decorator/logsError';
 import { LogErrorPrismaRepository } from '../../infra/db/prisma/logError';
-import { PrismaHelper } from '../../infra/db/prisma/helper';
+import { PrismaHelper } from '../../infra/db/prisma/utils/helper';
 
 export const makeSignUpController = (): Controller => {
   const emailValidatorAdapter = new EmailValidatorAdapter();
