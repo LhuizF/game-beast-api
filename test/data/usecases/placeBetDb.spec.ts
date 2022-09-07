@@ -23,7 +23,7 @@ const makeSut = (): SutTypes => {
         status: 'pending',
         platform: 'discord',
         id_beast: 1,
-        id_user: 1,
+        id_user: 'any_id',
         created_at: new Date()
       };
 
@@ -32,7 +32,7 @@ const makeSut = (): SutTypes => {
   }
 
   class HelperDbStub implements HelperDb {
-    async verifyUser(id: number): Promise<void> {
+    async verifyUser(id: string): Promise<void> {
       await new Promise((resolve) => resolve(null));
     }
     async verifyBeast(id: number): Promise<void> {
@@ -62,7 +62,7 @@ const makeSut = (): SutTypes => {
 };
 
 const makeBet = () => ({
-  id_user: 1,
+  id_user: 'any_id',
   id_beast: 1,
   points: 10,
   platform: 'any_platform'
@@ -74,7 +74,7 @@ describe('PlaceBetDb Usecase', () => {
     const verifyUserStub = jest.spyOn(helperDbStub, 'verifyUser');
     await sut.play(makeBet());
 
-    expect(verifyUserStub).toHaveBeenCalledWith(1);
+    expect(verifyUserStub).toHaveBeenCalledWith('any_id');
   });
 
   test('should call verifyBeast with correct id_user', async () => {
@@ -91,7 +91,7 @@ describe('PlaceBetDb Usecase', () => {
     await sut.play(makeBet());
 
     expect(saveStub).toHaveBeenCalledWith({
-      id_user: 1,
+      id_user: 'any_id',
       id_beast: 1,
       points: 10,
       platform: 'any_platform',
@@ -110,7 +110,7 @@ describe('PlaceBetDb Usecase', () => {
       status: 'pending',
       platform: 'discord',
       id_beast: 1,
-      id_user: 1,
+      id_user: 'any_id',
       created_at: new Date()
     });
   });
