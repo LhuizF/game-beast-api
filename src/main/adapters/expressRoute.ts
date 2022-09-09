@@ -7,7 +7,7 @@ export const adapterRoute = (controller: Controller) => {
       body: req.body
     };
 
-    const httpResponse = await controller.handle(httpRequest);
-    res.status(httpResponse.statusCode).json(httpResponse.body);
+    const { statusCode, body } = await controller.handle(httpRequest);
+    res.status(statusCode).json(body);
   };
 };
