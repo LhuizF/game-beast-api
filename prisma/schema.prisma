@@ -43,15 +43,13 @@ model Bet {
   id         Int      @id @default(autoincrement())
   points     Int
   game_time  Int
+  id_beast   Int
   status     String   @default("pending")
   created_at DateTime @default(now())
   platform   String
 
   id_user String
   User    User   @relation(fields: [id_user], references: [id])
-
-  id_beast Int
-  Beast    Beast @relation(fields: [id_beast], references: [id])
 
   @@map("bets")
 }
@@ -60,8 +58,6 @@ model Beast {
   id        Int    @id
   name      String
   times_win Int    @default(0)
-
-  Bets Bet[]
 
   @@map("beasts")
 }
