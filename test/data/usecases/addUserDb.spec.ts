@@ -2,13 +2,11 @@ import { AddUserDb } from '../../../src/data/usecases/addUserDb';
 import { Encrypter, SaveUserRepository } from '../../../src/data/protocols';
 import { AddUserModel } from '../../../src/domain/usecases/add-user';
 import { UserModel } from '../../../src/domain/models/user';
-import { HelperDb } from '../../../src/data/protocols/helperDb';
 
 interface SutTypes {
   sut: AddUserDb;
   encrypterStub: Encrypter;
   saveUserRepositoryStub: SaveUserRepository;
-  helperDbStub: HelperDb;
 }
 
 jest.useFakeTimers().setSystemTime(new Date());
@@ -38,27 +36,13 @@ const makeSut = (): SutTypes => {
     }
   }
 
-  class HelperDbStub implements HelperDb {
-    async verifyUser(id: string): Promise<UserModel> {
-      return await new Promise((resolve) => resolve(fakeUser));
-    }
-    async verifyBeast(id: number): Promise<void> {
-      await new Promise((resolve) => resolve(null));
-    }
-    async verifyGuild(id: number): Promise<void> {
-      await new Promise((resolve) => resolve(null));
-    }
-  }
-
-  const helperDbStub = new HelperDbStub();
   const saveUserRepositoryStub = new SaveUserRepositoryStub();
   const encrypterStub = new EncrypterStub();
-  const sut = new AddUserDb(encrypterStub, saveUserRepositoryStub, helperDbStub);
+  const sut = new AddUserDb(encrypterStub, saveUserRepositoryStub);
   return {
     sut,
     encrypterStub,
-    saveUserRepositoryStub,
-    helperDbStub
+    saveUserRepositoryStub
   };
 };
 
@@ -195,40 +179,5 @@ describe('AddUser Usecase', () => {
       avatar: 'any_avatar',
       created_at: new Date(Date.now())
     });
-  });
-
-  test('should call getGuild with id_guild if id_guild is provided', async () => {
-    const { sut, helperDbStub } = makeSut();
-
-    const getGuildSpy = jest.spyOn(helperDbStub, 'verifyGuild');
-
-    const fakeUser = {
-      name: 'any_name',
-      id_guild: 123,
-      id_discord: 312,
-      avatar: 'any_avatar'
-    };
-
-    await sut.add(fakeUser);
-
-    expect(getGuildSpy).toHaveBeenCalledWith(123);
-  });
-
-  test('should throw if encrypter throw', async () => {
-    const { sut, helperDbStub } = makeSut();
-    jest
-      .spyOn(helperDbStub, 'verifyGuild')
-      .mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())));
-
-    const fakeUser = {
-      name: 'any_name',
-      id_guild: 123,
-      id_discord: 312,
-      avatar: 'any_avatar'
-    };
-
-    const promise = sut.add(fakeUser);
-
-    await expect(promise).rejects.toThrow();
   });
 });

@@ -11,11 +11,14 @@ import {
   UserModel
 } from '../../../src/presentation/controllers/signup/signup-protocols';
 import { badRequest } from '../../../src/presentation/helpers';
+import { HelperDb } from '../../../src/data/protocols/helperDb';
+import { GuildModel } from '../../../src/domain/models';
 
 interface SutTypes {
   sut: SignUpController;
   emailValidatorStub: EmailValidator;
   addUserStub: AddUser;
+  helperDbStub: HelperDb;
 }
 
 jest.useFakeTimers().setSystemTime(new Date());
@@ -44,13 +47,36 @@ const makeSut = (): SutTypes => {
       return new Promise((resolve) => resolve(fakeUser));
     }
   }
+
+  class HelperDbStub implements HelperDb {
+    async getUser(id: string): Promise<UserModel | null> {
+      return await new Promise((resolve) => resolve(null));
+    }
+    async getBeast(id: number): Promise<any> {
+      return await new Promise((resolve) => resolve({}));
+    }
+    async getGuild(id: number): Promise<GuildModel | null> {
+      return await new Promise((resolve) =>
+        resolve({
+          id: 1,
+          name: 'any_name',
+          icon: 'any_icon',
+          channel: 3,
+          created_at: new Date()
+        })
+      );
+    }
+  }
+
+  const helperDbStub = new HelperDbStub();
   const addUserStub = new AddUserStub();
   const emailValidatorStub = new EmailValidatorStub();
-  const sut = new SignUpController(emailValidatorStub, addUserStub);
+  const sut = new SignUpController(emailValidatorStub, addUserStub, helperDbStub);
   return {
     sut,
     emailValidatorStub,
-    addUserStub
+    addUserStub,
+    helperDbStub
   };
 };
 
@@ -343,5 +369,41 @@ describe('SignUp Controller', () => {
     const httpResponse = await sut.handle(httpRequest);
 
     expect(httpResponse).toEqual(badRequest(new InvalidParamError('id_discord')));
+  });
+
+  test('should call getGuild with correct id_guild ', async () => {
+    const { sut, helperDbStub } = makeSut();
+    const getBeastSpy = jest.spyOn(helperDbStub, 'getGuild');
+
+    const httpRequest = {
+      body: {
+        name: 'any_name',
+        id_guild: 123,
+        id_discord: 312
+      }
+    };
+
+    await sut.handle(httpRequest);
+
+    expect(getBeastSpy).toHaveBeenCalledWith(123);
+  });
+
+  test('should return 400 if guild not found', async () => {
+    const { sut, helperDbStub } = makeSut();
+    const httpRequest = {
+      body: {
+        name: 'any_name',
+        id_guild: 123,
+        id_discord: 312
+      }
+    };
+
+    jest
+      .spyOn(helperDbStub, 'getGuild')
+      .mockReturnValueOnce(new Promise((resolve) => resolve(null)));
+
+    const httpResponse = await sut.handle(httpRequest);
+
+    expect(httpResponse).toEqual(badRequest(new InvalidParamError('guild not found')));
   });
 });

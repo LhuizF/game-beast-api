@@ -1,7 +1,8 @@
 import { SaveBetPrismaRepository } from '../../../../src/infra/db/prisma/saveBet';
 import { mockDeep, DeepMockProxy } from 'jest-mock-extended';
-import { Bet, PrismaClient } from '@prisma/client';
-import { BetModel } from '../../../../src/data/protocols/saveBetRepository';
+import { PrismaClient } from '@prisma/client';
+import { Bet } from '../../../../src/data/protocols/saveBetRepository';
+import { BetModel } from '../../../../src/domain/models';
 
 jest.useFakeTimers().setSystemTime(new Date());
 
@@ -21,7 +22,7 @@ describe('SaveBetPrismaRepository', () => {
   test('Save bet db', async () => {
     const { sut, prismaMock } = makeSut();
 
-    const betModel: BetModel = {
+    const bet: Bet = {
       points: 10,
       game_time: 1,
       id_beast: 1,
@@ -29,7 +30,7 @@ describe('SaveBetPrismaRepository', () => {
       platform: 'any'
     };
 
-    const bet: Bet = {
+    const betModel: BetModel = {
       points: 10,
       game_time: 1,
       id_beast: 1,
@@ -40,10 +41,10 @@ describe('SaveBetPrismaRepository', () => {
       status: 'any'
     };
 
-    prismaMock.bet.create.mockResolvedValue(bet);
+    prismaMock.bet.create.mockResolvedValue(betModel);
 
-    const newBet = await sut.save(betModel);
+    const newBet = await sut.save(bet);
 
-    expect(newBet).toEqual(bet);
+    expect(newBet).toEqual(betModel);
   });
 });

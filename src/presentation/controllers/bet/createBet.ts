@@ -19,8 +19,16 @@ class CreateBetController implements Controller {
 
       const { id_user, id_beast, points, platform } = httpRequest.body;
 
-      await this.helperDb.verifyBeast(id_beast);
-      const user = await this.helperDb.verifyUser(id_user);
+      const beast = await this.helperDb.getBeast(id_beast);
+      const user = await this.helperDb.getUser(id_user);
+
+      if (!beast) {
+        return badRequest(new InvalidParamError('beast not found'));
+      }
+
+      if (!user) {
+        return badRequest(new InvalidParamError('user not found'));
+      }
 
       if (user.points < points) {
         return badRequest(new InvalidParamError('insufficient points'));
@@ -30,6 +38,7 @@ class CreateBetController implements Controller {
 
       return ok(bet);
     } catch (error) {
+      console.log(error);
       return serverError(error);
     }
   }

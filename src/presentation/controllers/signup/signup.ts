@@ -2,11 +2,13 @@ import { HttpRequest, HttpResponse, EmailValidator, AddUser } from './signup-pro
 import { InvalidParamError, MissingParamError } from '../../erros';
 import { badRequest, serverError, ok } from '../../helpers';
 import { Controller } from '../../protocols/controller';
+import { HelperDb } from '../../../data/protocols/helperDb';
 
 class SignUpController implements Controller {
   constructor(
     private readonly emailValidator: EmailValidator,
-    private readonly addUser: AddUser
+    private readonly addUser: AddUser,
+    private readonly helperDb: HelperDb
   ) {}
 
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
@@ -25,6 +27,12 @@ class SignUpController implements Controller {
         if (!id_discord) {
           return badRequest(new MissingParamError('id_discord'));
         }
+
+        const guild = await this.helperDb.getGuild(id_guild);
+        if (!guild) {
+          return badRequest(new InvalidParamError('guild not found'));
+        }
+
         const numberFields = ['id_guild', 'id_discord'];
         for (const field of numberFields) {
           if (typeof httpRequest.body[field] !== 'number')
