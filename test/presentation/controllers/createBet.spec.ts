@@ -222,8 +222,32 @@ describe('CreateBet Controller', () => {
       )
     );
 
-    const bet = await sut.handle(makeBet());
+    const httpResponse = await sut.handle(makeBet());
 
-    expect(bet).toEqual(badRequest(new InvalidParamError('insufficient points')));
+    expect(httpResponse).toEqual(
+      badRequest(new InvalidParamError('insufficient points'))
+    );
+  });
+
+  test('should return 400 if beast not found', async () => {
+    const { sut, helperDbStub } = makeSut();
+    jest
+      .spyOn(helperDbStub, 'getBeast')
+      .mockReturnValueOnce(new Promise((resolve) => resolve(null)));
+
+    const httpResponse = await sut.handle(makeBet());
+
+    expect(httpResponse).toEqual(badRequest(new InvalidParamError('beast not found')));
+  });
+
+  test('should return 400 if user not found', async () => {
+    const { sut, helperDbStub } = makeSut();
+    jest
+      .spyOn(helperDbStub, 'getUser')
+      .mockReturnValueOnce(new Promise((resolve) => resolve(null)));
+
+    const httpResponse = await sut.handle(makeBet());
+
+    expect(httpResponse).toEqual(badRequest(new InvalidParamError('user not found')));
   });
 });
