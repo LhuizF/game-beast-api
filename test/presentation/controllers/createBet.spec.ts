@@ -6,9 +6,10 @@ import {
 } from '../../../src/presentation/erros';
 import { badRequest, ok } from '../../../src/presentation/helpers';
 import { PlayBetModel, PlaceBet } from '../../../src/domain/usecases/place-bet';
-import { Bet } from '../../../src/domain/models/Bet';
+import { BetModel } from '../../../src/domain/models/Bet';
 import { UserModel } from '../../../src/domain/models/user';
 import { HelperDb } from '../../../src/data/protocols/helperDb';
+import { GuildModel } from '../../../src/domain/models';
 
 jest.useFakeTimers().setSystemTime(new Date());
 
@@ -20,7 +21,7 @@ interface SutTypes {
 
 const makeSut = (): SutTypes => {
   class PlaceBetStub implements PlaceBet {
-    play(bet: PlayBetModel): Promise<Bet> {
+    play(bet: PlayBetModel): Promise<BetModel> {
       return new Promise((resolve) =>
         resolve({
           id: 1,
@@ -37,7 +38,7 @@ const makeSut = (): SutTypes => {
   }
 
   class HelperDbStub implements HelperDb {
-    async verifyUser(id: string): Promise<UserModel> {
+    async getUser(id: string): Promise<UserModel> {
       return await new Promise((resolve) =>
         resolve({
           id: 'any_id',
@@ -52,11 +53,19 @@ const makeSut = (): SutTypes => {
         })
       );
     }
-    async verifyBeast(id: number): Promise<void> {
-      await new Promise((resolve) => resolve(null));
+    async getBeast(id: number): Promise<any> {
+      return await new Promise((resolve) => resolve({}));
     }
-    async verifyGuild(id: number): Promise<void> {
-      await new Promise((resolve) => resolve(null));
+    async getGuild(id: number): Promise<GuildModel> {
+      return await new Promise((resolve) =>
+        resolve({
+          id: 1,
+          name: 'any_name',
+          icon: 'any_icon',
+          channel: 3,
+          created_at: new Date()
+        })
+      );
     }
   }
 
@@ -179,25 +188,25 @@ describe('CreateBet Controller', () => {
     expect(httpResponse.body).toEqual(new ServerError('null'));
   });
 
-  test('should call verifyUser with correct id_user', async () => {
+  test('should call getUser with correct id_user', async () => {
     const { sut, helperDbStub } = makeSut();
-    const verifyUserStub = jest.spyOn(helperDbStub, 'verifyUser');
+    const getUserStub = jest.spyOn(helperDbStub, 'getUser');
     await sut.handle(makeBet());
 
-    expect(verifyUserStub).toHaveBeenCalledWith('any_id');
+    expect(getUserStub).toHaveBeenCalledWith('any_id');
   });
 
-  test('should call verifyBeast with correct id_user', async () => {
+  test('should call getBeast with correct id_beast', async () => {
     const { sut, helperDbStub } = makeSut();
-    const verifyBeastStub = jest.spyOn(helperDbStub, 'verifyBeast');
+    const getBeastStub = jest.spyOn(helperDbStub, 'getBeast');
     await sut.handle(makeBet());
 
-    expect(verifyBeastStub).toHaveBeenCalledWith(1);
+    expect(getBeastStub).toHaveBeenCalledWith(1);
   });
 
   test('should return 400 if points is insufficient', async () => {
     const { sut, helperDbStub } = makeSut();
-    jest.spyOn(helperDbStub, 'verifyUser').mockReturnValueOnce(
+    jest.spyOn(helperDbStub, 'getUser').mockReturnValueOnce(
       new Promise((resolve) =>
         resolve({
           id: 'any_id',

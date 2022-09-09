@@ -1,4 +1,4 @@
-export interface Bet {
+export interface BetModel {
   id: number;
   points: number;
   game_time: number;

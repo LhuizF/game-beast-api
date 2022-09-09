@@ -1,15 +1,17 @@
 import { HelperDb } from '../../../../data/protocols/helperDb';
-import { UserModel } from '../../../../domain/models/user';
+import { UserModel, GuildModel, BetModel } from '../../../../domain/models';
 import { prisma } from './client';
 
 export class PrismaHelper implements HelperDb {
-  async verifyGuild(id: number) {
-    await prisma.guild.findUniqueOrThrow({ where: { id } });
+  async getGuild(id: number): Promise<GuildModel | null> {
+    return await prisma.guild.findUnique({ where: { id } });
   }
-  async verifyUser(id: string): Promise<UserModel> {
-    return await prisma.user.findUniqueOrThrow({ where: { id } });
+
+  async getUser(id: string): Promise<UserModel | null> {
+    return await prisma.user.findUnique({ where: { id } });
   }
-  async verifyBeast(id: number): Promise<void> {
-    await prisma.beast.findUniqueOrThrow({ where: { id } });
+
+  async getBeast(id: number): Promise<any | null> {
+    return await prisma.beast.findUnique({ where: { id } });
   }
 }

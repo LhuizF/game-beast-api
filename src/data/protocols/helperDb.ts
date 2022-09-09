@@ -1,7 +1,7 @@
-import { UserModel } from '../../domain/models/user';
+import { UserModel, GuildModel } from '../../domain/models';
 
 export interface HelperDb {
-  verifyGuild(id: number): Promise<void>;
-  verifyUser(id: string): Promise<UserModel>;
-  verifyBeast(id: number): Promise<void>;
+  getGuild(id: number): Promise<GuildModel | null>;
+  getUser(id: string): Promise<UserModel | null>;
+  getBeast(id: number): Promise<any | null>;
 }

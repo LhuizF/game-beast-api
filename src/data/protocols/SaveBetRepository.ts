@@ -1,6 +1,6 @@
-import { Bet } from '../../domain/models/bet';
+import { BetModel } from '../../domain/models/bet';
 
-export interface BetModel {
+export interface Bet {
   id_user: string;
   id_beast: number;
   points: number;
@@ -9,5 +9,5 @@ export interface BetModel {
 }
 
 export interface SaveBetRepository {
-  save(userDate: BetModel): Promise<Bet>;
+  save(userDate: Bet): Promise<BetModel>;
 }

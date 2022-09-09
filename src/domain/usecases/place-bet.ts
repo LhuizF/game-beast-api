@@ -1,4 +1,4 @@
-import { Bet } from '../models/Bet';
+import { BetModel } from '../models/Bet';
 
 export interface PlayBetModel {
   id_user: string;
@@ -8,5 +8,5 @@ export interface PlayBetModel {
 }
 
 export interface PlaceBet {
-  play(bet: PlayBetModel): Promise<Bet>;
+  play(bet: PlayBetModel): Promise<BetModel>;
 }

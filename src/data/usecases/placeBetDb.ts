@@ -1,10 +1,8 @@
 import { PlayBetModel, PlaceBet } from '../../domain/usecases/place-bet';
-import { Bet } from '../../domain/models/Bet';
-import { HelperDb } from '../protocols/helperDb';
-import { BetModel, SaveBetRepository } from '../protocols/saveBetRepository';
+import { BetModel } from '../../domain/models/Bet';
+import { Bet, SaveBetRepository } from '../protocols/saveBetRepository';
 import { GameTime } from '../../presentation/protocols/game-time';
 import { UpdatePoints } from '../protocols/updatePoints';
-import { InvalidParamError } from '../../presentation/erros';
 
 export class PlaceBetDb implements PlaceBet {
   constructor(
@@ -12,12 +10,12 @@ export class PlaceBetDb implements PlaceBet {
     private readonly gameTime: GameTime,
     private readonly updatePoints: UpdatePoints
   ) {}
-  async play(playBet: PlayBetModel): Promise<Bet> {
+  async play(playBet: PlayBetModel): Promise<BetModel> {
     const { id_user, id_beast, points, platform } = playBet;
 
     const game_time = this.gameTime.get();
 
-    const play: BetModel = {
+    const play: Bet = {
       id_user,
       id_beast,
       points,

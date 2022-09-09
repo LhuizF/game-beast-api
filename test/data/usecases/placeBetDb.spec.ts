@@ -1,6 +1,6 @@
 import { PlaceBetDb } from '../../../src/data/usecases/placeBetDb';
 import { SaveBetRepository } from '../../../src/data/protocols/saveBetRepository';
-import { Bet } from '../../../src/domain/models/Bet';
+import { BetModel } from '../../../src/domain/models/Bet';
 import { PlayBetModel } from '../../../src/domain/usecases/place-bet';
 import { GameTime } from '../../../src/presentation/protocols/game-time';
 import { UpdatePoints } from '../../../src/data/protocols/updatePoints';
@@ -15,8 +15,8 @@ jest.useFakeTimers().setSystemTime(new Date());
 
 const makeSut = (): SutTypes => {
   class SaveBetRepositoryStub implements SaveBetRepository {
-    save(userDate: PlayBetModel): Promise<Bet> {
-      const bet: Bet = {
+    save(userDate: PlayBetModel): Promise<BetModel> {
+      const bet: BetModel = {
         id: 1,
         points: 1,
         game_time: 1,
