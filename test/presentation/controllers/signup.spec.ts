@@ -12,7 +12,7 @@ import {
 } from '../../../src/presentation/controllers/signup/signup-protocols';
 import { badRequest } from '../../../src/presentation/helpers';
 import { HelperDb } from '../../../src/data/protocols/helperDb';
-import { GuildModel } from '../../../src/domain/models';
+import { HelperDbStub } from '../../helper';
 
 interface SutTypes {
   sut: SignUpController;
@@ -45,26 +45,6 @@ const makeSut = (): SutTypes => {
       };
 
       return new Promise((resolve) => resolve(fakeUser));
-    }
-  }
-
-  class HelperDbStub implements HelperDb {
-    async getUser(id: string): Promise<UserModel | null> {
-      return await new Promise((resolve) => resolve(null));
-    }
-    async getBeast(id: number): Promise<any> {
-      return await new Promise((resolve) => resolve({}));
-    }
-    async getGuild(id: number): Promise<GuildModel | null> {
-      return await new Promise((resolve) =>
-        resolve({
-          id: 1,
-          name: 'any_name',
-          icon: 'any_icon',
-          channel: 3,
-          created_at: new Date()
-        })
-      );
     }
   }
 
