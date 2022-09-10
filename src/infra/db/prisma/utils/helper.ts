@@ -1,5 +1,5 @@
 import { HelperDb } from '../../../../data/protocols/helperDb';
-import { UserModel, GuildModel, BetModel } from '../../../../domain/models';
+import { UserModel, GuildModel, BeastModel } from '../../../../domain/models';
 import { prisma } from './client';
 
 export class PrismaHelper implements HelperDb {
@@ -11,7 +11,11 @@ export class PrismaHelper implements HelperDb {
     return await prisma.user.findUnique({ where: { id } });
   }
 
-  async getBeast(id: number): Promise<any | null> {
+  async getBeast(id: number): Promise<BeastModel | null> {
     return await prisma.beast.findUnique({ where: { id } });
+  }
+
+  async getAllBeast(): Promise<BeastModel[]> {
+    return await prisma.beast.findMany();
   }
 }
