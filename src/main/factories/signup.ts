@@ -13,8 +13,8 @@ export const makeSignUpController = (): Controller => {
   const bcryptAdapter = new BcryptAdapter(12);
   const saveUserPrismaRepository = new SaveUserPrismaRepository(prisma);
   const helperDb = new PrismaHelper();
-  const addUser = new AddUserDb(bcryptAdapter, saveUserPrismaRepository, helperDb);
-  const signUpController = new SignUpController(emailValidatorAdapter, addUser);
+  const addUser = new AddUserDb(bcryptAdapter, saveUserPrismaRepository);
+  const signUpController = new SignUpController(emailValidatorAdapter, addUser, helperDb);
   const logErrorPrismaRepository = new LogErrorPrismaRepository(prisma);
   return new LogControllerDecorator(signUpController, logErrorPrismaRepository);
 };
