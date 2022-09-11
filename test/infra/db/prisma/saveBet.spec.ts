@@ -24,7 +24,7 @@ describe('SaveBetPrismaRepository', () => {
 
     const bet: Bet = {
       points: 10,
-      game_time: 1,
+      id_game: 1,
       id_beast: 1,
       id_user: 'any_id',
       platform: 'any'
@@ -32,7 +32,7 @@ describe('SaveBetPrismaRepository', () => {
 
     const betModel: BetModel = {
       points: 10,
-      game_time: 1,
+      id_game: 1,
       id_beast: 1,
       id_user: 'any_id',
       platform: 'any',

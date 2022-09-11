@@ -2,7 +2,6 @@ import { PlaceBetDb } from '../../../src/data/usecases/placeBetDb';
 import { SaveBetRepository } from '../../../src/data/protocols/saveBetRepository';
 import { BetModel } from '../../../src/domain/models/Bet';
 import { PlayBetModel } from '../../../src/domain/usecases/place-bet';
-import { GameTime } from '../../../src/presentation/protocols/game-time';
 import { UpdatePoints } from '../../../src/data/protocols/updatePoints';
 
 interface SutTypes {
@@ -19,7 +18,7 @@ const makeSut = (): SutTypes => {
       const bet: BetModel = {
         id: 1,
         points: 1,
-        game_time: 1,
+        id_game: 1,
         status: 'pending',
         platform: 'discord',
         id_beast: 1,
@@ -31,27 +30,16 @@ const makeSut = (): SutTypes => {
     }
   }
 
-  class GameTimeAdapterStub implements GameTime {
-    get(): number {
-      return 1;
-    }
-  }
-
   class UpdatePointsStub implements UpdatePoints {
     async discount(userID: string, points: number): Promise<void> {
       await new Promise((resolve) => resolve(null));
     }
   }
 
-  const gameTimeAdapterStub = new GameTimeAdapterStub();
   const saveBetRepositoryStub = new SaveBetRepositoryStub();
   const updatePointsStub = new UpdatePointsStub();
 
-  const sut = new PlaceBetDb(
-    saveBetRepositoryStub,
-    gameTimeAdapterStub,
-    updatePointsStub
-  );
+  const sut = new PlaceBetDb(saveBetRepositoryStub, updatePointsStub);
 
   return {
     sut,
@@ -60,9 +48,10 @@ const makeSut = (): SutTypes => {
   };
 };
 
-const makeBet = () => ({
+const makeBet = (): PlayBetModel => ({
   id_user: 'any_id',
   id_beast: 1,
+  id_game: 1,
   points: 10,
   platform: 'any_platform'
 });
@@ -78,7 +67,7 @@ describe('PlaceBetDb Usecase', () => {
       id_beast: 1,
       points: 10,
       platform: 'any_platform',
-      game_time: 1
+      id_game: 1
     });
   });
 
@@ -89,7 +78,7 @@ describe('PlaceBetDb Usecase', () => {
     expect(bet).toEqual({
       id: 1,
       points: 1,
-      game_time: 1,
+      id_game: 1,
       status: 'pending',
       platform: 'discord',
       id_beast: 1,

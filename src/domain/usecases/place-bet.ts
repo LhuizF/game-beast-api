@@ -5,6 +5,7 @@ export interface PlayBetModel {
   id_beast: number;
   points: number;
   platform: string;
+  id_game: number;
 }
 
 export interface PlaceBet {

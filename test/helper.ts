@@ -38,4 +38,8 @@ export class HelperDbStub implements HelperDb {
   async getAllBeast(): Promise<BeastModel[]> {
     return await new Promise((resolve) => resolve(beatMock));
   }
+
+  async getCurrentGameId(): Promise<number> {
+    return await new Promise((resolve) => resolve(1));
+  }
 }

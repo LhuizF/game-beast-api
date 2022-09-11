@@ -5,4 +5,5 @@ export interface HelperDb {
   getUser(id: string): Promise<UserModel | null>;
   getBeast(id: number): Promise<BeastModel | null>;
   getAllBeast(): Promise<BeastModel[]>;
+  getCurrentGameId(): Promise<number>;
 }

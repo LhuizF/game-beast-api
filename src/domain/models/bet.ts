@@ -1,7 +1,7 @@
 export interface BetModel {
   id: number;
   points: number;
-  game_time: number;
+  id_game: number;
   status: string;
   platform: string;
   id_beast: number;

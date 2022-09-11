@@ -18,4 +18,10 @@ export class PrismaHelper implements HelperDb {
   async getAllBeast(): Promise<BeastModel[]> {
     return await prisma.beast.findMany();
   }
+
+  async getCurrentGameId(): Promise<number> {
+    const game = await prisma.game.findFirst({ orderBy: { created_at: 'desc' } });
+    if (!game) return 0;
+    return game.id;
+  }
 }

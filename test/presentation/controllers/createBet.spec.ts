@@ -26,7 +26,7 @@ const makeSut = (): SutTypes => {
           id: 1,
           id_user: 'any_id',
           id_beast: 1,
-          game_time: 1,
+          id_game: 1,
           status: 'pending',
           platform: 'discord',
           points: 10,
@@ -120,6 +120,7 @@ describe('CreateBet Controller', () => {
     expect(play).toHaveBeenCalledWith({
       id_user: 'any_id',
       id_beast: 1,
+      id_game: 1,
       points: 10,
       platform: 'any_platform'
     });
@@ -135,7 +136,7 @@ describe('CreateBet Controller', () => {
         id: 1,
         id_user: 'any_id',
         id_beast: 1,
-        game_time: 1,
+        id_game: 1,
         status: 'pending',
         platform: 'discord',
         points: 10,
