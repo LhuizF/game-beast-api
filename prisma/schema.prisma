@@ -39,17 +39,30 @@ model Guild {
   @@map("guilds")
 }
 
+model Game {
+  id         Int      @id @unique @default(autoincrement())
+  time       Int
+  result     Int      @default(0)
+  created_at DateTime @default(now())
+  update_at  DateTime @updatedAt
+
+  Bet Bet[]
+
+  @@map("games")
+}
+
 model Bet {
   id         Int      @id @default(autoincrement())
-  points     Int
-  game_time  Int
+  id_game    Int
+  id_user    String
   id_beast   Int
+  points     Int
   status     String   @default("pending")
-  created_at DateTime @default(now())
   platform   String
+  created_at DateTime @default(now())
 
-  id_user String
-  User    User   @relation(fields: [id_user], references: [id])
+  User User @relation(fields: [id_user], references: [id])
+  Game Game @relation(fields: [id_game], references: [id])
 
   @@map("bets")
 }
