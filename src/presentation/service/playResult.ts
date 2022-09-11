@@ -15,8 +15,7 @@ class PlayResultService implements PlayResult {
     }
 
     const index = Math.floor(Math.random() * beasts.length);
-
-    const item = beasts[index];
+    const item = beasts[index - 1];
 
     await this.winBeast.addWin(item.id);
   }
