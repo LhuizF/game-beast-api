@@ -1,3 +1,3 @@
 export interface WinBeast {
-  addWin(id: number): Promise<void>;
+  addWin(id: number, time: number): Promise<void>;
 }
