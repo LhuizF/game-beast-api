@@ -1,3 +1,5 @@
+import { BetsResult } from '../../presentation/protocols/play-result';
+
 export interface WinBeast {
-  addWin(id: number, time: number): Promise<void>;
+  addWin(idGame: number, idBeast: number): Promise<BetsResult>;
 }

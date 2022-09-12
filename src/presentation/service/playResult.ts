@@ -1,34 +1,48 @@
-import { PlayResult } from '../protocols/play-result';
+import { Result, PlayResult } from '../protocols/play-result';
 import { HelperDb } from '../../data/protocols/helperDb';
 import { WinBeast } from '../../data/protocols/winBeast';
-import { GameTime } from '../protocols/game-time';
+import { BeastModel } from '../../domain/models';
 
 class PlayResultService implements PlayResult {
-  constructor(
-    private readonly helperDb: HelperDb,
-    private readonly winBeast: WinBeast,
-    private readonly gameTime: GameTime
-  ) {}
+  constructor(private readonly helperDb: HelperDb, private readonly winBeast: WinBeast) {}
 
-  async play() {
+  async play(): Promise<Result> {
     const beasts = await this.helperDb.getAllBeast();
+    const game = await this.helperDb.getCurrentGameId();
 
     if (beasts.length === 0) {
       console.log('vai ser um erro');
-
-      return;
+      return {
+        isSuccess: false,
+        data: {
+          date: new Date(),
+          body: {
+            beasts,
+            game
+          }
+        }
+      };
     }
 
+    const beast = this.beastSelected(beasts);
+
+    const { totalBets, winners, losers } = await this.winBeast.addWin(game, beast.id);
+
+    return {
+      isSuccess: true,
+      data: {
+        id_game: game,
+        beastWin: beast,
+        totalBets,
+        winners,
+        losers
+      }
+    };
+  }
+
+  beastSelected(beasts: BeastModel[]): BeastModel {
     const index = Math.floor(Math.random() * beasts.length);
-    const beast = beasts[index - 1];
-
-    const time = this.gameTime.get();
-
-    console.log('beast', beast);
-    console.log('index', index);
-    console.log('time', time);
-
-    await this.winBeast.addWin(1, time);
+    return beasts[index];
   }
 }
 
