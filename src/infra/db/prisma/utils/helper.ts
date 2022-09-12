@@ -16,7 +16,7 @@ export class PrismaHelper implements HelperDb {
   }
 
   async getAllBeast(): Promise<BeastModel[]> {
-    return await prisma.beast.findMany();
+    return await prisma.beast.findMany({ orderBy: { id: 'asc' } });
   }
 
   async getCurrentGameId(): Promise<number> {
