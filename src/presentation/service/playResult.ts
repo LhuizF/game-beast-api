@@ -2,9 +2,14 @@ import { Result, PlayResult } from '../protocols/play-result';
 import { HelperDb } from '../../data/protocols/helperDb';
 import { WinBeast } from '../../data/protocols/winBeast';
 import { BeastModel } from '../../domain/models';
+import { CreateGame } from '../../domain/usecases/create-game';
 
 class PlayResultService implements PlayResult {
-  constructor(private readonly helperDb: HelperDb, private readonly winBeast: WinBeast) {}
+  constructor(
+    private readonly helperDb: HelperDb,
+    private readonly winBeast: WinBeast,
+    private readonly crateGame: CreateGame
+  ) {}
 
   async play(): Promise<Result> {
     const beasts = await this.helperDb.getAllBeast();
@@ -27,6 +32,8 @@ class PlayResultService implements PlayResult {
     const beast = this.beastSelected(beasts);
 
     const { totalBets, winners, losers } = await this.winBeast.addWin(game, beast.id);
+
+    await this.crateGame.nextGame();
 
     return {
       isSuccess: true,

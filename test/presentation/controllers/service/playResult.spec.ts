@@ -1,4 +1,6 @@
 import { WinBeast } from '../../../../src/data/protocols/winBeast';
+import { GameModel } from '../../../../src/domain/models';
+import { CreateGame } from '../../../../src/domain/usecases/create-game';
 import { BetsResult } from '../../../../src/presentation/protocols/play-result';
 import PlayResultService from '../../../../src/presentation/service/playResult';
 import { HelperDbStub } from '../../../helper';
@@ -24,10 +26,25 @@ const makeSut = () => {
     }
   }
 
+  class CreateGameStub implements CreateGame {
+    async nextGame(): Promise<GameModel> {
+      return await new Promise((resolve) =>
+        resolve({
+          id: 100,
+          time: 1,
+          result: 0,
+          created_at: new Date(),
+          update_at: new Date()
+        })
+      );
+    }
+  }
+
   const helperDbStub = new HelperDbStub();
   const winBeastStub = new WinBeastStub();
-  const sut = new PlayResultService(helperDbStub, winBeastStub);
-  return { sut, helperDbStub, winBeastStub };
+  const crateGameStub = new CreateGameStub();
+  const sut = new PlayResultService(helperDbStub, winBeastStub, crateGameStub);
+  return { sut, helperDbStub, winBeastStub, crateGameStub };
 };
 
 describe('PlayResult Service', () => {
@@ -101,5 +118,14 @@ describe('PlayResult Service', () => {
         }
       }
     });
+  });
+
+  test('should call crateGame', async () => {
+    const { sut, crateGameStub } = makeSut();
+    const nextGameSpy = jest.spyOn(crateGameStub, 'nextGame');
+
+    await sut.play();
+
+    expect(nextGameSpy).toHaveBeenCalled();
   });
 });
