@@ -1,3 +1,3 @@
 export interface GameTime {
-  get(): number;
+  getNext(): number;
 }

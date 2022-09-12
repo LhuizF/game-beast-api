@@ -9,7 +9,7 @@ export class CrateGameDb implements CreateGame {
     private readonly saveGameRepository: SaveGameRepository
   ) {}
   async nextGame(): Promise<GameModel> {
-    const gameTime = this.gameTime.get();
+    const gameTime = this.gameTime.getNext();
 
     const game = await this.saveGameRepository.save(gameTime);
 

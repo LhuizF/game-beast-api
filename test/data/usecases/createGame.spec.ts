@@ -13,7 +13,7 @@ interface SutTypes {
 
 const makeSut = (): SutTypes => {
   class GameTimeStub implements GameTime {
-    get(): number {
+    getNext(): number {
       return 1;
     }
   }
@@ -41,11 +41,11 @@ const makeSut = (): SutTypes => {
 describe('CreateGame Usecase', () => {
   test('Should call gameTimeStub', async () => {
     const { sut, gameTimeStub } = makeSut();
-    const getSpy = jest.spyOn(gameTimeStub, 'get');
+    const getNextSpy = jest.spyOn(gameTimeStub, 'getNext');
 
     await sut.nextGame();
 
-    expect(getSpy).toHaveBeenCalled();
+    expect(getNextSpy).toHaveBeenCalled();
   });
 
   test('Should call saveGameRepositoryStub witch correct  value', async () => {
