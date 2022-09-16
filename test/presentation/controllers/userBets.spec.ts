@@ -50,7 +50,7 @@ describe('UserBets Controller', () => {
   test('should return 400 if no id_user is provided', async () => {
     const { sut } = makeSut();
 
-    const response = await sut.handle({ body: { id_user: '' } });
+    const response = await sut.handle({ params: { id_user: '' } });
 
     expect(response.statusCode).toEqual(400);
     expect(response.body).toEqual(new MissingParamError('id_user'));
@@ -61,7 +61,7 @@ describe('UserBets Controller', () => {
 
     const getLastThreeBetsSpy = jest.spyOn(userInfosStub, 'getLastThreeBets');
 
-    await sut.handle({ body: { id_user: 'id' } });
+    await sut.handle({ params: { id_user: 'id' } });
 
     expect(getLastThreeBetsSpy).toHaveBeenCalled();
   });
@@ -69,7 +69,7 @@ describe('UserBets Controller', () => {
   test('should return 200 if id_user is provided', async () => {
     const { sut } = makeSut();
 
-    const response = await sut.handle({ body: { id_user: 'id' } });
+    const response = await sut.handle({ params: { id_user: 'id' } });
 
     expect(response.statusCode).toEqual(200);
     expect(response.body).toBeTruthy();
@@ -82,7 +82,7 @@ describe('UserBets Controller', () => {
       return new Promise((resolve, reject) => reject(new Error()));
     });
 
-    const response = await sut.handle({ body: { id_user: 'id' } });
+    const response = await sut.handle({ params: { id_user: 'id' } });
 
     expect(response.statusCode).toEqual(500);
     expect(response.body).toBeTruthy();
