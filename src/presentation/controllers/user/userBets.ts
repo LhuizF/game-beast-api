@@ -8,7 +8,7 @@ class UserBetsController implements Controller {
 
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
-      const { id_user } = httpRequest.body;
+      const { id_user } = httpRequest.params;
 
       if (!id_user) {
         return badRequest(new MissingParamError('id_user'));
