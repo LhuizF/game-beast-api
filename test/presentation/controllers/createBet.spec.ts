@@ -82,6 +82,17 @@ describe('CreateBet Controller', () => {
     expect(httpResponse).toEqual(badRequest(new MissingParamError('id_beast')));
   });
 
+  test('should return 500 if no current game', async () => {
+    const { sut, helperDbStub } = makeSut();
+
+    jest
+      .spyOn(helperDbStub, 'getCurrentGameId')
+      .mockResolvedValueOnce(new Promise((resolve) => resolve(0)));
+
+    const httpResponse = await sut.handle(makeBet());
+    expect(httpResponse).toEqual(badRequest(new ServerError('id_game')));
+  });
+
   test('should return 400 if no points is provided', async () => {
     const { sut } = makeSut();
     const httpRequest = {
