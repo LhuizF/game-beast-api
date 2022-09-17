@@ -1,5 +1,5 @@
 import { HelperDb } from '../src/data/protocols/helperDb';
-import { BeastModel, GuildModel, UserModel } from '../src/domain/models';
+import { BeastModel, GuildModel, UserModel, GameModel } from '../src/domain/models';
 import beatMock from './mocks/beasts.json';
 
 export class HelperDbStub implements HelperDb {
@@ -41,5 +41,17 @@ export class HelperDbStub implements HelperDb {
 
   async getCurrentGameId(): Promise<number> {
     return await new Promise((resolve) => resolve(1));
+  }
+
+  async getCurrentGame(): Promise<GameModel> {
+    return await new Promise((resolve) =>
+      resolve({
+        id: 1,
+        time: 1,
+        result: 0,
+        created_at: new Date(),
+        update_at: new Date()
+      })
+    );
   }
 }
