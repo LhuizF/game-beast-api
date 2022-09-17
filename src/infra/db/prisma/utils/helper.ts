@@ -28,4 +28,12 @@ export class PrismaHelper implements HelperDb {
   async getCurrentGame(): Promise<GameModel | null> {
     return await prisma.game.findFirst({ orderBy: { created_at: 'desc' } });
   }
+
+  async getLastThreeGames(): Promise<GameModel[]> {
+    return await prisma.game.findMany({
+      where: { result: { not: 0 } },
+      orderBy: { created_at: 'desc' },
+      take: 3
+    });
+  }
 }

@@ -7,4 +7,5 @@ export interface HelperDb {
   getAllBeast(): Promise<BeastModel[]>;
   getCurrentGameId(): Promise<number>;
   getCurrentGame(): Promise<GameModel | null>;
+  getLastThreeGames(): Promise<GameModel[]>;
 }
