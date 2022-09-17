@@ -1,5 +1,5 @@
 import { HelperDb } from '../../../../data/protocols/helperDb';
-import { UserModel, GuildModel, BeastModel } from '../../../../domain/models';
+import { UserModel, GuildModel, BeastModel, GameModel } from '../../../../domain/models';
 import { prisma } from './client';
 
 export class PrismaHelper implements HelperDb {
@@ -23,5 +23,9 @@ export class PrismaHelper implements HelperDb {
     const game = await prisma.game.findFirst({ orderBy: { created_at: 'desc' } });
     if (!game) return 0;
     return game.id;
+  }
+
+  async getCurrentGame(): Promise<GameModel | null> {
+    return await prisma.game.findFirst({ orderBy: { created_at: 'desc' } });
   }
 }
