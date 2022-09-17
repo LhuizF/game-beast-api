@@ -1,5 +1,5 @@
 import { HelperDb } from '../../../src/data/protocols/helperDb';
-import UserController from '../../../src/presentation/controllers/user/user';
+import { UserController } from '../../../src/presentation/controllers/user';
 import { InvalidParamError, MissingParamError } from '../../../src/presentation/erros';
 import { HelperDbStub } from '../../helper';
 

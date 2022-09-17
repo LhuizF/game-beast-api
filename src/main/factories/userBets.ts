@@ -1,6 +1,6 @@
 import { LogErrorPrismaRepository, prisma } from '../../infra/db/prisma';
 import UserInfosPrisma from '../../infra/db/prisma/utils/userInfos';
-import UserBetsController from '../../presentation/controllers/user/userBets';
+import { UserBetsController } from '../../presentation/controllers/user';
 import { Controller } from '../../presentation/protocols';
 import { LogControllerDecorator } from '../decorator/logsError';
 

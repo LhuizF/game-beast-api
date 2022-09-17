@@ -1,6 +1,6 @@
 import { UserInfos } from '../../../src/data/protocols/userInfos';
 import { UserModel, BetModel } from '../../../src/domain/models';
-import UserBetsController from '../../../src/presentation/controllers/user/userBets';
+import { UserBetsController } from '../../../src/presentation/controllers/user';
 import { MissingParamError } from '../../../src/presentation/erros';
 
 interface SutTypes {

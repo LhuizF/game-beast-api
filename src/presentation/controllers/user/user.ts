@@ -3,7 +3,7 @@ import { MissingParamError, InvalidParamError } from '../../erros';
 import { badRequest, ok, serverError } from '../../helpers';
 import { Controller, HttpRequest, HttpResponse } from '../../protocols';
 
-class UserController implements Controller {
+export class UserController implements Controller {
   constructor(private readonly helperDb: HelperDb) {}
 
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
@@ -27,5 +27,3 @@ class UserController implements Controller {
     }
   }
 }
-
-export default UserController;
