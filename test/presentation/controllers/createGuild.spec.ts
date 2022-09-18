@@ -19,8 +19,8 @@ const makeSut = (): SutTypes => {
   class AddGuildStub implements AddGuild {
     async add(guild: AddGuildModel): Promise<GuildModel> {
       const fakeUser: GuildModel = {
-        id: 1,
-        channel: 123,
+        id: '1',
+        channel: '123',
         name: 'valid_name',
         icon: 'valid_icon',
         created_at: new Date()
@@ -85,8 +85,8 @@ describe('CreateGuild Controller', () => {
 
     const httpRequest = {
       body: {
-        id: 1,
-        channel: 123,
+        id: '1',
+        channel: '123',
         name: 'any_name',
         icon: 'any_icon'
       }
@@ -95,8 +95,8 @@ describe('CreateGuild Controller', () => {
     await sut.handle(httpRequest);
 
     expect(addSpy).toHaveBeenCalledWith({
-      id: 1,
-      channel: 123,
+      id: '1',
+      channel: '123',
       name: 'any_name',
       icon: 'any_icon'
     });
@@ -110,8 +110,8 @@ describe('CreateGuild Controller', () => {
 
     const httpRequest = {
       body: {
-        id: 1,
-        channel: 123,
+        id: '1',
+        channel: ' 123',
         name: 'any_name',
         icon: 'any_icon'
       }
@@ -126,8 +126,8 @@ describe('CreateGuild Controller', () => {
     const { sut } = makeSut();
     const httpRequest = {
       body: {
-        id: 1,
-        channel: 123,
+        id: '1',
+        channel: '123',
         name: 'any_name',
         icon: 'any_icon'
       }
@@ -136,8 +136,8 @@ describe('CreateGuild Controller', () => {
 
     expect(httpResponse.statusCode).toBe(200);
     expect(httpResponse.body).toEqual({
-      id: 1,
-      channel: 123,
+      id: '1',
+      channel: '123',
       name: 'valid_name',
       icon: 'valid_icon',
       created_at: new Date()
@@ -148,8 +148,8 @@ describe('CreateGuild Controller', () => {
     const { sut } = makeSut();
     const httpRequest = {
       body: {
-        id: 1,
-        channel: 123,
+        id: '1',
+        channel: '123',
         name: 'any_name'
       }
     };
@@ -157,41 +157,11 @@ describe('CreateGuild Controller', () => {
 
     expect(httpResponse.statusCode).toBe(200);
     expect(httpResponse.body).toEqual({
-      id: 1,
-      channel: 123,
+      id: '1',
+      channel: '123',
       name: 'valid_name',
       icon: 'valid_icon',
       created_at: new Date()
     });
-  });
-
-  test('should return 400 if id not number', async () => {
-    const { sut } = makeSut();
-    const httpRequest = {
-      body: {
-        id: 'any',
-        channel: 123,
-        name: 'any_name',
-        icon: 'any_icon'
-      }
-    };
-    const httpResponse = await sut.handle(httpRequest);
-
-    expect(httpResponse).toEqual(badRequest(new InvalidParamError('id')));
-  });
-
-  test('should return 400 if channel not number', async () => {
-    const { sut } = makeSut();
-    const httpRequest = {
-      body: {
-        id: 1,
-        channel: '123',
-        name: 'any_name',
-        icon: 'any_icon'
-      }
-    };
-    const httpResponse = await sut.handle(httpRequest);
-
-    expect(httpResponse).toEqual(badRequest(new InvalidParamError('channel')));
   });
 });

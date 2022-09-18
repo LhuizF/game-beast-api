@@ -32,12 +32,6 @@ class SignUpController implements Controller {
         if (!guild) {
           return badRequest(new InvalidParamError('guild not found'));
         }
-
-        const numberFields = ['id_guild', 'id_discord'];
-        for (const field of numberFields) {
-          if (typeof httpRequest.body[field] !== 'number')
-            return badRequest(new InvalidParamError(field));
-        }
       }
 
       if (email) {

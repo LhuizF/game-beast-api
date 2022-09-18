@@ -14,8 +14,8 @@ const makeSut = (): SutTypes => {
   class CreateGuildRepositoryStub implements CreateGuildRepository {
     save(GuildDate: AddGuildModel): Promise<GuildModel> {
       const fakeGuild: GuildModel = {
-        id: 1,
-        channel: 1,
+        id: '1',
+        channel: '1',
         name: 'any_name',
         icon: 'any_icon',
         created_at: new Date()
@@ -35,15 +35,15 @@ describe('CreateGuild Usecase', () => {
     const saveSpy = jest.spyOn(createGuildRepository, 'save');
 
     await sut.add({
-      id: 1,
-      channel: 1,
+      id: '1',
+      channel: '1',
       name: 'any_name',
       icon: 'any_icon'
     });
 
     expect(saveSpy).toHaveBeenCalledWith({
-      id: 1,
-      channel: 1,
+      id: '1',
+      channel: '1',
       name: 'any_name',
       icon: 'any_icon'
     });
@@ -56,8 +56,8 @@ describe('CreateGuild Usecase', () => {
       .mockReturnValueOnce(new Promise((resolve, reject) => reject(new Error())));
 
     const fakeGuild = {
-      id: 1,
-      channel: 1,
+      id: '1',
+      channel: '1',
       name: 'any_name',
       icon: 'any_icon'
     };
@@ -71,8 +71,8 @@ describe('CreateGuild Usecase', () => {
     const { sut } = makeSut();
 
     const fakeGuild = {
-      id: 1,
-      channel: 1,
+      id: '1',
+      channel: '1',
       name: 'any_name',
       icon: 'any_icon'
     };
@@ -80,8 +80,8 @@ describe('CreateGuild Usecase', () => {
     const guild = await sut.add(fakeGuild);
 
     expect(guild).toEqual({
-      id: 1,
-      channel: 1,
+      id: '1',
+      channel: '1',
       name: 'any_name',
       icon: 'any_icon',
       created_at: new Date(Date.now())

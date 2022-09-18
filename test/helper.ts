@@ -9,8 +9,8 @@ export class HelperDbStub implements HelperDb {
         id: 'any_id',
         name: 'any_name',
         points: 100,
-        id_guild: 123,
-        id_discord: 312,
+        id_guild: '123',
+        id_discord: '312',
         email: 'any_email',
         password: 'hashed_password',
         avatar: 'any_avatar',
@@ -26,10 +26,10 @@ export class HelperDbStub implements HelperDb {
   async getGuild(id: number): Promise<GuildModel> {
     return await new Promise((resolve) =>
       resolve({
-        id: 1,
+        id: '1',
         name: 'any_name',
         icon: 'any_icon',
-        channel: 3,
+        channel: '3',
         created_at: new Date()
       })
     );

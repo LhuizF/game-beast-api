@@ -1,10 +1,10 @@
 import { GuildModel } from '../models/guild';
 
 export interface AddGuildModel {
-  id: number;
+  id: string;
   name: string;
   icon: string;
-  channel: number;
+  channel: string;
 }
 
 export interface AddGuild {

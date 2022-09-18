@@ -1,7 +1,7 @@
 export interface GuildModel {
-  id: number;
+  id: string;
   name: string;
   icon: string;
-  channel: number;
+  channel: string;
   created_at: Date;
 }

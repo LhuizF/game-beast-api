@@ -59,8 +59,8 @@ describe('SaveUserPrismaRepository prisma', () => {
     const user = {
       id: 'any_id',
       name: 'any_name',
-      id_guild: 123,
-      id_discord: 312,
+      id_guild: '123',
+      id_discord: '312',
       email: null,
       password: null,
       points: 100,
@@ -72,8 +72,8 @@ describe('SaveUserPrismaRepository prisma', () => {
 
     const newUser = await sut.save({
       name: 'any_name',
-      id_guild: 123,
-      id_discord: 312,
+      id_guild: '123',
+      id_discord: '312',
       avatar: 'any_url'
     });
 
@@ -81,8 +81,8 @@ describe('SaveUserPrismaRepository prisma', () => {
       expect.objectContaining({
         id: 'any_id',
         name: 'any_name',
-        id_guild: 123,
-        id_discord: 312,
+        id_guild: '123',
+        id_discord: '312',
         avatar: 'any_url',
         points: 100,
         created_at: new Date(Date.now())

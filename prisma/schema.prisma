@@ -14,8 +14,8 @@ model User {
   id         String   @id @default(uuid())
   name       String
   points     Int      @default(100)
-  id_guild   Int?
-  id_discord Int?
+  id_guild   String?
+  id_discord String?
   email      String?  @unique
   password   String?
   avatar     String
@@ -28,10 +28,10 @@ model User {
 }
 
 model Guild {
-  id         Int      @id @unique
+  id         String      @id @unique
   name       String
   icon       String
-  channel    Int
+  channel    String
   created_at DateTime @default(now())
 
   users User[]

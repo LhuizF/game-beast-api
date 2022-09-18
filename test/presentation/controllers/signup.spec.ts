@@ -36,8 +36,8 @@ const makeSut = (): SutTypes => {
         id: 'valid_id',
         name: 'valid_name',
         points: 100,
-        id_guild: 123,
-        id_discord: 312,
+        id_guild: '123',
+        id_discord: '312',
         avatar: 'valid_avatar',
         email: 'valid_email',
         password: 'valid_password',
@@ -93,7 +93,7 @@ describe('SignUp Controller', () => {
     const httpRequest = {
       body: {
         name: 'any_name',
-        id_guild: 123
+        id_guild: '123'
       }
     };
     const httpResponse = await sut.handle(httpRequest);
@@ -208,8 +208,8 @@ describe('SignUp Controller', () => {
     const httpRequest = {
       body: {
         name: 'any_name',
-        id_guild: 123,
-        id_discord: 312,
+        id_guild: '123',
+        id_discord: '312',
         avatar: 'any_url_avatar'
       }
     };
@@ -218,8 +218,8 @@ describe('SignUp Controller', () => {
     expect(addSpy).toHaveBeenCalledWith(
       expect.objectContaining({
         name: 'any_name',
-        id_guild: 123,
-        id_discord: 312,
+        id_guild: '123',
+        id_discord: '312',
         avatar: 'any_url_avatar'
       })
     );
@@ -275,8 +275,8 @@ describe('SignUp Controller', () => {
     const httpRequest = {
       body: {
         name: 'any_name',
-        id_guild: 123,
-        id_discord: 312,
+        id_guild: '123',
+        id_discord: '312',
         avatar: 'any_url_avatar'
       }
     };
@@ -287,8 +287,8 @@ describe('SignUp Controller', () => {
       id: 'valid_id',
       name: 'valid_name',
       points: 100,
-      id_guild: 123,
-      id_discord: 312,
+      id_guild: '123',
+      id_discord: '312',
       email: 'valid_email',
       password: 'valid_password',
       avatar: 'valid_avatar',
@@ -314,41 +314,13 @@ describe('SignUp Controller', () => {
       id: 'valid_id',
       name: 'valid_name',
       points: 100,
-      id_guild: 123,
-      id_discord: 312,
+      id_guild: '123',
+      id_discord: '312',
       email: 'valid_email',
       password: 'valid_password',
       avatar: 'valid_avatar',
       created_at: new Date()
     });
-  });
-
-  test('should return 400 if id_guild not number', async () => {
-    const { sut } = makeSut();
-    const httpRequest = {
-      body: {
-        name: 'any_name',
-        id_guild: '123',
-        id_discord: 312
-      }
-    };
-    const httpResponse = await sut.handle(httpRequest);
-
-    expect(httpResponse).toEqual(badRequest(new InvalidParamError('id_guild')));
-  });
-
-  test('should return 400 if id_discord not number', async () => {
-    const { sut } = makeSut();
-    const httpRequest = {
-      body: {
-        name: 'any_name',
-        id_guild: 123,
-        id_discord: '312'
-      }
-    };
-    const httpResponse = await sut.handle(httpRequest);
-
-    expect(httpResponse).toEqual(badRequest(new InvalidParamError('id_discord')));
   });
 
   test('should call getGuild with correct id_guild ', async () => {
@@ -358,14 +330,14 @@ describe('SignUp Controller', () => {
     const httpRequest = {
       body: {
         name: 'any_name',
-        id_guild: 123,
-        id_discord: 312
+        id_guild: '123',
+        id_discord: '312'
       }
     };
 
     await sut.handle(httpRequest);
 
-    expect(getBeastSpy).toHaveBeenCalledWith(123);
+    expect(getBeastSpy).toHaveBeenCalledWith('123');
   });
 
   test('should return 400 if guild not found', async () => {
@@ -373,8 +345,8 @@ describe('SignUp Controller', () => {
     const httpRequest = {
       body: {
         name: 'any_name',
-        id_guild: 123,
-        id_discord: 312
+        id_guild: '123',
+        id_discord: '312'
       }
     };
 

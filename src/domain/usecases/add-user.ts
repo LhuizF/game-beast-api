@@ -6,8 +6,8 @@ export interface AddUserModel extends UserDiscordModel, UserEmailModel {
 }
 
 export interface UserDiscordModel {
-  id_guild?: number;
-  id_discord?: number;
+  id_guild?: string;
+  id_discord?: string;
 }
 
 export interface UserEmailModel {

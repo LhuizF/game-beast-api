@@ -16,8 +16,8 @@ const makeSut = (): SutTypes => {
     id: 'any_id',
     name: 'any_name',
     points: 100,
-    id_guild: 123,
-    id_discord: 312,
+    id_guild: '123',
+    id_discord: '312',
     email: 'any_email',
     password: 'hashed_password',
     avatar: 'any_avatar',
@@ -107,8 +107,8 @@ describe('AddUser Usecase', () => {
 
     const fakeUser = {
       name: 'any_name',
-      id_guild: 123,
-      id_discord: 312,
+      id_guild: '123',
+      id_discord: '312',
       avatar: 'any_avatar'
     };
 
@@ -116,8 +116,8 @@ describe('AddUser Usecase', () => {
 
     expect(saveSpy).toHaveBeenCalledWith({
       name: 'any_name',
-      id_guild: 123,
-      id_discord: 312,
+      id_guild: '123',
+      id_discord: '312',
       avatar: 'any_avatar'
     });
   });
@@ -128,8 +128,8 @@ describe('AddUser Usecase', () => {
 
     const fakeUser = {
       name: 'any_name',
-      id_guild: 123,
-      id_discord: 312,
+      id_guild: '123',
+      id_discord: '312',
       avatar: 'any_avatar'
     };
 
@@ -146,8 +146,8 @@ describe('AddUser Usecase', () => {
 
     const fakeUser = {
       name: 'any_name',
-      id_guild: 123,
-      id_discord: 312,
+      id_guild: '123',
+      id_discord: '312',
       avatar: 'any_avatar'
     };
 
@@ -172,8 +172,8 @@ describe('AddUser Usecase', () => {
       id: 'any_id',
       name: 'any_name',
       points: 100,
-      id_guild: 123,
-      id_discord: 312,
+      id_guild: '123',
+      id_discord: '312',
       email: 'any_email',
       password: 'hashed_password',
       avatar: 'any_avatar',

@@ -21,8 +21,8 @@ describe('CreateGuildPrismaRepository', () => {
     const { sut, prismaMock } = makeSut();
 
     const guild = {
-      id: 1,
-      channel: 1,
+      id: '1',
+      channel: '1',
       name: 'any_name',
       icon: 'any_icon',
       created_at: new Date(Date.now())
@@ -31,15 +31,15 @@ describe('CreateGuildPrismaRepository', () => {
     prismaMock.guild.create.mockResolvedValue(guild);
 
     const newGuild = await sut.save({
-      id: 1,
-      channel: 1,
+      id: '1',
+      channel: '1',
       name: 'any_name',
       icon: 'any_icon'
     });
 
     expect(newGuild).toEqual({
-      id: 1,
-      channel: 1,
+      id: '1',
+      channel: '1',
       name: 'any_name',
       icon: 'any_icon',
       created_at: new Date(Date.now())
