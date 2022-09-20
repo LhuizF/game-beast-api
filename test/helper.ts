@@ -3,6 +3,21 @@ import { BeastModel, GuildModel, UserModel, GameModel } from '../src/domain/mode
 import beatMock from './mocks/beasts.json';
 
 export class HelperDbStub implements HelperDb {
+  async getUserDiscord(guildId: string, discordId: string): Promise<UserModel | null> {
+    return await new Promise((resolve) =>
+      resolve({
+        id: 'any_id',
+        name: 'any_name',
+        points: 100,
+        id_guild: '123',
+        id_discord: '312',
+        email: null,
+        password: null,
+        avatar: 'any_avatar',
+        created_at: new Date()
+      })
+    );
+  }
   async getUser(id: string): Promise<UserModel> {
     return await new Promise((resolve) =>
       resolve({
@@ -23,7 +38,7 @@ export class HelperDbStub implements HelperDb {
     return await new Promise((resolve) => resolve({}));
   }
 
-  async getGuild(id: number): Promise<GuildModel> {
+  async getGuild(id: string): Promise<GuildModel> {
     return await new Promise((resolve) =>
       resolve({
         id: '1',

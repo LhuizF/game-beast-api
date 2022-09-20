@@ -3,12 +3,21 @@ import { UserModel, GuildModel, BeastModel, GameModel } from '../../../../domain
 import { prisma } from './client';
 
 export class PrismaHelper implements HelperDb {
-  async getGuild(id: number): Promise<GuildModel | null> {
+  async getGuild(id: string): Promise<GuildModel | null> {
     return await prisma.guild.findUnique({ where: { id } });
   }
 
   async getUser(id: string): Promise<UserModel | null> {
     return await prisma.user.findUnique({ where: { id } });
+  }
+
+  async getUserDiscord(guildId: string, discordId: string): Promise<UserModel | null> {
+    return await prisma.user.findFirst({
+      where: {
+        id_guild: guildId,
+        id_discord: discordId
+      }
+    });
   }
 
   async getBeast(id: number): Promise<BeastModel | null> {

@@ -1,8 +1,9 @@
 import { UserModel, GuildModel, BeastModel, GameModel } from '../../domain/models';
 
 export interface HelperDb {
-  getGuild(id: number): Promise<GuildModel | null>;
+  getGuild(id: string): Promise<GuildModel | null>;
   getUser(id: string): Promise<UserModel | null>;
+  getUserDiscord(guildId: string, discordId: string): Promise<UserModel | null>;
   getBeast(id: number): Promise<BeastModel | null>;
   getAllBeast(): Promise<BeastModel[]>;
   getCurrentGameId(): Promise<number>;
