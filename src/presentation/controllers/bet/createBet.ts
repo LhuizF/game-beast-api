@@ -9,7 +9,7 @@ class CreateBetController implements Controller {
 
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
-      const RequiredFields = ['id_beast', 'points', 'platform'];
+      const RequiredFields = ['id_beast', 'points', 'platform', 'id_guild', 'id_discord'];
 
       for (const field of RequiredFields) {
         if (!httpRequest.body[field]) {
@@ -17,11 +17,10 @@ class CreateBetController implements Controller {
         }
       }
 
-      const { guild_id, id_discord } = httpRequest.params;
-      const { id_beast, points, platform } = httpRequest.body;
+      const { id_beast, points, platform, id_guild, id_discord } = httpRequest.body;
 
       const beast = await this.helperDb.getBeast(id_beast);
-      const user = await this.helperDb.getUserDiscord(guild_id, id_discord);
+      const user = await this.helperDb.getUserDiscord(id_guild, id_discord);
       const id_game = await this.helperDb.getCurrentGameId();
 
       if (!id_game) {

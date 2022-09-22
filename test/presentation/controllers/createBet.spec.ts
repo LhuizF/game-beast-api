@@ -44,11 +44,9 @@ const makeSut = (): SutTypes => {
 
 const makeBet = () => {
   return {
-    params: {
-      guild_id: 'any_id',
-      id_discord: 'any_id'
-    },
     body: {
+      id_guild: 'any_id',
+      id_discord: 'any_id',
       id_beast: 1,
       points: 10,
       platform: 'any_platform'
@@ -57,14 +55,42 @@ const makeBet = () => {
 };
 
 describe('CreateBet Controller', () => {
+  test('should return 400 if no id_guild is provided', async () => {
+    const { sut } = makeSut();
+    const httpRequest = {
+      body: {
+        id_discord: 'any_id',
+        id_beast: 1,
+        points: 10,
+        platform: 'any_platform'
+      }
+    };
+
+    const httpResponse = await sut.handle(httpRequest);
+    expect(httpResponse).toEqual(badRequest(new MissingParamError('id_guild')));
+  });
+
+  test('should return 400 if no id_discord is provided', async () => {
+    const { sut } = makeSut();
+    const httpRequest = {
+      body: {
+        id_guild: 'any_id',
+        id_beast: 1,
+        points: 10,
+        platform: 'any_platform'
+      }
+    };
+
+    const httpResponse = await sut.handle(httpRequest);
+    expect(httpResponse).toEqual(badRequest(new MissingParamError('id_discord')));
+  });
+
   test('should return 400 if no id_beast is provided', async () => {
     const { sut } = makeSut();
     const httpRequest = {
-      params: {
-        guild_id: 'any_id',
-        id_discord: 'any_id'
-      },
       body: {
+        id_guild: 'any_id',
+        id_discord: 'any_id',
         points: 10,
         platform: 'any_platform'
       }
@@ -88,11 +114,9 @@ describe('CreateBet Controller', () => {
   test('should return 400 if no points is provided', async () => {
     const { sut } = makeSut();
     const httpRequest = {
-      params: {
-        guild_id: 'any_id',
-        id_discord: 'any_id'
-      },
       body: {
+        id_guild: 'any_id',
+        id_discord: 'any_id',
         id_beast: 1,
         points: 0,
         platform: 'any_platform'
@@ -106,11 +130,9 @@ describe('CreateBet Controller', () => {
   test('should return 400 if no platform is provided', async () => {
     const { sut } = makeSut();
     const httpRequest = {
-      params: {
-        guild_id: 'any_id',
-        id_discord: 'any_id'
-      },
       body: {
+        id_guild: 'any_id',
+        id_discord: 'any_id',
         id_beast: 1,
         points: 10
       }
@@ -163,7 +185,7 @@ describe('CreateBet Controller', () => {
     expect(httpResponse.body).toEqual(new ServerError('null'));
   });
 
-  test('should call getUserDiscord with correct guild_id and id_discord', async () => {
+  test('should call getUserDiscord with correct id_guild and id_discord', async () => {
     const { sut, helperDbStub } = makeSut();
     const getUserDiscordStub = jest.spyOn(helperDbStub, 'getUserDiscord');
     await sut.handle(makeBet());
