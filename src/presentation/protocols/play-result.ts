@@ -2,7 +2,7 @@ import { BeastModel } from '../../domain/models';
 
 export interface GameResult extends BetsResult {
   id_game: number;
-  beastWin: BeastModel;
+  beastWin: BeastModel | null;
 }
 
 export interface BetsResult {

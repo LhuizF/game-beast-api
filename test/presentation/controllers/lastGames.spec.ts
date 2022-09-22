@@ -2,6 +2,7 @@ import { LastGamesController } from '../../../src/presentation/controllers/game'
 import { ok, serverError } from '../../../src/presentation/helpers';
 import { HelperDb } from '../../../src/data/protocols/helperDb';
 import { HelperDbStub } from '../../helper';
+import { GameResult } from '../../../src/presentation/protocols/play-result';
 
 jest.useFakeTimers().setSystemTime(new Date());
 
@@ -17,22 +18,40 @@ const makeSut = (): SutTypes => {
 };
 
 describe('CreateBet Controller', () => {
-  test('should call getLastThreeGames ', async () => {
+  test('should call getLastGames with 3 if query max is not provided', async () => {
     const { sut, helperDbStub } = makeSut();
-    const getLastThreeGamesSpy = jest.spyOn(helperDbStub, 'getLastThreeGames');
+    const getLastGamesSpy = jest.spyOn(helperDbStub, 'getLastGames');
 
-    await sut.handle();
+    await sut.handle({});
 
-    expect(getLastThreeGamesSpy).toHaveBeenCalled();
+    expect(getLastGamesSpy).toHaveBeenCalledWith(3);
   });
 
-  test('should return 400 if getLastThreeGames throws', async () => {
+  test('should call getLastGames with max if query max is provided', async () => {
     const { sut, helperDbStub } = makeSut();
-    jest.spyOn(helperDbStub, 'getLastThreeGames').mockImplementationOnce(async () => {
+    const getLastGamesSpy = jest.spyOn(helperDbStub, 'getLastGames');
+
+    await sut.handle({ query: { max: 10 } });
+
+    expect(getLastGamesSpy).toHaveBeenCalledWith(10);
+  });
+
+  test('should call getBeast with games id', async () => {
+    const { sut, helperDbStub } = makeSut();
+    const getBeastSpy = jest.spyOn(helperDbStub, 'getBeast');
+
+    await sut.handle({});
+
+    expect(getBeastSpy).toHaveBeenCalledWith(1);
+  });
+
+  test('should return 400 if getLastGames throws', async () => {
+    const { sut, helperDbStub } = makeSut();
+    jest.spyOn(helperDbStub, 'getLastGames').mockImplementationOnce(async () => {
       return new Promise((resolve, reject) => reject(new Error()));
     });
 
-    const response = await sut.handle();
+    const response = await sut.handle({});
 
     expect(response).toEqual(serverError(''));
   });
@@ -40,10 +59,28 @@ describe('CreateBet Controller', () => {
   test('should return 200 if success', async () => {
     const { sut } = makeSut();
 
-    const response = await sut.handle();
+    const response = await sut.handle({});
 
-    expect(response).toEqual(
-      ok([{ id: 1, time: 1, result: 0, created_at: new Date(), update_at: new Date() }])
-    );
+    const fakeResult: GameResult = {
+      id_game: 1,
+      losers: 1,
+      totalBets: 1,
+      beastWin: {
+        id: 1,
+        name: 'any',
+        times_win: 1
+      },
+      winners: [
+        {
+          id: '1',
+          avatar: 'any',
+          name: 'any_name',
+          pointsBet: 10,
+          pointsReceived: 60
+        }
+      ]
+    };
+
+    expect(response).toEqual(ok([fakeResult]));
   });
 });

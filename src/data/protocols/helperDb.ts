@@ -1,4 +1,11 @@
-import { UserModel, GuildModel, BeastModel, GameModel } from '../../domain/models';
+import {
+  UserModel,
+  GuildModel,
+  BeastModel,
+  GameModel,
+  GameWithBet
+} from '../../domain/models';
+import { UserWin } from '../../presentation/protocols/play-result';
 
 export interface HelperDb {
   getGuild(id: string): Promise<GuildModel | null>;
@@ -8,5 +15,6 @@ export interface HelperDb {
   getAllBeast(): Promise<BeastModel[]>;
   getCurrentGameId(): Promise<number>;
   getCurrentGame(): Promise<GameModel | null>;
-  getLastThreeGames(): Promise<GameModel[]>;
+  getLastGames(max: number): Promise<GameWithBet[]>;
+  getBetsByGame(id: number): Promise<{ winners: UserWin[]; losers: number }>;
 }
