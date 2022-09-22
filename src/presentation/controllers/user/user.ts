@@ -8,13 +8,16 @@ export class UserController implements Controller {
 
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
-      const { id_user } = httpRequest.params;
+      const { id_guild, id_discord } = httpRequest.params;
+      const fields = ['id_guild', 'id_discord'];
 
-      if (!id_user) {
-        return badRequest(new MissingParamError('id_user'));
+      for (const field of fields) {
+        if (!httpRequest.params[field]) {
+          return badRequest(new MissingParamError(field));
+        }
       }
 
-      const user = await this.helperDb.getUser(id_user);
+      const user = await this.helperDb.getUserDiscord(id_guild, id_discord);
 
       if (!user) {
         return badRequest(new InvalidParamError('id_user'));

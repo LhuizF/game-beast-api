@@ -16,33 +16,42 @@ const makeSut = (): SutTypes => {
 };
 
 describe('UserBets Controller', () => {
-  test('should return 400 if no id_user is provided', async () => {
+  test('should return 400 if no id_guild is provided', async () => {
     const { sut } = makeSut();
 
-    const response = await sut.handle({ params: { id_user: '' } });
+    const response = await sut.handle({ params: { id_guild: '', id_discord: 'any' } });
 
     expect(response.statusCode).toEqual(400);
-    expect(response.body).toEqual(new MissingParamError('id_user'));
+    expect(response.body).toEqual(new MissingParamError('id_guild'));
   });
 
-  test('should call getUser with correct id', async () => {
+  test('should return 400 if no id_discord is provided', async () => {
+    const { sut } = makeSut();
+
+    const response = await sut.handle({ params: { id_guild: 'any', id_discord: '' } });
+
+    expect(response.statusCode).toEqual(400);
+    expect(response.body).toEqual(new MissingParamError('id_discord'));
+  });
+
+  test('should call getUserDiscord with correct id', async () => {
     const { sut, helperDbStub } = makeSut();
 
-    const getUserSpy = jest.spyOn(helperDbStub, 'getUser');
+    const getUserDiscordSpy = jest.spyOn(helperDbStub, 'getUserDiscord');
 
-    await sut.handle({ params: { id_user: 'id_any' } });
+    await sut.handle({ params: { id_guild: 'any', id_discord: 'any' } });
 
-    expect(getUserSpy).toHaveBeenCalledWith('id_any');
+    expect(getUserDiscordSpy).toHaveBeenCalledWith('any', 'any');
   });
 
   test('should return 400 if no id_user valid', async () => {
     const { sut, helperDbStub } = makeSut();
 
     jest
-      .spyOn(helperDbStub, 'getUser')
+      .spyOn(helperDbStub, 'getUserDiscord')
       .mockReturnValueOnce(new Promise((resolve) => resolve(null)));
 
-    const response = await sut.handle({ params: { id_user: 'id_any' } });
+    const response = await sut.handle({ params: { id_guild: 'any', id_discord: 'any' } });
 
     expect(response.statusCode).toEqual(400);
     expect(response.body).toEqual(new InvalidParamError('id_user'));
@@ -51,7 +60,7 @@ describe('UserBets Controller', () => {
   test('should return 200 if id_user is provided', async () => {
     const { sut } = makeSut();
 
-    const response = await sut.handle({ params: { id_user: 'id' } });
+    const response = await sut.handle({ params: { id_guild: 'any', id_discord: 'any' } });
 
     expect(response.statusCode).toEqual(200);
     expect(response.body).toBeTruthy();
@@ -60,11 +69,11 @@ describe('UserBets Controller', () => {
   test('should return 500 if getUser throws', async () => {
     const { sut, helperDbStub } = makeSut();
 
-    jest.spyOn(helperDbStub, 'getUser').mockImplementationOnce(async () => {
+    jest.spyOn(helperDbStub, 'getUserDiscord').mockImplementationOnce(async () => {
       return new Promise((resolve, reject) => reject(new Error()));
     });
 
-    const response = await sut.handle({ params: { id_user: 'id' } });
+    const response = await sut.handle({ params: { id_guild: 'any', id_discord: 'any' } });
 
     expect(response.statusCode).toEqual(500);
     expect(response.body).toBeTruthy();
