@@ -34,8 +34,14 @@ export class HelperDbStub implements HelperDb {
     );
   }
 
-  async getBeast(id: number): Promise<any> {
-    return await new Promise((resolve) => resolve({}));
+  async getBeast(id: number): Promise<BeastModel> {
+    return await new Promise((resolve) =>
+      resolve({
+        id: 1,
+        name: 'any',
+        times_win: 1
+      })
+    );
   }
 
   async getGuild(id: string): Promise<GuildModel> {

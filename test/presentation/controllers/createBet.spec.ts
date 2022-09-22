@@ -136,7 +136,7 @@ describe('CreateBet Controller', () => {
   });
 
   test('should return 200 if valid data is provided', async () => {
-    const { sut } = makeSut();
+    const { sut, helperDbStub } = makeSut();
 
     const bet = await sut.handle(makeBet());
 
@@ -144,12 +144,10 @@ describe('CreateBet Controller', () => {
       ok({
         id: 1,
         id_user: 'any_id',
-        id_beast: 1,
+        beast: 'any',
         id_game: 1,
         status: 'pending',
-        platform: 'discord',
-        points: 10,
-        created_at: new Date()
+        points: 10
       })
     );
   });

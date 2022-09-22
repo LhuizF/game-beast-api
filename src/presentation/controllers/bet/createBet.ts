@@ -48,7 +48,14 @@ class CreateBetController implements Controller {
         id_game
       });
 
-      return ok(bet);
+      return ok({
+        id: bet.id,
+        id_user: user.id,
+        beast: beast.name,
+        id_game,
+        status: bet.status,
+        points
+      });
     } catch (error) {
       console.log(error);
       return serverError(error);
