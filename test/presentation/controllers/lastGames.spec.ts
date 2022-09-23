@@ -78,7 +78,9 @@ describe('CreateBet Controller', () => {
           pointsBet: 10,
           pointsReceived: 60
         }
-      ]
+      ],
+      create_at: new Date(),
+      date: new Date()
     };
 
     expect(response).toEqual(ok([fakeResult]));

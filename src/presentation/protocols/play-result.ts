@@ -3,6 +3,8 @@ import { BeastModel } from '../../domain/models';
 export interface GameResult extends BetsResult {
   id_game: number;
   beastWin: BeastModel | null;
+  create_at: Date;
+  date: Date;
 }
 
 export interface BetsResult {

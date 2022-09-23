@@ -9,8 +9,6 @@ export class LastGamesController implements Controller {
     try {
       const max = Number(httpRequest.query?.max) || 3;
 
-      console.log('max->', max);
-
       const games = await this.helperDb.getLastGames(max);
 
       const gamesWithBests: GameResult[] = await Promise.all(
@@ -24,7 +22,9 @@ export class LastGamesController implements Controller {
             totalBets: game.bets.length,
             beastWin,
             winners,
-            losers
+            losers,
+            create_at: game.created_at,
+            date: game.update_at
           };
         })
       );
