@@ -25,7 +25,7 @@ const makeSut = (): SutTypes => {
         })
       );
     }
-    getLastThreeBets(id: string): Promise<BetModel[] | []> {
+    getLastBets(id: string): Promise<BetModel[] | []> {
       const bet: BetModel = {
         id: 1,
         status: 'any',
@@ -47,29 +47,50 @@ const makeSut = (): SutTypes => {
 };
 
 describe('UserBets Controller', () => {
-  test('should return 400 if no id_user is provided', async () => {
+  test('should return 400 if no id_guild is provided', async () => {
     const { sut } = makeSut();
 
-    const response = await sut.handle({ params: { id_user: '' } });
+    const response = await sut.handle({ params: { id_guild: '', id_discord: 'any' } });
 
     expect(response.statusCode).toEqual(400);
-    expect(response.body).toEqual(new MissingParamError('id_user'));
+    expect(response.body).toEqual(new MissingParamError('id_guild'));
   });
 
-  test('should call getLastThreeBetsSpy', async () => {
+  test('should return 400 if no id_discord is provided', async () => {
+    const { sut } = makeSut();
+
+    const response = await sut.handle({ params: { id_guild: 'any', id_discord: '' } });
+
+    expect(response.statusCode).toEqual(400);
+    expect(response.body).toEqual(new MissingParamError('id_discord'));
+  });
+
+  test('should call getLastBets with max if query max is provided', async () => {
+    const { sut, userInfosStub } = makeSut();
+    const getLastGamesSpy = jest.spyOn(userInfosStub, 'getLastBets');
+
+    await sut.handle({
+      params: { id_guild: 'any', id_discord: 'any' },
+      query: { max: 5 }
+    });
+
+    expect(getLastGamesSpy).toHaveBeenCalledWith('any', 'any', 5);
+  });
+
+  test('should call getLastBetsSpy with correct values', async () => {
     const { sut, userInfosStub } = makeSut();
 
-    const getLastThreeBetsSpy = jest.spyOn(userInfosStub, 'getLastThreeBets');
+    const getLastBetsSpy = jest.spyOn(userInfosStub, 'getLastBets');
 
-    await sut.handle({ params: { id_user: 'id' } });
+    await sut.handle({ params: { id_guild: 'any', id_discord: 'any' } });
 
-    expect(getLastThreeBetsSpy).toHaveBeenCalled();
+    expect(getLastBetsSpy).toHaveBeenCalledWith('any', 'any', 3);
   });
 
   test('should return 200 if id_user is provided', async () => {
     const { sut } = makeSut();
 
-    const response = await sut.handle({ params: { id_user: 'id' } });
+    const response = await sut.handle({ params: { id_guild: 'any', id_discord: 'any' } });
 
     expect(response.statusCode).toEqual(200);
     expect(response.body).toBeTruthy();
@@ -78,11 +99,11 @@ describe('UserBets Controller', () => {
   test('should return 500 if userInfosStub throws', async () => {
     const { sut, userInfosStub } = makeSut();
 
-    jest.spyOn(userInfosStub, 'getLastThreeBets').mockImplementationOnce(async () => {
+    jest.spyOn(userInfosStub, 'getLastBets').mockImplementationOnce(async () => {
       return new Promise((resolve, reject) => reject(new Error()));
     });
 
-    const response = await sut.handle({ params: { id_user: 'id' } });
+    const response = await sut.handle({ params: { id_guild: 'any', id_discord: 'any' } });
 
     expect(response.statusCode).toEqual(500);
     expect(response.body).toBeTruthy();

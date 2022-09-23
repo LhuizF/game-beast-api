@@ -8,13 +8,18 @@ export class UserBetsController implements Controller {
 
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
-      const { id_user } = httpRequest.params;
+      const max = Number(httpRequest.query?.max) || 3;
+      const { id_guild, id_discord } = httpRequest.params;
 
-      if (!id_user) {
-        return badRequest(new MissingParamError('id_user'));
+      const fields = ['id_guild', 'id_discord'];
+
+      for (const field of fields) {
+        if (!httpRequest.params[field]) {
+          return badRequest(new MissingParamError(field));
+        }
       }
 
-      const bets = await this.userInfos.getLastThreeBets(id_user);
+      const bets = await this.userInfos.getLastBets(id_guild, id_discord, max);
 
       return ok(bets);
     } catch (error) {

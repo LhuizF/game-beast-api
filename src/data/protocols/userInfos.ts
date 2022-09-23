@@ -2,5 +2,9 @@ import { UserModel, BetModel } from '../../domain/models';
 
 export interface UserInfos {
   getAllInfos(id: string): Promise<UserModel | null>;
-  getLastThreeBets(id: string): Promise<BetModel[] | []>;
+  getLastBets(
+    id_guild: string,
+    id_discord: string,
+    max: number
+  ): Promise<BetModel[] | []>;
 }

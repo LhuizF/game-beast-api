@@ -9,11 +9,14 @@ class UserInfosPrisma implements UserInfos {
       include: { Bets: true, Guild: true }
     });
   }
-  async getLastThreeBets(id: string): Promise<BetModel[] | []> {
+  // eslint-disable-next-line
+  async getLastBets(id_guild: string, id_discord: string, max: number): Promise<BetModel[] | []> {
     return await prisma.bet.findMany({
-      where: { id_user: id },
+      where: {
+        User: { id_guild, id_discord }
+      },
       orderBy: { created_at: 'desc' },
-      take: 3
+      take: max
     });
   }
 }
