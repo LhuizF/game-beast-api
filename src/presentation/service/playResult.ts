@@ -13,9 +13,9 @@ class PlayResultService implements PlayResult {
 
   async play(): Promise<Result> {
     const beasts = await this.helperDb.getAllBeast();
-    const game = await this.helperDb.getCurrentGameId();
+    const game = await this.helperDb.getCurrentGame();
 
-    if (beasts.length === 0) {
+    if (beasts.length === 0 || !game) {
       console.log('vai ser um erro');
       return {
         isSuccess: false,
@@ -31,18 +31,20 @@ class PlayResultService implements PlayResult {
 
     const beast = this.beastSelected(beasts);
 
-    const { totalBets, winners, losers } = await this.winBeast.addWin(game, beast.id);
+    const { totalBets, winners, losers } = await this.winBeast.addWin(game.id, beast.id);
 
     await this.crateGame.nextGame();
 
     return {
       isSuccess: true,
       data: {
-        id_game: game,
+        id_game: game.id,
         beastWin: beast,
         totalBets,
         winners,
-        losers
+        losers,
+        create_at: game.created_at,
+        date: new Date()
       }
     };
   }

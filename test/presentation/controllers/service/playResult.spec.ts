@@ -56,12 +56,12 @@ describe('PlayResult Service', () => {
     expect(getAllBeastSpy).toHaveBeenCalled();
   });
 
-  test('should call getCurrentGameId', async () => {
+  test('should call getCurrentGame', async () => {
     const { sut, helperDbStub } = makeSut();
-    const getCurrentGameIdSpy = jest.spyOn(helperDbStub, 'getCurrentGameId');
+    const getCurrentGameSpy = jest.spyOn(helperDbStub, 'getCurrentGame');
     await sut.play();
 
-    expect(getCurrentGameIdSpy).toHaveBeenCalled();
+    expect(getCurrentGameSpy).toHaveBeenCalled();
   });
 
   test('should call beastSelected current values', async () => {
@@ -87,9 +87,17 @@ describe('PlayResult Service', () => {
   test('should call addWin current values', async () => {
     const { sut, winBeastStub, helperDbStub } = makeSut();
     const addWinSpy = jest.spyOn(winBeastStub, 'addWin');
-    jest
-      .spyOn(helperDbStub, 'getCurrentGameId')
-      .mockReturnValueOnce(new Promise((resolve) => resolve(1)));
+    jest.spyOn(helperDbStub, 'getCurrentGame').mockReturnValueOnce(
+      new Promise((resolve) =>
+        resolve({
+          id: 1,
+          result: 0,
+          time: 1,
+          created_at: new Date(),
+          update_at: new Date()
+        })
+      )
+    );
 
     jest
       .spyOn(sut, 'beastSelected')
@@ -114,7 +122,13 @@ describe('PlayResult Service', () => {
         date: new Date(),
         body: {
           beasts: [],
-          game: 1
+          game: {
+            id: 1,
+            result: 0,
+            time: 1,
+            created_at: new Date(),
+            update_at: new Date()
+          }
         }
       }
     });
