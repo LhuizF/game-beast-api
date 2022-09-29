@@ -1,5 +1,4 @@
 import { AddGuild } from '../../../domain/usecases/add-guild';
-import { MissingParamError } from '../../erros';
 import { badRequest, ok, serverError } from '../../helpers';
 import { Controller, HttpRequest, HttpResponse } from '../../protocols';
 
@@ -8,16 +7,14 @@ class CreateGuildController implements Controller {
 
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
-      const fields = ['id', 'channel'];
+      const fields = ['id', 'channel', 'name'];
 
       for (const field of fields) {
         if (!httpRequest.body[field]) {
-          return badRequest(new MissingParamError(field));
+          return badRequest(`${field} is required`);
         }
       }
       const { id, name, channel } = httpRequest.body;
-
-      if (!name) return badRequest(new MissingParamError('name'));
 
       const icon =
         httpRequest.body.icon ||

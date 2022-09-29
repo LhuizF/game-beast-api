@@ -1,5 +1,4 @@
 import { UserInfos } from '../../../data/protocols/userInfos';
-import { MissingParamError } from '../../erros';
 import { badRequest, ok, serverError } from '../../helpers';
 import { Controller, HttpRequest, HttpResponse } from '../../protocols';
 
@@ -15,7 +14,7 @@ export class UserBetsController implements Controller {
 
       for (const field of fields) {
         if (!httpRequest.params[field]) {
-          return badRequest(new MissingParamError(field));
+          return badRequest(`${field} is required`);
         }
       }
 

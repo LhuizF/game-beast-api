@@ -1,6 +1,5 @@
 import { HelperDb } from '../../../data/protocols/helperDb';
 import { PlaceBet } from '../../../domain/usecases/place-bet';
-import { InvalidParamError, MissingParamError, ServerError } from '../../erros';
 import { badRequest, ok, serverError } from '../../helpers';
 import { Controller, HttpRequest, HttpResponse } from '../../protocols';
 
@@ -13,30 +12,29 @@ class CreateBetController implements Controller {
 
       for (const field of RequiredFields) {
         if (!httpRequest.body[field]) {
-          return badRequest(new MissingParamError(field));
+          return badRequest(`${field} is required`);
         }
       }
 
       const { id_beast, points, platform, id_guild, id_discord } = httpRequest.body;
 
       const beast = await this.helperDb.getBeast(id_beast);
-      const user = await this.helperDb.getUserDiscord(id_guild, id_discord);
-      const id_game = await this.helperDb.getCurrentGameId();
-
-      if (!id_game) {
-        return badRequest(new ServerError('game not found'));
-      }
-
       if (!beast) {
-        return badRequest(new InvalidParamError('beast not found'));
+        return badRequest('beast not found');
       }
 
+      const user = await this.helperDb.getUserDiscord(id_guild, id_discord);
       if (!user) {
-        return badRequest(new InvalidParamError('user not found'));
+        return badRequest('user not found');
+      }
+
+      const id_game = await this.helperDb.getCurrentGameId();
+      if (!id_game) {
+        return badRequest('game not found');
       }
 
       if (user.points < points) {
-        return badRequest(new InvalidParamError('insufficient points'));
+        return badRequest('insufficient points', { userPoints: user.points });
       }
 
       const bet = await this.placeBet.play({

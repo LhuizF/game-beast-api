@@ -1,7 +1,7 @@
 import { UserInfos } from '../../../src/data/protocols/userInfos';
 import { UserModel, BetModel } from '../../../src/domain/models';
 import { UserBetsController } from '../../../src/presentation/controllers/user';
-import { MissingParamError } from '../../../src/presentation/erros';
+import { badRequest } from '../../../src/presentation/helpers';
 
 interface SutTypes {
   sut: UserBetsController;
@@ -52,8 +52,7 @@ describe('UserBets Controller', () => {
 
     const response = await sut.handle({ params: { id_guild: '', id_discord: 'any' } });
 
-    expect(response.statusCode).toEqual(400);
-    expect(response.body).toEqual(new MissingParamError('id_guild'));
+    expect(response).toEqual(badRequest('id_guild is required'));
   });
 
   test('should return 400 if no id_discord is provided', async () => {
@@ -61,8 +60,7 @@ describe('UserBets Controller', () => {
 
     const response = await sut.handle({ params: { id_guild: 'any', id_discord: '' } });
 
-    expect(response.statusCode).toEqual(400);
-    expect(response.body).toEqual(new MissingParamError('id_discord'));
+    expect(response).toEqual(badRequest('id_discord is required'));
   });
 
   test('should call getLastBets with max if query max is provided', async () => {

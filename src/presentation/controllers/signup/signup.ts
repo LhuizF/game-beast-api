@@ -1,5 +1,4 @@
 import { HttpRequest, HttpResponse, EmailValidator, AddUser } from './signup-protocols';
-import { InvalidParamError, MissingParamError } from '../../erros';
 import { badRequest, serverError, ok } from '../../helpers';
 import { Controller } from '../../protocols/controller';
 import { HelperDb } from '../../../data/protocols/helperDb';
@@ -16,21 +15,21 @@ class SignUpController implements Controller {
       const { name, id_guild, email, id_discord } = httpRequest.body;
 
       if (!name) {
-        return badRequest(new MissingParamError('name'));
+        return badRequest('name is required');
       }
 
       if (!id_guild && !email) {
-        return badRequest(new MissingParamError('id_guild or email'));
+        return badRequest('id_guild or email is required');
       }
 
       if (id_guild) {
         if (!id_discord) {
-          return badRequest(new MissingParamError('id_discord'));
+          return badRequest('id_discord is required');
         }
 
         const guild = await this.helperDb.getGuild(id_guild);
         if (!guild) {
-          return badRequest(new InvalidParamError('guild not found'));
+          return badRequest('guild not found');
         }
       }
 
@@ -38,19 +37,19 @@ class SignUpController implements Controller {
         const isValid = this.emailValidator.isValid(email);
 
         if (!isValid) {
-          return badRequest(new InvalidParamError('email'));
+          return badRequest('email not valid');
         }
 
         const passwords = ['password', 'password_confirmation'];
         for (const password of passwords) {
           if (!httpRequest.body[password]) {
-            return badRequest(new MissingParamError(password));
+            return badRequest(`${password} is required`);
           }
         }
         const { password, password_confirmation } = httpRequest.body;
 
         if (password !== password_confirmation) {
-          return badRequest(new InvalidParamError('password_confirmation'));
+          return badRequest('password_confirmation not valid');
         }
       }
       //trocar depois hehehe

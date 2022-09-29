@@ -1,9 +1,5 @@
 import CreateBetController from '../../../src/presentation/controllers/bet/createBet';
-import {
-  InvalidParamError,
-  MissingParamError,
-  ServerError
-} from '../../../src/presentation/erros';
+import { ServerError } from '../../../src/presentation/erros';
 import { badRequest, ok } from '../../../src/presentation/helpers';
 import { PlayBetModel, PlaceBet } from '../../../src/domain/usecases/place-bet';
 import { BetModel } from '../../../src/domain/models/Bet';
@@ -67,7 +63,7 @@ describe('CreateBet Controller', () => {
     };
 
     const httpResponse = await sut.handle(httpRequest);
-    expect(httpResponse).toEqual(badRequest(new MissingParamError('id_guild')));
+    expect(httpResponse).toEqual(badRequest('id_guild is required'));
   });
 
   test('should return 400 if no id_discord is provided', async () => {
@@ -82,7 +78,7 @@ describe('CreateBet Controller', () => {
     };
 
     const httpResponse = await sut.handle(httpRequest);
-    expect(httpResponse).toEqual(badRequest(new MissingParamError('id_discord')));
+    expect(httpResponse).toEqual(badRequest('id_discord is required'));
   });
 
   test('should return 400 if no id_beast is provided', async () => {
@@ -97,7 +93,7 @@ describe('CreateBet Controller', () => {
     };
 
     const httpResponse = await sut.handle(httpRequest);
-    expect(httpResponse).toEqual(badRequest(new MissingParamError('id_beast')));
+    expect(httpResponse).toEqual(badRequest('id_beast is required'));
   });
 
   test('should return 500 if no current game', async () => {
@@ -108,7 +104,7 @@ describe('CreateBet Controller', () => {
       .mockResolvedValueOnce(new Promise((resolve) => resolve(0)));
 
     const httpResponse = await sut.handle(makeBet());
-    expect(httpResponse).toEqual(badRequest(new ServerError('id_game')));
+    expect(httpResponse).toEqual(badRequest('game not found'));
   });
 
   test('should return 400 if no points is provided', async () => {
@@ -124,7 +120,7 @@ describe('CreateBet Controller', () => {
     };
 
     const httpResponse = await sut.handle(httpRequest);
-    expect(httpResponse).toEqual(badRequest(new MissingParamError('points')));
+    expect(httpResponse).toEqual(badRequest('points is required'));
   });
 
   test('should return 400 if no platform is provided', async () => {
@@ -139,7 +135,7 @@ describe('CreateBet Controller', () => {
     };
 
     const httpResponse = await sut.handle(httpRequest);
-    expect(httpResponse).toEqual(badRequest(new MissingParamError('platform')));
+    expect(httpResponse).toEqual(badRequest('platform is required'));
   });
 
   test('should call placeBetStub with correct values', async () => {
@@ -221,9 +217,7 @@ describe('CreateBet Controller', () => {
 
     const httpResponse = await sut.handle(makeBet());
 
-    expect(httpResponse).toEqual(
-      badRequest(new InvalidParamError('insufficient points'))
-    );
+    expect(httpResponse).toEqual(badRequest('insufficient points', { userPoints: 9 }));
   });
 
   test('should return 400 if beast not found', async () => {
@@ -234,7 +228,7 @@ describe('CreateBet Controller', () => {
 
     const httpResponse = await sut.handle(makeBet());
 
-    expect(httpResponse).toEqual(badRequest(new InvalidParamError('beast not found')));
+    expect(httpResponse).toEqual(badRequest('beast not found'));
   });
 
   test('should return 400 if user not found', async () => {
@@ -245,6 +239,6 @@ describe('CreateBet Controller', () => {
 
     const httpResponse = await sut.handle(makeBet());
 
-    expect(httpResponse).toEqual(badRequest(new InvalidParamError('user not found')));
+    expect(httpResponse).toEqual(badRequest('user not found'));
   });
 });

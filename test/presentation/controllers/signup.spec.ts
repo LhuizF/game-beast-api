@@ -1,9 +1,5 @@
 import SignUpController from '../../../src/presentation/controllers/signup/signup';
-import {
-  MissingParamError,
-  InvalidParamError,
-  ServerError
-} from '../../../src/presentation/erros';
+import { ServerError } from '../../../src/presentation/erros';
 import {
   EmailValidator,
   AddUser,
@@ -71,8 +67,7 @@ describe('SignUp Controller', () => {
     };
     const httpResponse = await sut.handle(httpRequest);
 
-    expect(httpResponse.statusCode).toBe(400);
-    expect(httpResponse.body).toEqual(new MissingParamError('name'));
+    expect(httpResponse).toEqual(badRequest('name is required'));
   });
 
   test('should return 400 if no id_guild or email is provided', async () => {
@@ -84,8 +79,7 @@ describe('SignUp Controller', () => {
     };
     const httpResponse = await sut.handle(httpRequest);
 
-    expect(httpResponse.statusCode).toBe(400);
-    expect(httpResponse.body).toEqual(new MissingParamError('id_guild or email'));
+    expect(httpResponse).toEqual(badRequest('id_guild or email is required'));
   });
 
   test('should return 400 if id_guild is provided and id_discord no provided', async () => {
@@ -97,9 +91,7 @@ describe('SignUp Controller', () => {
       }
     };
     const httpResponse = await sut.handle(httpRequest);
-
-    expect(httpResponse.statusCode).toBe(400);
-    expect(httpResponse.body).toEqual(new MissingParamError('id_discord'));
+    expect(httpResponse).toEqual(badRequest('id_discord is required'));
   });
 
   test('should return 400 if email is provided and password no provided', async () => {
@@ -112,8 +104,7 @@ describe('SignUp Controller', () => {
       }
     };
     const httpResponse = await sut.handle(httpRequest);
-    expect(httpResponse.statusCode).toBe(400);
-    expect(httpResponse.body).toEqual(new MissingParamError('password'));
+    expect(httpResponse).toEqual(badRequest('password is required'));
   });
 
   test('should return 400 if email is provided and password_confirmation no provided', async () => {
@@ -126,8 +117,7 @@ describe('SignUp Controller', () => {
       }
     };
     const httpResponse = await sut.handle(httpRequest);
-    expect(httpResponse.statusCode).toBe(400);
-    expect(httpResponse.body).toEqual(new MissingParamError('password_confirmation'));
+    expect(httpResponse).toEqual(badRequest('password_confirmation is required'));
   });
 
   test('should return 400 if Password confirmation does not match password', async () => {
@@ -141,8 +131,7 @@ describe('SignUp Controller', () => {
       }
     };
     const httpResponse = await sut.handle(httpRequest);
-    expect(httpResponse.statusCode).toBe(400);
-    expect(httpResponse.body).toEqual(new InvalidParamError('password_confirmation'));
+    expect(httpResponse).toEqual(badRequest('password_confirmation not valid'));
   });
 
   test('should return 400 if invalide email is provided', async () => {
@@ -159,8 +148,7 @@ describe('SignUp Controller', () => {
     };
 
     const httpResponse = await sut.handle(httpRequest);
-    expect(httpResponse.statusCode).toBe(400);
-    expect(httpResponse.body).toEqual(new InvalidParamError('email'));
+    expect(httpResponse).toEqual(badRequest('email not valid'));
   });
 
   test('should call emailValidator with correct email ', async () => {
@@ -356,6 +344,6 @@ describe('SignUp Controller', () => {
 
     const httpResponse = await sut.handle(httpRequest);
 
-    expect(httpResponse).toEqual(badRequest(new InvalidParamError('guild not found')));
+    expect(httpResponse).toEqual(badRequest('guild not found'));
   });
 });

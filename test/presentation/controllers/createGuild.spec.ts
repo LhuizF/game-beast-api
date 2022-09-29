@@ -1,9 +1,5 @@
 import CreateGuildController from '../../../src/presentation/controllers/guild/createGuild';
-import {
-  InvalidParamError,
-  MissingParamError,
-  ServerError
-} from '../../../src/presentation/erros';
+import { ServerError } from '../../../src/presentation/erros';
 import { AddGuild, AddGuildModel } from '../../../src/domain/usecases/add-guild';
 import { GuildModel } from '../../../src/domain/models/guild';
 import { badRequest } from '../../../src/presentation/helpers';
@@ -46,8 +42,7 @@ describe('CreateGuild Controller', () => {
     };
     const httpResponse = await sut.handle(httpRequest);
 
-    expect(httpResponse.statusCode).toBe(400);
-    expect(httpResponse.body).toEqual(new MissingParamError('id'));
+    expect(httpResponse).toEqual(badRequest('id is required'));
   });
 
   test('should return 400 if no name is provided', async () => {
@@ -61,8 +56,7 @@ describe('CreateGuild Controller', () => {
     };
     const httpResponse = await sut.handle(httpRequest);
 
-    expect(httpResponse.statusCode).toBe(400);
-    expect(httpResponse.body).toEqual(new MissingParamError('name'));
+    expect(httpResponse).toEqual(badRequest('name is required'));
   });
 
   test('should return 400 if no channel no provided', async () => {
@@ -75,8 +69,7 @@ describe('CreateGuild Controller', () => {
       }
     };
     const httpResponse = await sut.handle(httpRequest);
-    expect(httpResponse.statusCode).toBe(400);
-    expect(httpResponse.body).toEqual(new MissingParamError('channel'));
+    expect(httpResponse).toEqual(badRequest('channel is required'));
   });
 
   test('should call addGuild with correct values', async () => {

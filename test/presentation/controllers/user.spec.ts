@@ -1,6 +1,6 @@
 import { HelperDb } from '../../../src/data/protocols/helperDb';
 import { UserController } from '../../../src/presentation/controllers/user';
-import { InvalidParamError, MissingParamError } from '../../../src/presentation/erros';
+import { badRequest } from '../../../src/presentation/helpers';
 import { HelperDbStub } from '../../helper';
 
 interface SutTypes {
@@ -21,8 +21,7 @@ describe('UserBets Controller', () => {
 
     const response = await sut.handle({ params: { id_guild: '', id_discord: 'any' } });
 
-    expect(response.statusCode).toEqual(400);
-    expect(response.body).toEqual(new MissingParamError('id_guild'));
+    expect(response).toEqual(badRequest('id_guild is required'));
   });
 
   test('should return 400 if no id_discord is provided', async () => {
@@ -30,8 +29,7 @@ describe('UserBets Controller', () => {
 
     const response = await sut.handle({ params: { id_guild: 'any', id_discord: '' } });
 
-    expect(response.statusCode).toEqual(400);
-    expect(response.body).toEqual(new MissingParamError('id_discord'));
+    expect(response).toEqual(badRequest('id_discord is required'));
   });
 
   test('should call getUserDiscord with correct id', async () => {
@@ -53,8 +51,7 @@ describe('UserBets Controller', () => {
 
     const response = await sut.handle({ params: { id_guild: 'any', id_discord: 'any' } });
 
-    expect(response.statusCode).toEqual(400);
-    expect(response.body).toEqual(new InvalidParamError('id_user'));
+    expect(response).toEqual(badRequest('user not found'));
   });
 
   test('should return 200 if id_user is provided', async () => {

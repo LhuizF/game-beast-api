@@ -1,5 +1,4 @@
 import { HelperDb } from '../../../data/protocols/helperDb';
-import { ServerError } from '../../erros';
 import { badRequest, ok, serverError } from '../../helpers';
 import { Controller, HttpResponse } from '../../protocols';
 
@@ -10,7 +9,7 @@ export class CurrentGameController implements Controller {
       const game = await this.helperDb.getCurrentGame();
 
       if (!game) {
-        return badRequest(new ServerError('game not found'));
+        return badRequest('game not found');
       }
 
       return ok(game);

@@ -1,5 +1,4 @@
 import { CurrentGameController } from '../../../src/presentation/controllers/game';
-import { ServerError } from '../../../src/presentation/erros';
 import { badRequest, ok, serverError } from '../../../src/presentation/helpers';
 import { HelperDb } from '../../../src/data/protocols/helperDb';
 import { HelperDbStub } from '../../helper';
@@ -35,7 +34,7 @@ describe('CreateBet Controller', () => {
 
     const response = await sut.handle();
 
-    expect(response).toEqual(badRequest(new ServerError('game not found')));
+    expect(response).toEqual(badRequest('game not found'));
   });
 
   test('should return 400 if getCurrentGame throws', async () => {

@@ -1,5 +1,4 @@
 import { HelperDb } from '../../../data/protocols/helperDb';
-import { MissingParamError, InvalidParamError } from '../../erros';
 import { badRequest, ok, serverError } from '../../helpers';
 import { Controller, HttpRequest, HttpResponse } from '../../protocols';
 
@@ -13,14 +12,14 @@ export class UserController implements Controller {
 
       for (const field of fields) {
         if (!httpRequest.params[field]) {
-          return badRequest(new MissingParamError(field));
+          return badRequest(`${field} is required`);
         }
       }
 
       const user = await this.helperDb.getUserDiscord(id_guild, id_discord);
 
       if (!user) {
-        return badRequest(new InvalidParamError('id_user'));
+        return badRequest('user not found');
       }
 
       return ok(user);
