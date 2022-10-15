@@ -22,5 +22,5 @@ export class ServerError extends Error {
 }
 
 export class ErrorMessage {
-  constructor(private readonly mensagem: string, private readonly data?: any) {}
+  constructor(private readonly message: string, private readonly data?: any) {}
 }
