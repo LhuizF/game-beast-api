@@ -5,6 +5,8 @@ import { BetsResult } from '../../../../src/presentation/protocols/play-result';
 import PlayResultService from '../../../../src/presentation/service/playResult';
 import { HelperDbStub } from '../../../helper';
 
+jest.useFakeTimers().setSystemTime(new Date());
+
 const makeSut = () => {
   class WinBeastStub implements WinBeast {
     async addWin(idGame: number, idBeast: number): Promise<BetsResult> {
