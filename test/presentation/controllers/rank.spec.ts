@@ -1,7 +1,9 @@
 import { HelperDb } from '../../../src/data/protocols/helperDb';
 import { RankController } from '../../../src/presentation/controllers/rank';
-import { badRequest, ok } from '../../../src/presentation/helpers';
+import { ok, serverError } from '../../../src/presentation/helpers';
 import { HelperDbStub } from '../../helper';
+
+jest.useFakeTimers().setSystemTime(new Date());
 
 interface SutTypes {
   sut: RankController;
@@ -56,5 +58,17 @@ describe('Rank Controller', () => {
         }
       ])
     );
+  });
+
+  test('should return 500 if getRank throws', async () => {
+    const { sut, helperDbStub } = makeSut();
+
+    jest.spyOn(helperDbStub, 'getRank').mockImplementationOnce(async () => {
+      return new Promise((resolve, reject) => reject(new Error()));
+    });
+
+    const response = await sut.handle({});
+
+    expect(response).toEqual(serverError(''));
   });
 });
