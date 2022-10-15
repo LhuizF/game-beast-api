@@ -86,4 +86,14 @@ export class PrismaHelper implements HelperDb {
       losers: lose.length
     };
   }
+
+  async getRank(guildId?: string): Promise<any[]> {
+    const user = await prisma.user.findMany({
+      where: { id_guild: guildId },
+      orderBy: { points: 'desc' },
+      take: 5
+    });
+
+    return user;
+  }
 }

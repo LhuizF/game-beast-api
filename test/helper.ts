@@ -125,4 +125,22 @@ export class HelperDbStub implements HelperDb {
       })
     );
   }
+
+  async getRank(guildId?: string): Promise<any[]> {
+    return await new Promise((resolve) =>
+      resolve([
+        {
+          id: 'any_id',
+          name: 'any_name',
+          points: 100,
+          id_guild: '123',
+          id_discord: '312',
+          email: 'any_email',
+          password: 'hashed_password',
+          avatar: 'any_avatar',
+          created_at: new Date()
+        }
+      ])
+    );
+  }
 }

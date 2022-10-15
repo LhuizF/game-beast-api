@@ -17,4 +17,5 @@ export interface HelperDb {
   getCurrentGame(): Promise<GameModel | null>;
   getLastGames(max: number): Promise<GameWithBet[]>;
   getBetsByGame(id: number): Promise<{ winners: UserWin[]; losers: number }>;
+  getRank(guildId?: string): Promise<Array<UserModel>>;
 }
