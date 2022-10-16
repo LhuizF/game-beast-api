@@ -28,11 +28,12 @@ model User {
 }
 
 model Guild {
-  id         String      @id @unique
+  id         String   @id @unique
   name       String
   icon       String
   channel    String
   created_at DateTime @default(now())
+  active     Boolean  @default(true)
 
   users User[]
 

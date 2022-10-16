@@ -4,4 +4,5 @@ export interface GuildModel {
   icon: string;
   channel: string;
   created_at: Date;
+  active: boolean;
 }

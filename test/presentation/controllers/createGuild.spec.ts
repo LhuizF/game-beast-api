@@ -19,7 +19,8 @@ const makeSut = (): SutTypes => {
         channel: '123',
         name: 'valid_name',
         icon: 'valid_icon',
-        created_at: new Date()
+        created_at: new Date(),
+        active: true
       };
 
       return new Promise((resolve) => resolve(fakeUser));
@@ -133,7 +134,8 @@ describe('CreateGuild Controller', () => {
       channel: '123',
       name: 'valid_name',
       icon: 'valid_icon',
-      created_at: new Date()
+      created_at: new Date(),
+      active: true
     });
   });
 
@@ -154,7 +156,8 @@ describe('CreateGuild Controller', () => {
       channel: '123',
       name: 'valid_name',
       icon: 'valid_icon',
-      created_at: new Date()
+      created_at: new Date(),
+      active: true
     });
   });
 });

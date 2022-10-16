@@ -58,7 +58,8 @@ export class HelperDbStub implements HelperDb {
         name: 'any_name',
         icon: 'any_icon',
         channel: '3',
-        created_at: new Date()
+        created_at: new Date(),
+        active: true
       })
     );
   }
