@@ -18,7 +18,8 @@ const makeSut = (): SutTypes => {
         channel: '1',
         name: 'any_name',
         icon: 'any_icon',
-        created_at: new Date()
+        created_at: new Date(),
+        active: true
       };
       return new Promise((resolve) => resolve(fakeGuild));
     }
@@ -84,7 +85,8 @@ describe('CreateGuild Usecase', () => {
       channel: '1',
       name: 'any_name',
       icon: 'any_icon',
-      created_at: new Date(Date.now())
+      created_at: new Date(Date.now()),
+      active: true
     });
   });
 });

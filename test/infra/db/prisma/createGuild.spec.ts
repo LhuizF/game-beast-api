@@ -25,7 +25,8 @@ describe('CreateGuildPrismaRepository', () => {
       channel: '1',
       name: 'any_name',
       icon: 'any_icon',
-      created_at: new Date(Date.now())
+      created_at: new Date(Date.now()),
+      active: true
     };
 
     prismaMock.guild.create.mockResolvedValue(guild);
@@ -42,7 +43,8 @@ describe('CreateGuildPrismaRepository', () => {
       channel: '1',
       name: 'any_name',
       icon: 'any_icon',
-      created_at: new Date(Date.now())
+      created_at: new Date(Date.now()),
+      active: true
     });
   });
 });
