@@ -12,6 +12,12 @@ export class GameTimeAdapter implements GameTime {
   }
 }
 
+export const time = {
+  1: 'Manha',
+  2: 'Tarde',
+  3: 'Noite'
+};
+
 /**
  * 1 Manha 10hs 36000 next => 2
  * 2 Tarde 15hs 54000 next => 3
