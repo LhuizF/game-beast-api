@@ -18,6 +18,7 @@ const makeSut = (): SutTypes => {
         channel: '1',
         name: 'any_name',
         icon: 'any_icon',
+        role: 'any_role',
         created_at: new Date(),
         active: true
       };
@@ -39,14 +40,16 @@ describe('CreateGuild Usecase', () => {
       id: '1',
       channel: '1',
       name: 'any_name',
-      icon: 'any_icon'
+      icon: 'any_icon',
+      role: 'any_role'
     });
 
     expect(saveSpy).toHaveBeenCalledWith({
       id: '1',
       channel: '1',
       name: 'any_name',
-      icon: 'any_icon'
+      icon: 'any_icon',
+      role: 'any_role'
     });
   });
 
@@ -60,7 +63,8 @@ describe('CreateGuild Usecase', () => {
       id: '1',
       channel: '1',
       name: 'any_name',
-      icon: 'any_icon'
+      icon: 'any_icon',
+      role: 'any_role'
     };
 
     const promise = sut.add(fakeGuild);
@@ -75,7 +79,8 @@ describe('CreateGuild Usecase', () => {
       id: '1',
       channel: '1',
       name: 'any_name',
-      icon: 'any_icon'
+      icon: 'any_icon',
+      role: 'any_role'
     };
 
     const guild = await sut.add(fakeGuild);
@@ -85,6 +90,7 @@ describe('CreateGuild Usecase', () => {
       channel: '1',
       name: 'any_name',
       icon: 'any_icon',
+      role: 'any_role',
       created_at: new Date(Date.now()),
       active: true
     });

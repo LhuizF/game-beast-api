@@ -25,6 +25,7 @@ describe('CreateGuildPrismaRepository', () => {
       channel: '1',
       name: 'any_name',
       icon: 'any_icon',
+      role: 'any_role',
       created_at: new Date(Date.now()),
       active: true
     };
@@ -35,7 +36,8 @@ describe('CreateGuildPrismaRepository', () => {
       id: '1',
       channel: '1',
       name: 'any_name',
-      icon: 'any_icon'
+      icon: 'any_icon',
+      role: 'any_role'
     });
 
     expect(newGuild).toEqual({
@@ -43,6 +45,7 @@ describe('CreateGuildPrismaRepository', () => {
       channel: '1',
       name: 'any_name',
       icon: 'any_icon',
+      role: 'any_role',
       created_at: new Date(Date.now()),
       active: true
     });

@@ -5,6 +5,7 @@ export interface AddGuildModel {
   name: string;
   icon: string;
   channel: string;
+  role: string;
 }
 
 export interface AddGuild {

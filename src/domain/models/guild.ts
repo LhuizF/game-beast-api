@@ -3,6 +3,7 @@ export interface GuildModel {
   name: string;
   icon: string;
   channel: string;
+  role: string;
   created_at: Date;
   active: boolean;
 }

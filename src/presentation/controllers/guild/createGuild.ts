@@ -7,14 +7,14 @@ class CreateGuildController implements Controller {
 
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
-      const fields = ['id', 'channel', 'name'];
+      const fields = ['id', 'channel', 'name', 'role'];
 
       for (const field of fields) {
         if (!httpRequest.body[field]) {
           return badRequest(`${field} is required`);
         }
       }
-      const { id, name, channel } = httpRequest.body;
+      const { id, name, channel, role } = httpRequest.body;
 
       const icon =
         httpRequest.body.icon ||
@@ -24,7 +24,8 @@ class CreateGuildController implements Controller {
         id,
         name,
         icon,
-        channel
+        channel,
+        role
       });
       return ok(guild);
     } catch (error) {

@@ -19,6 +19,7 @@ const makeSut = (): SutTypes => {
         channel: '123',
         name: 'valid_name',
         icon: 'valid_icon',
+        role: 'any_role',
         created_at: new Date(),
         active: true
       };
@@ -36,9 +37,10 @@ describe('CreateGuild Controller', () => {
     const { sut } = makeSut();
     const httpRequest = {
       body: {
-        channel: 123,
+        channel: '123',
         name: 'any_name',
-        icon: 'any_icon'
+        icon: 'any_icon',
+        role: 'any_role'
       }
     };
     const httpResponse = await sut.handle(httpRequest);
@@ -51,8 +53,9 @@ describe('CreateGuild Controller', () => {
     const httpRequest = {
       body: {
         id: 1,
-        channel: 123,
-        icon: 'any_name'
+        channel: '123',
+        icon: 'any_name',
+        role: 'any_role'
       }
     };
     const httpResponse = await sut.handle(httpRequest);
@@ -66,11 +69,26 @@ describe('CreateGuild Controller', () => {
       body: {
         id: 1,
         name: 'any_name',
-        icon: 'any_icon'
+        icon: 'any_icon',
+        role: 'any_role'
       }
     };
     const httpResponse = await sut.handle(httpRequest);
     expect(httpResponse).toEqual(badRequest('channel is required'));
+  });
+
+  test('should return 400 if role no provided', async () => {
+    const { sut } = makeSut();
+    const httpRequest = {
+      body: {
+        id: 1,
+        channel: '123',
+        name: 'any_name',
+        icon: 'any_icon'
+      }
+    };
+    const httpResponse = await sut.handle(httpRequest);
+    expect(httpResponse).toEqual(badRequest('role is required'));
   });
 
   test('should call addGuild with correct values', async () => {
@@ -82,7 +100,8 @@ describe('CreateGuild Controller', () => {
         id: '1',
         channel: '123',
         name: 'any_name',
-        icon: 'any_icon'
+        icon: 'any_icon',
+        role: 'any_role'
       }
     };
 
@@ -92,7 +111,8 @@ describe('CreateGuild Controller', () => {
       id: '1',
       channel: '123',
       name: 'any_name',
-      icon: 'any_icon'
+      icon: 'any_icon',
+      role: 'any_role'
     });
   });
 
@@ -107,7 +127,8 @@ describe('CreateGuild Controller', () => {
         id: '1',
         channel: ' 123',
         name: 'any_name',
-        icon: 'any_icon'
+        icon: 'any_icon',
+        role: 'any_role'
       }
     };
 
@@ -123,7 +144,8 @@ describe('CreateGuild Controller', () => {
         id: '1',
         channel: '123',
         name: 'any_name',
-        icon: 'any_icon'
+        icon: 'any_icon',
+        role: 'any_role'
       }
     };
     const httpResponse = await sut.handle(httpRequest);
@@ -134,6 +156,7 @@ describe('CreateGuild Controller', () => {
       channel: '123',
       name: 'valid_name',
       icon: 'valid_icon',
+      role: 'any_role',
       created_at: new Date(),
       active: true
     });
@@ -145,7 +168,8 @@ describe('CreateGuild Controller', () => {
       body: {
         id: '1',
         channel: '123',
-        name: 'any_name'
+        name: 'any_name',
+        role: 'any_role'
       }
     };
     const httpResponse = await sut.handle(httpRequest);
@@ -156,6 +180,7 @@ describe('CreateGuild Controller', () => {
       channel: '123',
       name: 'valid_name',
       icon: 'valid_icon',
+      role: 'any_role',
       created_at: new Date(),
       active: true
     });
