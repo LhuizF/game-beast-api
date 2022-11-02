@@ -45,9 +45,7 @@ class PlayResultService implements PlayResult {
         beastWin: beast,
         totalBets,
         winners,
-        losers,
-        create_at: game.created_at,
-        date: new Date()
+        losers
       },
       channels
     };

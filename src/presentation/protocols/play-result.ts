@@ -3,8 +3,6 @@ import { BeastModel, GameModel } from '../../domain/models';
 export interface GameResult extends BetsResult {
   game: GameModel;
   beastWin: BeastModel;
-  create_at: Date;
-  date: Date;
 }
 
 export interface BetsResult {

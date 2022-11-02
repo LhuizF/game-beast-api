@@ -1,4 +1,5 @@
 import { HelperDb } from '../../../data/protocols/helperDb';
+import { BeastModel, GameModel } from '../../../domain/models';
 import { ok, serverError } from '../../helpers';
 import { Controller, HttpRequest, HttpResponse } from '../../protocols';
 import { GameResult } from '../../protocols/play-result';
@@ -11,25 +12,30 @@ export class LastGamesController implements Controller {
 
       const games = await this.helperDb.getLastGames(max);
 
-      const gamesWithBests: GameResult[] = await Promise.all(
+      const gameResult: Array<GameResult> = await Promise.all(
         games.map(async (game) => {
-          const beastWin = await this.helperDb.getBeast(game.id);
-
+          const beastWin = (await this.helperDb.getBeast(game.id)) as BeastModel;
           const { winners, losers } = await this.helperDb.getBetsByGame(game.id);
 
+          const currentGame: GameModel = {
+            id: game.id,
+            result: game.result,
+            time: game.time,
+            created_at: game.created_at,
+            update_at: game.update_at
+          };
+
           return {
-            id_game: game.id,
+            game: currentGame,
             totalBets: game.bets.length,
             beastWin,
             winners,
-            losers,
-            create_at: game.created_at,
-            date: game.update_at
+            losers
           };
         })
       );
 
-      return ok(gamesWithBests);
+      return ok(gameResult);
     } catch (error) {
       console.log(error);
       return serverError(error);

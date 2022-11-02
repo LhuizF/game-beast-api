@@ -62,7 +62,13 @@ describe('CreateBet Controller', () => {
     const response = await sut.handle({});
 
     const fakeResult: GameResult = {
-      id_game: 1,
+      game: {
+        id: 1,
+        time: 1,
+        result: 0,
+        created_at: new Date(),
+        update_at: new Date()
+      },
       losers: 1,
       totalBets: 1,
       beastWin: {
@@ -78,9 +84,7 @@ describe('CreateBet Controller', () => {
           pointsBet: 10,
           pointsReceived: 60
         }
-      ],
-      create_at: new Date(),
-      date: new Date()
+      ]
     };
 
     expect(response).toEqual(ok([fakeResult]));

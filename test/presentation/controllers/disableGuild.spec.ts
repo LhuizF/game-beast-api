@@ -20,6 +20,7 @@ const makeSut = (): SutTypes => {
           channel: '2112',
           created_at: new Date(),
           icon: 'any',
+          role: 'any_role',
           active: false
         })
       );
@@ -61,6 +62,7 @@ describe('DisableGuild Controller', () => {
         id: 'any_id',
         name: 'guild',
         channel: '2112',
+        role: 'any_role',
         created_at: new Date(),
         icon: 'any',
         active: false
