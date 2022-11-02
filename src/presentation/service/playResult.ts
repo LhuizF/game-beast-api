@@ -25,7 +25,8 @@ class PlayResultService implements PlayResult {
             beasts,
             game
           }
-        }
+        },
+        channels: []
       };
     }
 
@@ -33,19 +34,22 @@ class PlayResultService implements PlayResult {
 
     const { totalBets, winners, losers } = await this.winBeast.addWin(game.id, beast.id);
 
+    const channels = await this.winBeast.getChannels();
+
     await this.crateGame.nextGame();
 
     return {
       isSuccess: true,
       data: {
-        id_game: game.id,
+        game,
         beastWin: beast,
         totalBets,
         winners,
         losers,
         create_at: game.created_at,
         date: new Date()
-      }
+      },
+      channels
     };
   }
 
