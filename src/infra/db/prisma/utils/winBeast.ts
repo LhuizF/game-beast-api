@@ -64,4 +64,13 @@ export class WinBeastPrisma implements WinBeast {
       losers: betsLose.count
     };
   }
+
+  async getChannels(): Promise<string[]> {
+    const guilds = await prisma.guild.findMany({
+      where: { active: true },
+      select: { channel: true }
+    });
+
+    return guilds.map((ch) => ch.channel);
+  }
 }
