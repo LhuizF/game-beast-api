@@ -26,6 +26,12 @@ const makeSut = () => {
         })
       );
     }
+
+    async getChannels(): Promise<string[]> {
+      return await new Promise((resolve) => {
+        resolve(['id']);
+      });
+    }
   }
 
   class CreateGameStub implements CreateGame {
@@ -132,7 +138,8 @@ describe('PlayResult Service', () => {
             update_at: new Date()
           }
         }
-      }
+      },
+      channels: []
     });
   });
 
