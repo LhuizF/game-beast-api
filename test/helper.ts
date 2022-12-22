@@ -145,4 +145,20 @@ export class HelperDbStub implements HelperDb {
       ])
     );
   }
+
+  async getAllGuildActive(): Promise<GuildModel[]> {
+    return await new Promise((resolve) =>
+      resolve([
+        {
+          id: '1',
+          name: 'any_name',
+          icon: 'any_icon',
+          channel: '3',
+          role: '3',
+          created_at: new Date(),
+          active: true
+        }
+      ])
+    );
+  }
 }

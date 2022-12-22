@@ -139,7 +139,7 @@ describe('PlayResult Service', () => {
           }
         }
       },
-      channels: []
+      guilds: []
     });
   });
 
