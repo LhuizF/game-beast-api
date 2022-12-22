@@ -11,9 +11,9 @@
     "test:unit": "npm test -- --watch",
     "test:staged": "npm test -- --onlyChanged",
     "test:ci": "npm test -- --coverage",
-    "start": "sucrase-node src/main/server.ts",
+    "dev": "sucrase-node src/main/server.ts",
     "build": "sucrase ./src -d ./build --transforms typescript,imports",
-    "start:prod": "node ./build/main/server.js",
+    "start": "npm run build && node ./build/main/server.js",
     "seed": "sucrase-node prisma/seed.ts"
   },
   "keywords": [],
