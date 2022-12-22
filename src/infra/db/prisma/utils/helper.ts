@@ -100,4 +100,18 @@ export class PrismaHelper implements HelperDb {
   async getAllGuildActive(): Promise<GuildModel[]> {
     return await prisma.guild.findMany({ where: { active: true } });
   }
+
+  async checkUser(guildId: string, discordId: string, email: string): Promise<boolean> {
+    const user = await prisma.user.findFirst({
+      where: {
+        email: email,
+        OR: {
+          id_guild: guildId,
+          id_discord: discordId
+        }
+      }
+    });
+
+    return !!user;
+  }
 }

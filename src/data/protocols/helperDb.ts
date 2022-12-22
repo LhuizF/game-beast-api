@@ -19,4 +19,5 @@ export interface HelperDb {
   getBetsByGame(id: number): Promise<{ winners: UserWin[]; losers: number }>;
   getRank(guildId?: string): Promise<Array<UserModel>>;
   getAllGuildActive(): Promise<GuildModel[]>;
+  checkUser(guildId: string, discordId: string, email: string): Promise<boolean>;
 }

@@ -22,6 +22,11 @@ class SignUpController implements Controller {
         return badRequest('id_guild or email is required');
       }
 
+      const existsUser = await this.helperDb.checkUser(id_guild, id_discord, email);
+      if (existsUser) {
+        return badRequest('user already registered');
+      }
+
       if (id_guild) {
         if (!id_discord) {
           return badRequest('id_discord is required');
