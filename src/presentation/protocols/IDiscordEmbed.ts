@@ -31,7 +31,7 @@ interface Field {
 
 export interface DiscordMessage {
   content: string;
-  embed: Embed[];
+  embeds: Embed[];
 }
 
 export interface IDiscordEmbed {

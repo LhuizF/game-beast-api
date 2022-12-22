@@ -2,14 +2,14 @@ import {
   DiscordMessage,
   GameData,
   IDiscordEmbed
-} from '../presentation/protocols/IDiscordEmbed';
-import { time } from './game-time';
+} from '../../presentation/protocols/IDiscordEmbed';
+import { time } from '../game-time';
 
 export class DiscordEmbed implements IDiscordEmbed {
   createEmbed(data: GameData): DiscordMessage {
     const timeHour = time[data.gameTime as keyof typeof time];
     const content = `||<@&${data.roleId}>||`;
-    const embed = [
+    const embeds = [
       {
         title: `Resultado do jogo número ${data.gameNumber}`,
         description: `Animal sorteado: **${data.result.name} N°${data.result.number}**`,
@@ -36,6 +36,6 @@ export class DiscordEmbed implements IDiscordEmbed {
       }
     ];
 
-    return { content, embed };
+    return { content, embeds };
   }
 }

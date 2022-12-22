@@ -1,36 +1,20 @@
 import { CronJob } from 'cron';
 import { GameResult, PlayResult } from '../../presentation/protocols/play-result';
-import { discordApi } from '../../services';
-import { createEmbed } from '../../utils/createEmbed';
+import { SendMessageDiscord } from '../../presentation/service/sendDiscordMessage';
+import { DiscordEmbed } from '../../utils/discord/embed';
 
 const cron = (time: string, playResult: PlayResult): CronJob => {
   console.log('run Cron');
   return new CronJob(
     time,
     async () => {
-      const { isSuccess, data, channels } = await playResult.play();
+      const { isSuccess, data, guilds } = await playResult.play();
       if (isSuccess) {
         const result = data as GameResult;
+        const discordEmbed = new DiscordEmbed();
+        const sendMessageDiscord = new SendMessageDiscord(discordEmbed);
 
-        const body = {
-          allowed_mentions: {
-            //  roles: ['1031346220318334976']
-          },
-          embeds: createEmbed(result)
-        };
-
-        channels.forEach(async (channel) => {
-          await discordApi
-            .post(`/channels/${channel}/messages`, body, {
-              headers: {
-                Authorization: 'Bot ' + process.env.DISCORD_TOKEN
-              }
-            })
-            .catch((err) => {
-              console.error(err);
-            });
-        });
-
+        sendMessageDiscord.send(result, guilds);
         return;
       }
 

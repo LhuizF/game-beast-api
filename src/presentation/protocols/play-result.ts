@@ -1,4 +1,4 @@
-import { BeastModel, GameModel } from '../../domain/models';
+import { BeastModel, GameModel, GuildModel } from '../../domain/models';
 
 export interface GameResult extends BetsResult {
   game: GameModel;
@@ -22,7 +22,6 @@ export interface UserWin {
 export interface PlayResult {
   play(): Promise<Result>;
   beastSelected(beasts: BeastModel[]): BeastModel;
-  sendMessageResult(game: GameModel, beast: BeastModel, bets: BetsResult): Promise<void>;
 }
 
 export interface ErrorGame {
@@ -33,5 +32,5 @@ export interface ErrorGame {
 export interface Result {
   isSuccess: boolean;
   data: GameResult | ErrorGame;
-  channels: string[];
+  guilds: GuildModel[];
 }
