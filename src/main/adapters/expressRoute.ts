@@ -3,7 +3,7 @@ import { Controller, HttpRequest } from '../../presentation/protocols';
 
 export const adapterRoute = (controller: Controller) => {
   return async (req: Request, res: Response) => {
-    console.log(req.method, '->', req.originalUrl);
+    console.log(req.headers.host, '->', req.method, req.originalUrl);
 
     const httpRequest: HttpRequest = {
       body: req.body,
