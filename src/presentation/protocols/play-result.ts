@@ -22,6 +22,7 @@ export interface UserWin {
 export interface PlayResult {
   play(): Promise<Result>;
   beastSelected(beasts: BeastModel[]): BeastModel;
+  sendMessageResult(game: GameModel, beast: BeastModel, bets: BetsResult): Promise<void>;
 }
 
 export interface ErrorGame {

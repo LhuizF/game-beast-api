@@ -96,4 +96,8 @@ export class PrismaHelper implements HelperDb {
 
     return user;
   }
+
+  async getAllGuildActive(): Promise<GuildModel[]> {
+    return await prisma.guild.findMany({ where: { active: true } });
+  }
 }

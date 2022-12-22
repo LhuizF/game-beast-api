@@ -12,7 +12,7 @@ const useRoutes = (app: Express) => {
     (await import(`../routes/${file}`)).default(router);
     // console.log('router ->', file);
 
-    if (process.env.NODE_ENV !== 'DEV') return;
+    if (process.env.NODE_ENV === 'PROD') return;
 
     if (i === fs.readdirSync(folder).length - 1) {
       console.log('\nAll routes');
