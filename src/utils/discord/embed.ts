@@ -23,12 +23,12 @@ export class DiscordEmbed implements IDiscordEmbed {
             name: 'Total de Ganhadores',
             value: data.bets.wins.toString(),
             inline: true
-          },
-          {
-            name: 'Total de Ganhadores',
-            value: data.bets.loses.toString(),
-            inline: true
           }
+          // {
+          //   name: 'Total de perdedores',
+          //   value: data.bets.loses.toString(),
+          //   inline: true
+          // }
         ],
         footer: {
           text: `Horário: ${timeHour} ${data.gameTime}`

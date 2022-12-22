@@ -14,7 +14,7 @@ export class LastGamesController implements Controller {
 
       const gameResult: Array<GameResult> = await Promise.all(
         games.map(async (game) => {
-          const beastWin = (await this.helperDb.getBeast(game.id)) as BeastModel;
+          const beastWin = (await this.helperDb.getBeast(game.result)) as BeastModel;
           const { winners, losers } = await this.helperDb.getBetsByGame(game.id);
 
           const currentGame: GameModel = {
