@@ -1,6 +1,5 @@
-import { UserModel } from '../../domain/models/user';
-import { AddUserModel } from '../../domain/usecases/add-user';
+import { AddUserModel, UserModelWithRoleId } from '../../domain/usecases/add-user';
 
 export interface SaveUserRepository {
-  save(userDate: AddUserModel): Promise<UserModel>;
+  save(userDate: AddUserModel): Promise<UserModelWithRoleId>;
 }

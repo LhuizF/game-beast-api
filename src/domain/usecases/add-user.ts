@@ -15,6 +15,10 @@ export interface UserEmailModel {
   password?: string;
 }
 
+export interface UserModelWithRoleId extends UserModel {
+  roleId?: string;
+}
+
 export interface AddUser {
-  add(user: AddUserModel): Promise<UserModel>;
+  add(user: AddUserModel): Promise<UserModelWithRoleId>;
 }

@@ -1,5 +1,9 @@
-import { AddUser, AddUserModel } from '../../domain/usecases/add-user';
-import { UserModel } from '../../domain/models/user';
+import {
+  AddUser,
+  AddUserModel,
+  UserModelWithRoleId
+} from '../../domain/usecases/add-user';
+
 import { Encrypter, SaveUserRepository } from '../protocols';
 
 export class AddUserDb implements AddUser {
@@ -8,7 +12,7 @@ export class AddUserDb implements AddUser {
     private readonly saveUserRepository: SaveUserRepository
   ) {}
 
-  async add(userDate: AddUserModel): Promise<UserModel> {
+  async add(userDate: AddUserModel): Promise<UserModelWithRoleId> {
     if (userDate.email && userDate.password) {
       userDate.password = await this.encrypter.encrypt(userDate.password);
     }
