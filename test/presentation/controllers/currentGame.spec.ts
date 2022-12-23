@@ -16,7 +16,7 @@ const makeSut = (): SutTypes => {
   return { sut, helperDbStub };
 };
 
-describe('CreateBet Controller', () => {
+describe('Current Game Controller', () => {
   test('should call getCurrentGame ', async () => {
     const { sut, helperDbStub } = makeSut();
     const getCurrentGameSpy = jest.spyOn(helperDbStub, 'getCurrentGame');

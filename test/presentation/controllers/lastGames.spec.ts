@@ -17,7 +17,7 @@ const makeSut = (): SutTypes => {
   return { sut, helperDbStub };
 };
 
-describe('CreateBet Controller', () => {
+describe('Last Games Controller', () => {
   test('should call getLastGames with 3 if query max is not provided', async () => {
     const { sut, helperDbStub } = makeSut();
     const getLastGamesSpy = jest.spyOn(helperDbStub, 'getLastGames');
@@ -36,13 +36,13 @@ describe('CreateBet Controller', () => {
     expect(getLastGamesSpy).toHaveBeenCalledWith(10);
   });
 
-  test('should call getBeast with games id', async () => {
+  test('should call getBeast with games result', async () => {
     const { sut, helperDbStub } = makeSut();
     const getBeastSpy = jest.spyOn(helperDbStub, 'getBeast');
 
     await sut.handle({});
 
-    expect(getBeastSpy).toHaveBeenCalledWith(1);
+    expect(getBeastSpy).toHaveBeenCalledWith(2);
   });
 
   test('should return 400 if getLastGames throws', async () => {
@@ -65,7 +65,7 @@ describe('CreateBet Controller', () => {
       game: {
         id: 1,
         time: 1,
-        result: 0,
+        result: 2,
         created_at: new Date(),
         update_at: new Date()
       },

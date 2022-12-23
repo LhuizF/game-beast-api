@@ -91,7 +91,7 @@ export class HelperDbStub implements HelperDb {
         {
           id: 1,
           time: 1,
-          result: 0,
+          result: 2,
           created_at: new Date(),
           update_at: new Date(),
           bets: [
@@ -160,5 +160,9 @@ export class HelperDbStub implements HelperDb {
         }
       ])
     );
+  }
+
+  async checkUser(guildId: string, discordId: string, email: string): Promise<boolean> {
+    return await new Promise((resolve) => resolve(false));
   }
 }
