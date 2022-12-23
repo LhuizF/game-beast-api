@@ -1,6 +1,6 @@
 import { CrateGameDb } from '../../../src/data/usecases/createGameDb';
 import { GameTime } from '../../../src/presentation/protocols/game-time';
-import { SaveGameRepository } from '../../../src/data/protocols/saveGameRepository';
+import { SaveGameRepository } from '../../../src/data/protocols';
 import { GameModel } from '../../../src/domain/models';
 
 jest.useFakeTimers().setSystemTime(new Date());

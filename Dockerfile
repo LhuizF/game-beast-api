@@ -14,8 +14,8 @@ RUN npm run build
 FROM node:16.13.0-alpine as production
 
 ENV NODE_ENV=production
-ENV PORT=3333
-ENV DATABASE_URL = postgresql://gameBeast_attrainher:85a6d13e1f2127d04eb59894d93ad93384c50d64@e8p.h.filess.io:5432/gameBeast_attrainher
+ENV PORT=${PORT}
+ENV DATABASE_URL=${DATABASE_URL}
 
 WORKDIR /app
 

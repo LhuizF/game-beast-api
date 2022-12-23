@@ -1,4 +1,4 @@
-import { HelperDb } from '../../../../data/protocols/helperDb';
+import { HelperDb } from '../../../../data/protocols';
 import {
   UserModel,
   GuildModel,

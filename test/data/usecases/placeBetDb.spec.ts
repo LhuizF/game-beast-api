@@ -1,8 +1,7 @@
 import { PlaceBetDb } from '../../../src/data/usecases/placeBetDb';
-import { SaveBetRepository } from '../../../src/data/protocols/saveBetRepository';
-import { BetModel } from '../../../src/domain/models/Bet';
+import { SaveBetRepository, UpdatePoints } from '../../../src/data/protocols';
+import { BetModel } from '../../../src/domain/models';
 import { PlayBetModel } from '../../../src/domain/usecases/place-bet';
-import { UpdatePoints } from '../../../src/data/protocols/updatePoints';
 
 interface SutTypes {
   sut: PlaceBetDb;

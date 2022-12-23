@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import { LogErrorRepository } from '../../../data/protocols/logErrorRepository';
+import { LogErrorRepository } from '../../../data/protocols';
 
 export class LogErrorPrismaRepository implements LogErrorRepository {
   constructor(private readonly cxt: PrismaClient) {}

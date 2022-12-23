@@ -1,6 +1,6 @@
 import { LastGamesController } from '../../../src/presentation/controllers/game';
 import { ok, serverError } from '../../../src/presentation/helpers';
-import { HelperDb } from '../../../src/data/protocols/helperDb';
+import { HelperDb } from '../../../src/data/protocols';
 import { HelperDbStub } from '../../helper';
 import { GameResult } from '../../../src/presentation/protocols/play-result';
 

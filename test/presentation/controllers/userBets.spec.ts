@@ -1,4 +1,4 @@
-import { UserInfos } from '../../../src/data/protocols/userInfos';
+import { UserInfos } from '../../../src/data/protocols';
 import { UserModel, BetModel } from '../../../src/domain/models';
 import { UserBetsController } from '../../../src/presentation/controllers/user';
 import { badRequest } from '../../../src/presentation/helpers';

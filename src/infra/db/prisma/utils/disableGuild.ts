@@ -1,4 +1,4 @@
-import { DisableGuild } from '../../../../data/protocols/disableGuild';
+import { DisableGuild } from '../../../../data/protocols';
 import { GuildModel } from '../../../../domain/models';
 import { prisma } from './client';
 

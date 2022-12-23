@@ -1,6 +1,6 @@
 import { CreateGuildRepository } from '../../../data/protocols';
 import { PrismaClient } from '@prisma/client';
-import { GuildModel } from '../../../domain/models/guild';
+import { GuildModel } from '../../../domain/models';
 import { AddGuildModel } from '../../../domain/usecases/add-guild';
 
 export class CreateGuildPrismaRepository implements CreateGuildRepository {

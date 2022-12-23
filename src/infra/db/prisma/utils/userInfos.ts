@@ -1,4 +1,4 @@
-import { UserInfos } from '../../../../data/protocols/userInfos';
+import { UserInfos } from '../../../../data/protocols';
 import { UserModel, BetModel } from '../../../../domain/models';
 import { prisma } from './client';
 

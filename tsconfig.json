@@ -2,13 +2,16 @@
   "compilerOptions": {
     "outDir": "./dist",
     "module": "commonjs",
-    "target": "es2020",
+    "target": "es5",
     "esModuleInterop": true,
     "allowJs": true,
     "sourceMap": true,
     "strict": true,
     "strictNullChecks": true,
-    "resolveJsonModule": true
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "forceConsistentCasingInFileNames": true
   },
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "coverage", "dist", "src/test",],
+  //"include": ["src", "prisma"]
 }

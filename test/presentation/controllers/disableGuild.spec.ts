@@ -1,5 +1,5 @@
 import DisableGuildController from '../../../src/presentation/controllers/guild/disableGuild';
-import { DisableGuild } from '../../../src/data/protocols/disableGuild';
+import { DisableGuild } from '../../../src/data/protocols';
 import { GuildModel } from '../../../src/domain/models';
 import { badRequest, ok, serverError } from '../../../src/presentation/helpers';
 

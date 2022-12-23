@@ -1,4 +1,4 @@
-import { WinBeast } from '../../../../src/data/protocols/winBeast';
+import { WinBeast } from '../../../../src/data/protocols';
 import { GameModel } from '../../../../src/domain/models';
 import { CreateGame } from '../../../../src/domain/usecases/create-game';
 import { BetsResult } from '../../../../src/presentation/protocols/play-result';

@@ -1,4 +1,4 @@
-import { HelperDb } from '../../../data/protocols/helperDb';
+import { HelperDb } from '../../../data/protocols';
 import { badRequest, ok, serverError } from '../../helpers';
 import { Controller, HttpResponse } from '../../protocols';
 

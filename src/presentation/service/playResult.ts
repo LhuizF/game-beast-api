@@ -1,6 +1,5 @@
 import { Result, PlayResult } from '../protocols/play-result';
-import { HelperDb } from '../../data/protocols/helperDb';
-import { WinBeast } from '../../data/protocols/winBeast';
+import { HelperDb, WinBeast } from '../../data/protocols';
 import { BeastModel } from '../../domain/models';
 import { CreateGame } from '../../domain/usecases/create-game';
 

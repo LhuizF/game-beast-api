@@ -1,4 +1,4 @@
-import { SaveUserRepository } from '../../../data/protocols/saveUserRepository';
+import { SaveUserRepository } from '../../../data/protocols';
 import { AddUserModel, UserModelWithRoleId } from '../../../domain/usecases/add-user';
 import { PrismaClient } from '@prisma/client';
 

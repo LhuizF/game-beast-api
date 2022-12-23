@@ -1,4 +1,4 @@
-import { GuildModel } from '../../domain/models/guild';
+import { GuildModel } from '../../domain/models';
 import { AddGuildModel } from '../../domain/usecases/add-guild';
 
 export interface CreateGuildRepository {

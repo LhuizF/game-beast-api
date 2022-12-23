@@ -1,4 +1,4 @@
-import { HelperDb } from '../../../data/protocols/helperDb';
+import { HelperDb } from '../../../data/protocols';
 import { PlaceBet } from '../../../domain/usecases/place-bet';
 import { badRequest, ok, serverError } from '../../helpers';
 import { Controller, HttpRequest, HttpResponse } from '../../protocols';

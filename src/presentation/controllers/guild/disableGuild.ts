@@ -1,4 +1,4 @@
-import { DisableGuild } from '../../../data/protocols/disableGuild';
+import { DisableGuild } from '../../../data/protocols';
 import { badRequest, ok, serverError } from '../../helpers';
 import { Controller, HttpRequest, HttpResponse } from '../../protocols';
 

@@ -1,6 +1,6 @@
 import { CurrentGameController } from '../../../src/presentation/controllers/game';
 import { badRequest, ok, serverError } from '../../../src/presentation/helpers';
-import { HelperDb } from '../../../src/data/protocols/helperDb';
+import { HelperDb } from '../../../src/data/protocols';
 import { HelperDbStub } from '../../helper';
 
 jest.useFakeTimers().setSystemTime(new Date());

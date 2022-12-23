@@ -1,4 +1,4 @@
-import { BetModel } from '../models/Bet';
+import { BetModel } from '../models';
 
 export interface PlayBetModel {
   id_user: string;

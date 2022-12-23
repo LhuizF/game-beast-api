@@ -1,7 +1,7 @@
 import { AddGuildDb } from '../../../src/data/usecases/addGuildDb';
 import { CreateGuildRepository } from '../../../src/data/protocols';
 import { AddGuildModel } from '../../../src/domain/usecases/add-guild';
-import { GuildModel } from '../../../src/domain/models/guild';
+import { GuildModel } from '../../../src/domain/models';
 
 interface SutTypes {
   sut: AddGuildDb;

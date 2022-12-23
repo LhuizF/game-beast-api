@@ -1,4 +1,4 @@
-import { HelperDb } from '../../../src/data/protocols/helperDb';
+import { HelperDb } from '../../../src/data/protocols';
 import { RankController } from '../../../src/presentation/controllers/rank';
 import { ok, serverError } from '../../../src/presentation/helpers';
 import { HelperDbStub } from '../../helper';

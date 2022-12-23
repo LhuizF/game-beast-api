@@ -1,4 +1,4 @@
-import { GuildModel } from '../models/guild';
+import { GuildModel } from '../models';
 
 export interface AddGuildModel {
   id: string;

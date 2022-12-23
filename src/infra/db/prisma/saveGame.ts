@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import { SaveGameRepository } from '../../../data/protocols/saveGameRepository';
+import { SaveGameRepository } from '../../../data/protocols';
 import { GameModel } from '../../../domain/models';
 
 export class SaveGamePrismaRepository implements SaveGameRepository {

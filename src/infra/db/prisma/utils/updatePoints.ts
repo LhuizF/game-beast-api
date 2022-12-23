@@ -1,4 +1,4 @@
-import { UpdatePoints } from '../../../../data/protocols/updatePoints';
+import { UpdatePoints } from '../../../../data/protocols';
 import { prisma } from './client';
 
 export class UpdatePointsPrisma implements UpdatePoints {

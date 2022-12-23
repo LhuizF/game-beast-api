@@ -1,4 +1,4 @@
-import { HelperDb } from '../../../src/data/protocols/helperDb';
+import { HelperDb } from '../../../src/data/protocols';
 import { UserController } from '../../../src/presentation/controllers/user';
 import { badRequest } from '../../../src/presentation/helpers';
 import { HelperDbStub } from '../../helper';

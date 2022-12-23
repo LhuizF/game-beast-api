@@ -1,4 +1,4 @@
-import { WinBeast } from '../../../../data/protocols/winBeast';
+import { WinBeast } from '../../../../data/protocols';
 import { BetsResult, UserWin } from '../../../../presentation/protocols/play-result';
 import { prisma } from './client';
 

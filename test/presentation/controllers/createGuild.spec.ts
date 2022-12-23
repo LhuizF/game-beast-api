@@ -1,7 +1,7 @@
 import CreateGuildController from '../../../src/presentation/controllers/guild/createGuild';
 import { ServerError } from '../../../src/presentation/erros';
 import { AddGuild, AddGuildModel } from '../../../src/domain/usecases/add-guild';
-import { GuildModel } from '../../../src/domain/models/guild';
+import { GuildModel } from '../../../src/domain/models';
 import { badRequest } from '../../../src/presentation/helpers';
 
 interface SutTypes {

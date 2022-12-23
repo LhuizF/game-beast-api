@@ -1,5 +1,5 @@
 import { PlayBetModel, PlaceBet } from '../../domain/usecases/place-bet';
-import { BetModel } from '../../domain/models/Bet';
+import { BetModel } from '../../domain/models';
 import { Bet, SaveBetRepository } from '../protocols/saveBetRepository';
 import { UpdatePoints } from '../protocols/updatePoints';
 

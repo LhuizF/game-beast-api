@@ -1,4 +1,4 @@
-import { HelperDb } from '../src/data/protocols/helperDb';
+import { HelperDb } from '../src/data/protocols';
 import {
   BeastModel,
   GuildModel,

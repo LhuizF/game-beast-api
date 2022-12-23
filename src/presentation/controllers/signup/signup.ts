@@ -1,7 +1,7 @@
 import { HttpRequest, HttpResponse, EmailValidator, AddUser } from './signup-protocols';
 import { badRequest, serverError, ok } from '../../helpers';
 import { Controller } from '../../protocols/controller';
-import { HelperDb } from '../../../data/protocols/helperDb';
+import { HelperDb } from '../../../data/protocols';
 
 class SignUpController implements Controller {
   constructor(

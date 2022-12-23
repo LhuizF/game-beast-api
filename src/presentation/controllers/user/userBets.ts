@@ -1,4 +1,4 @@
-import { UserInfos } from '../../../data/protocols/userInfos';
+import { UserInfos } from '../../../data/protocols';
 import { badRequest, ok, serverError } from '../../helpers';
 import { Controller, HttpRequest, HttpResponse } from '../../protocols';
 

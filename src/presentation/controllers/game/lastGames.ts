@@ -1,4 +1,4 @@
-import { HelperDb } from '../../../data/protocols/helperDb';
+import { HelperDb } from '../../../data/protocols';
 import { BeastModel, GameModel } from '../../../domain/models';
 import { ok, serverError } from '../../helpers';
 import { Controller, HttpRequest, HttpResponse } from '../../protocols';

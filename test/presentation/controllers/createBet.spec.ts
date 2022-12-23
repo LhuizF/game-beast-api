@@ -2,8 +2,8 @@ import CreateBetController from '../../../src/presentation/controllers/bet/creat
 import { ServerError } from '../../../src/presentation/erros';
 import { badRequest, ok } from '../../../src/presentation/helpers';
 import { PlayBetModel, PlaceBet } from '../../../src/domain/usecases/place-bet';
-import { BetModel } from '../../../src/domain/models/Bet';
-import { HelperDb } from '../../../src/data/protocols/helperDb';
+import { BetModel } from '../../../src/domain/models';
+import { HelperDb } from '../../../src/data/protocols';
 import { HelperDbStub } from '../../helper';
 
 jest.useFakeTimers().setSystemTime(new Date());

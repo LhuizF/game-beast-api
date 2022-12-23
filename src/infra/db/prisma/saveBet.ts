@@ -1,6 +1,6 @@
 import { PrismaClient } from '@prisma/client';
-import { Bet, SaveBetRepository } from '../../../data/protocols/saveBetRepository';
-import { BetModel } from '../../../domain/models/bet';
+import { Bet, SaveBetRepository } from '../../../data/protocols';
+import { BetModel } from '../../../domain/models';
 
 export class SaveBetPrismaRepository implements SaveBetRepository {
   constructor(private readonly cxt: PrismaClient) {}
