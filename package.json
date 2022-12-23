@@ -13,7 +13,7 @@
     "test:ci": "npm test -- --coverage",
     "dev": "sucrase-node src/main/server.ts",
     "build": "sucrase ./src -d ./build --transforms typescript,imports",
-    "start": "npm run build && node ./build/main/server.js",
+    "start": "node ./build/main/server.js",
     "seed": "sucrase-node prisma/seed.ts"
   },
   "keywords": [],
