@@ -13,7 +13,7 @@ const run = async () => {
     const saveGame = new SaveGamePrismaRepository(prisma);
     await saveGame.save(time);
 
-    console.log('Done');
+    console.log('Done ✔️');
   } catch (err) {
     console.log(err);
   }

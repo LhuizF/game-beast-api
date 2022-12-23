@@ -4,7 +4,6 @@ WORKDIR /app
 
 COPY ["package.json", "package-lock.json*", "./"]
 
-
 RUN npm install
 
 COPY . .
@@ -14,8 +13,7 @@ RUN npm run build
 FROM node:16.13.0-alpine as production
 
 ENV NODE_ENV=production
-ENV PORT=${PORT}
-ENV DATABASE_URL=${DATABASE_URL}
+ENV PORT=3333
 
 WORKDIR /app
 
