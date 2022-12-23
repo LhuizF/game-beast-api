@@ -5,7 +5,6 @@
   "main": "index.js",
   "scripts": {
     "lint": "npx eslint src/**",
-    "prepare": "husky install",
     "test": "jest --passWithNoTests --silent --noStackTrace --runInBand",
     "test:debug": "jest --passWithNoTests --noStackTrace --runInBand --onlyChanged",
     "test:unit": "npm test -- --watch",
