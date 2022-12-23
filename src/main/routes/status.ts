@@ -1,5 +1,9 @@
 import { Router } from 'express';
 
 export default (router: Router): void => {
-  router.get('/status', (req, res) => res.json({ status: 'okay' }));
+  router.get('/status', (req, res) => {
+    const origin = req.get('origin');
+    console.log(origin);
+    res.json({ status: 'okay' });
+  });
 };
