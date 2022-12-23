@@ -2,7 +2,7 @@ import { LogErrorPrismaRepository, prisma } from '../../infra/db/prisma';
 import { PrismaHelper } from '../../infra/db/prisma/utils/helper';
 import { UserController } from '../../presentation/controllers/user';
 import { Controller } from '../../presentation/protocols';
-import { LogControllerDecorator } from '../decorator/logsError';
+import { LogControllerDecorator } from '../decorators/logsError';
 
 export const makeUserController = (): Controller => {
   const prismaHelper = new PrismaHelper();

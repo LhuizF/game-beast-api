@@ -1,7 +1,7 @@
 import CreateBetController from '../../presentation/controllers/bet/createBet';
 import { prisma, SaveBetPrismaRepository } from '../../infra/db/prisma';
 import { Controller } from '../../presentation/protocols';
-import { LogControllerDecorator } from '../decorator';
+import { LogControllerDecorator } from '../decorators';
 import { LogErrorPrismaRepository } from '../../infra/db/prisma/logError';
 import { PlaceBetDb } from '../../data/usecases/placeBetDb';
 import { PrismaHelper } from '../../infra/db/prisma/utils/helper';

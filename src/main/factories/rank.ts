@@ -1,7 +1,7 @@
 import { RankController } from '../../presentation/controllers/rank';
 import { prisma } from '../../infra/db/prisma';
 import { Controller } from '../../presentation/protocols';
-import { LogControllerDecorator } from '../decorator/logsError';
+import { LogControllerDecorator } from '../decorators/logsError';
 import { LogErrorPrismaRepository } from '../../infra/db/prisma/logError';
 import { PrismaHelper } from '../../infra/db/prisma/utils/helper';
 
