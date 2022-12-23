@@ -1,4 +1,4 @@
-import { CrateGameDb } from '../../data/usecases/createGameDb';
+import { CrateGameDb } from '../../data/usecases';
 import { prisma } from '../../infra/db/prisma';
 import { SaveGamePrismaRepository } from '../../infra/db/prisma/saveGame';
 import { PrismaHelper } from '../../infra/db/prisma/utils/helper';

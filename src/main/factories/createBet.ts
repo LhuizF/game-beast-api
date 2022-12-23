@@ -3,7 +3,7 @@ import { prisma, SaveBetPrismaRepository } from '../../infra/db/prisma';
 import { Controller } from '../../presentation/protocols';
 import { LogControllerDecorator } from '../decorators';
 import { LogErrorPrismaRepository } from '../../infra/db/prisma/logError';
-import { PlaceBetDb } from '../../data/usecases/placeBetDb';
+import { PlaceBetDb } from '../../data/usecases';
 import { PrismaHelper } from '../../infra/db/prisma/utils/helper';
 import { UpdatePointsPrisma } from '../../infra/db/prisma/utils/updatePoints';
 

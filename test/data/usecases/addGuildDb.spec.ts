@@ -1,4 +1,4 @@
-import { AddGuildDb } from '../../../src/data/usecases/addGuildDb';
+import { AddGuildDb } from '../../../src/data/usecases';
 import { CreateGuildRepository } from '../../../src/data/protocols';
 import { AddGuildModel } from '../../../src/domain/usecases/add-guild';
 import { GuildModel } from '../../../src/domain/models';

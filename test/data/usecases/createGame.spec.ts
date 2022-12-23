@@ -1,4 +1,4 @@
-import { CrateGameDb } from '../../../src/data/usecases/createGameDb';
+import { CrateGameDb } from '../../../src/data/usecases';
 import { GameTime } from '../../../src/presentation/protocols/game-time';
 import { SaveGameRepository } from '../../../src/data/protocols';
 import { GameModel } from '../../../src/domain/models';

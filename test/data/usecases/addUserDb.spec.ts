@@ -1,4 +1,4 @@
-import { AddUserDb } from '../../../src/data/usecases/addUserDb';
+import { AddUserDb } from '../../../src/data/usecases';
 import { Encrypter, SaveUserRepository } from '../../../src/data/protocols';
 import { AddUserModel } from '../../../src/domain/usecases/add-user';
 import { UserModel } from '../../../src/domain/models';

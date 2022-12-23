@@ -1,5 +1,5 @@
 import CreateGuildController from '../../presentation/controllers/guild/createGuild';
-import { AddGuildDb } from '../../data/usecases/addGuildDb';
+import { AddGuildDb } from '../../data/usecases';
 import { CreateGuildPrismaRepository, prisma } from '../../infra/db/prisma';
 import { Controller } from '../../presentation/protocols';
 import { LogControllerDecorator } from '../decorators/logsError';

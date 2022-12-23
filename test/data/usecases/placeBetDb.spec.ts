@@ -1,4 +1,4 @@
-import { PlaceBetDb } from '../../../src/data/usecases/placeBetDb';
+import { PlaceBetDb } from '../../../src/data/usecases';
 import { SaveBetRepository, UpdatePoints } from '../../../src/data/protocols';
 import { BetModel } from '../../../src/domain/models';
 import { PlayBetModel } from '../../../src/domain/usecases/place-bet';
