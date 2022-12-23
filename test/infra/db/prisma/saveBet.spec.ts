@@ -1,4 +1,4 @@
-import { SaveBetPrismaRepository } from '../../../../src/infra/db/prisma/mainSaveBet';
+import { SaveBetPrismaRepository } from '../../../../src/infra/db/prisma/saveBet';
 import { mockDeep, DeepMockProxy } from 'jest-mock-extended';
 import { PrismaClient } from '@prisma/client';
 import { Bet } from '../../../../src/data/protocols/saveBetRepository';
