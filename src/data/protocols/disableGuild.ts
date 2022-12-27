@@ -1,5 +1,5 @@
 import { GuildModel } from '../../domain/models';
 
 export interface DisableGuild {
-  disable(guildId: string): Promise<GuildModel>;
+  disable(guildId: string): Promise<GuildModel | null>;
 }

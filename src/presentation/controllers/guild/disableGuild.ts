@@ -15,7 +15,9 @@ class DisableGuildController implements Controller {
 
       const guild = await this.disableGuild.disable(guildId);
 
-      return ok(guild);
+      if (!guild) return badRequest(`Guild ${guildId} not found`);
+
+      return ok({ message: `Guild ${guildId} disabled` });
     } catch (error) {
       return serverError(error);
     }
