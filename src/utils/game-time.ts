@@ -3,13 +3,23 @@ import { GameTime } from '../presentation/protocols/game-time';
 export class GameTimeAdapter implements GameTime {
   getNext(): number {
     const now = new Date().toLocaleTimeString('pt-BR', { timeZone: 'America/Sao_Paulo' });
-    console.log('now -> ', now);
+
     const [hour, min, seconds] = now.split(':');
     const currentSeconds = Number(hour) * 3600 + Number(min) * 60 + Number(seconds);
 
-    if (currentSeconds <= 36000) return 2;
-    if (currentSeconds <= 54000) return 3;
-    return 1;
+    const time = (() => {
+      if (currentSeconds <= 36000) return 2;
+      if (currentSeconds <= 54000) return 3;
+      return 1;
+    })();
+
+    console.log({
+      now,
+      currentSeconds,
+      time
+    });
+
+    return time;
   }
 }
 
