@@ -6,9 +6,12 @@ import { discordApi } from '../../utils/discord';
 
 export class SendMessageDiscord implements SendMessage {
   constructor(private readonly discordEmbed: IDiscordEmbed) {}
+
   async send(data: GameResult, guilds: GuildModel[]) {
     const { game, beastWin: beast, totalBets, winners, losers } = data;
-    console.log(guilds.length);
+
+    console.log(`Total of ${guilds.length} guilds`);
+
     guilds.forEach((guild, i) => {
       const gameDD: GameData = {
         roleId: guild.role,
@@ -35,8 +38,6 @@ export class SendMessageDiscord implements SendMessage {
         .catch((err) => {
           console.log('error', err);
         });
-
-      //fs.writeFileSync(path.join(__dirname, `text${i}.txt`), JSON.stringify(message));
     });
   }
 }
