@@ -57,17 +57,7 @@ describe('DisableGuild Controller', () => {
 
     const response = await sut.handle({ params: { guild: 'any' } });
 
-    expect(response).toEqual(
-      ok({
-        id: 'any_id',
-        name: 'guild',
-        channel: '2112',
-        role: 'any_role',
-        created_at: new Date(),
-        icon: 'any',
-        active: false
-      })
-    );
+    expect(response).toEqual(ok({ message: 'Guild any disabled' }));
   });
 
   test('should return 500 if getRank throws', async () => {
