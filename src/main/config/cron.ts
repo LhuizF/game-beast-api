@@ -2,7 +2,7 @@ import { CronJob } from 'cron';
 import { GameResult, PlayResult } from '../../presentation/protocols/play-result';
 import { SendMessageDiscord } from '../../presentation/service/sendDiscordMessage';
 import { DiscordEmbed } from '../../utils/discord/embed';
-import { SendEmail } from '../../presentation/service/sendEmail';
+import { SendEmailNode } from '../../presentation/service/sendEmail';
 
 const cron = (time: string, playResult: PlayResult): CronJob => {
   console.log('run Cron');
@@ -14,7 +14,7 @@ const cron = (time: string, playResult: PlayResult): CronJob => {
         const result = data as GameResult;
         const discordEmbed = new DiscordEmbed();
         const sendMessageDiscord = new SendMessageDiscord(discordEmbed);
-        const sendEmail = new SendEmail();
+        const sendEmail = new SendEmailNode();
 
         sendMessageDiscord.send(result, guilds);
         sendEmail.send(result);

@@ -1,8 +1,9 @@
 import nodemailer from 'nodemailer';
 import { time } from '../../utils/game-time';
 import { GameResult } from '../protocols/play-result';
+import { SendEmail } from '../protocols/send-email';
 
-export class SendEmail implements SendEmail {
+export class SendEmailNode implements SendEmail {
   config() {
     return nodemailer.createTransport({
       host: 'smtp.gmail.com',
