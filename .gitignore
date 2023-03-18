@@ -3,5 +3,5 @@ coverage
 build
 dist
 .vscode
-.env
+.env*
 scripts
